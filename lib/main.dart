@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todo_app_riverpod/screens/home.dart';
+import 'package:todo_app_riverpod/features/counter/presentation/pages/counter_page.dart';
 
 void main() {
   runApp(
@@ -18,7 +18,7 @@ class MyApp extends HookConsumerWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Example')),
-        body: Home(),
+        body: CounterPage(),
       ),
     );
   }

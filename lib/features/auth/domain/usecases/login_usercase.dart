@@ -1,0 +1,2 @@
+// Login logic
+class LoginUsercase {}

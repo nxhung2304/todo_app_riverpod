@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Todo {
 
- int get userId; int get id; String get title; bool get completed;
+ int get userId; int get id; String get todo; bool get completed;
 /// Create a copy of Todo
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $TodoCopyWith<Todo> get copyWith => _$TodoCopyWithImpl<Todo>(this as Todo, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Todo&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.completed, completed) || other.completed == completed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Todo&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.id, id) || other.id == id)&&(identical(other.todo, todo) || other.todo == todo)&&(identical(other.completed, completed) || other.completed == completed));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,userId,id,title,completed);
+int get hashCode => Object.hash(runtimeType,userId,id,todo,completed);
 
 @override
 String toString() {
-  return 'Todo(userId: $userId, id: $id, title: $title, completed: $completed)';
+  return 'Todo(userId: $userId, id: $id, todo: $todo, completed: $completed)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $TodoCopyWith<$Res>  {
   factory $TodoCopyWith(Todo value, $Res Function(Todo) _then) = _$TodoCopyWithImpl;
 @useResult
 $Res call({
- int userId, int id, String title, bool completed
+ int userId, int id, String todo, bool completed
 });
 
 
@@ -66,11 +66,11 @@ class _$TodoCopyWithImpl<$Res>
 
 /// Create a copy of Todo
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? id = null,Object? title = null,Object? completed = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? id = null,Object? todo = null,Object? completed = null,}) {
   return _then(_self.copyWith(
 userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as int,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as int,todo: null == todo ? _self.todo : todo // ignore: cast_nullable_to_non_nullable
 as String,completed: null == completed ? _self.completed : completed // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
@@ -83,12 +83,12 @@ as bool,
 @JsonSerializable()
 
 class _Todo implements Todo {
-   _Todo({required this.userId, required this.id, required this.title, required this.completed});
+   _Todo({required this.userId, required this.id, required this.todo, required this.completed});
   factory _Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
 
 @override final  int userId;
 @override final  int id;
-@override final  String title;
+@override final  String todo;
 @override final  bool completed;
 
 /// Create a copy of Todo
@@ -104,16 +104,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Todo&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.completed, completed) || other.completed == completed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Todo&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.id, id) || other.id == id)&&(identical(other.todo, todo) || other.todo == todo)&&(identical(other.completed, completed) || other.completed == completed));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,userId,id,title,completed);
+int get hashCode => Object.hash(runtimeType,userId,id,todo,completed);
 
 @override
 String toString() {
-  return 'Todo(userId: $userId, id: $id, title: $title, completed: $completed)';
+  return 'Todo(userId: $userId, id: $id, todo: $todo, completed: $completed)';
 }
 
 
@@ -124,7 +124,7 @@ abstract mixin class _$TodoCopyWith<$Res> implements $TodoCopyWith<$Res> {
   factory _$TodoCopyWith(_Todo value, $Res Function(_Todo) _then) = __$TodoCopyWithImpl;
 @override @useResult
 $Res call({
- int userId, int id, String title, bool completed
+ int userId, int id, String todo, bool completed
 });
 
 
@@ -141,11 +141,11 @@ class __$TodoCopyWithImpl<$Res>
 
 /// Create a copy of Todo
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? id = null,Object? title = null,Object? completed = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? id = null,Object? todo = null,Object? completed = null,}) {
   return _then(_Todo(
 userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as int,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as int,todo: null == todo ? _self.todo : todo // ignore: cast_nullable_to_non_nullable
 as String,completed: null == completed ? _self.completed : completed // ignore: cast_nullable_to_non_nullable
 as bool,
   ));

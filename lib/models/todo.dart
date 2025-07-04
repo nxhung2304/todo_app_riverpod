@@ -11,7 +11,7 @@ sealed class Todo with _$Todo {
   factory Todo({
     required int userId,
     required int id,
-    required String title,
+    required String todo,
     required bool completed,
   }) = _Todo;
 

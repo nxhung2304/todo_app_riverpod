@@ -1,0 +1,2 @@
+// Loading states
+class AuthLoadingOverlay {}

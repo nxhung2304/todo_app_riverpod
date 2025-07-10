@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:learn_riverpod/app/router/app_routes.dart';
+import 'package:learn_riverpod/features/todo/presentation/providers/todo_list.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/base_text_field.dart';
 
 class NewTodoPage extends HookConsumerWidget {
-  NewTodoPage({super.key});
+  const NewTodoPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -12,13 +15,15 @@ class NewTodoPage extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add New Todo", style: TextStyle(color: Colors.white)),
+        title: Center(
+          child: Text("Add New Todo", style: TextStyle(color: Colors.white)),
+        ),
         backgroundColor: Colors.purple,
       ),
       body: Column(
         children: [
           _buildTodoTitle(todoTitleController),
-          _buildSubmitTodo(todoTitleController, ref),
+          _buildSubmitTodo(context, todoTitleController, ref),
         ],
       ),
     );
@@ -35,9 +40,23 @@ class NewTodoPage extends HookConsumerWidget {
   }
 
   Widget _buildSubmitTodo(
+    BuildContext context,
     TextEditingController todoTitleController,
     WidgetRef ref,
   ) {
-    return ElevatedButton(onPressed: () {}, child: Text("Add todo"));
+    return ElevatedButton(
+      onPressed: () {
+        final todoTitle = todoTitleController.text.trim();
+        if (todoTitle.isEmpty) {
+          print("Title is empty");
+          return;
+        }
+
+        ref.read(todoListProvider.notifier).addTodo(title: todoTitle);
+        print("Added new todo");
+        context.go(AppRoutes.root);
+      },
+      child: Text("Add todo"),
+    );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:learn_riverpod/features/todo/data/models/todo.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'todo_list.g.dart';
+part 'todo_list_provider.g.dart';
 
 @riverpod
 class TodoList extends _$TodoList {

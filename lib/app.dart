@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:learn_riverpod/screens/home.dart';
+import 'package:learn_riverpod/app/router/app_router.dart';
+
 class App extends StatelessWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const Home(),
-    );
+    // return MaterialApp(
+    //   title: 'Todos',
+    //   theme: ThemeData(
+    //     primaryColor: Colors.red
+    //   ),
+    //   home: const MyTodoPage(),
+    // );
+    return MaterialApp.router(routerConfig: router);
   }
 }

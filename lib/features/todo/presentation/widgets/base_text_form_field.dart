@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BaseTextFormField extends StatelessWidget {
-  final TextEditingController textFieldController;
+  final TextEditingController controller;
   final String? hintText;
   final String? labelText;
   final int? maxLines;
@@ -10,7 +10,7 @@ class BaseTextFormField extends StatelessWidget {
 
   const BaseTextFormField({
     super.key,
-    required this.textFieldController,
+    required this.controller,
     required this.validator,
 
     this.hintText,
@@ -21,7 +21,7 @@ class BaseTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: textFieldController,
+      controller: controller,
       maxLines: maxLines,
       decoration: InputDecoration(
         hintText: hintText,

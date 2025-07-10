@@ -4,7 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/app/router/app_routes.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/todo_list.dart';
-import 'package:learn_riverpod/features/todo/presentation/widgets/base_text_field.dart';
+import 'package:learn_riverpod/features/todo/presentation/validators/todo_validators.dart';
+import 'package:learn_riverpod/features/todo/presentation/widgets/base_text_form_field.dart';
 
 class NewTodoPage extends HookConsumerWidget {
   const NewTodoPage({super.key});
@@ -12,6 +13,7 @@ class NewTodoPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final todoTitleController = useTextEditingController();
+    final formKey = useMemoized(() => GlobalKey<FormState>());
 
     return Scaffold(
       appBar: AppBar(
@@ -20,11 +22,17 @@ class NewTodoPage extends HookConsumerWidget {
         ),
         backgroundColor: Colors.purple,
       ),
-      body: Column(
-        children: [
-          _buildTodoTitle(todoTitleController),
-          _buildSubmitTodo(context, todoTitleController, ref),
-        ],
+      body: Form(
+        key: formKey,
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              _buildTodoTitle(todoTitleController),
+              _buildSubmitTodo(context, todoTitleController, ref, formKey),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -34,7 +42,10 @@ class NewTodoPage extends HookConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text("Todo title"),
-        BaseTextField(textFieldController: controller),
+        BaseTextFormField(
+          validator: TodoValidators.validateTitle,
+          textFieldController: controller,
+        ),
       ],
     );
   }
@@ -43,20 +54,17 @@ class NewTodoPage extends HookConsumerWidget {
     BuildContext context,
     TextEditingController todoTitleController,
     WidgetRef ref,
+    GlobalKey<FormState> formKey,
   ) {
     return ElevatedButton(
+      child: Text("Save"),
       onPressed: () {
-        final todoTitle = todoTitleController.text.trim();
-        if (todoTitle.isEmpty) {
-          print("Title is empty");
-          return;
+        if (formKey.currentState?.validate() ?? false) {
+          final todoTitle = todoTitleController.text.trim();
+          ref.read(todoListProvider.notifier).addTodo(title: todoTitle);
+          context.go(AppRoutes.root);
         }
-
-        ref.read(todoListProvider.notifier).addTodo(title: todoTitle);
-        print("Added new todo");
-        context.go(AppRoutes.root);
       },
-      child: Text("Add todo"),
     );
   }
 }

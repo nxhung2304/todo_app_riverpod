@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BaseTextFormField extends StatelessWidget {
+class InputFormField extends StatelessWidget {
   final String? hintText;
   final String? labelText;
   final int? maxLines;
@@ -8,7 +8,7 @@ class BaseTextFormField extends StatelessWidget {
   final String? initialValue;
   final ValueChanged<String>? onChanged;
 
-  const BaseTextFormField({
+  const InputFormField({
     super.key,
     this.validator,
     this.initialValue,
@@ -32,7 +32,7 @@ class BaseTextFormField extends StatelessWidget {
         errorStyle: TextStyle(color: Colors.red, fontSize: 12),
       ),
       validator: validator,
-      autofocus: true,
+      autofocus: false,
       textInputAction: TextInputAction.done,
     );
   }

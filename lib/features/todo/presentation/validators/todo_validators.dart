@@ -16,9 +16,13 @@ class TodoValidators {
   }
 
   static String? validateDate(DateTime? value) {
+    // if (value == null) {
+    //   return "Vui lòng chọn ngày";
+    // }
     if (value == null) {
-      return "Vui lòng chọn ngày";
+      return null;
     }
+
     if (value.isBefore(DateTime.now().subtract(Duration(days: 1)))) {
       return "Ngày không được trong quá khứ";
     }
@@ -26,19 +30,14 @@ class TodoValidators {
   }
 
   static String? validateTime(TimeOfDay? value) {
-    if (value == null) {
-      return "Vui lòng chọn thời gian";
-    }
     return null;
   }
 
   static String? validateNotes(String? notes) {
-    if (notes == null || notes.trim().isEmpty) {
-      return "Vui lòng nhập notes todo";
+    if (notes == null ) {
+      return null;
     }
-    if (notes.trim().length < 3) {
-      return "Notes phải có ít nhất 3 ký tự";
-    }
+
     if (notes.length > 500) {
       return "Notes không được quá 500 ký tự";
     }

@@ -15,14 +15,13 @@ class SubmitTodo extends _$SubmitTodo {
     required String title,
     required DateTime? date,
     required TimeOfDay? time,
-    required String notes,
+    required String? notes,
   }) async {
     try {
       state = const AsyncValue.loading();
 
-      print("Submit");
       final todoList = ref.read(todoListProvider.notifier);
-      todoList.addTodo(title: title);
+      todoList.addTodo(title: title, notes: notes, time: time, date: date);
 
       state = const AsyncValue.data(null);
     } catch (e, stackTrace) {

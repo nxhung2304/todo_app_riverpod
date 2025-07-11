@@ -9,7 +9,7 @@ class SettingsPage extends StatelessWidget {
     @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SharedAppBar('Search Page', Colors.blue, Colors.white),
+      appBar: SharedAppBar(title: 'Settings Page'),
       body: Center(child: Text('Search')),
       bottomNavigationBar: SharedBottomNav(currentRoute: AppRoutes.settings),
     );

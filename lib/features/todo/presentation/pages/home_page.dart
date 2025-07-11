@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SharedAppBar('Home', Colors.blue, Colors.white),
+      appBar: SharedAppBar(title: 'Home'),
       body: Center(child: Text('Home Content 1')),
       bottomNavigationBar: SharedBottomNav(currentRoute: AppRoutes.home),
     );

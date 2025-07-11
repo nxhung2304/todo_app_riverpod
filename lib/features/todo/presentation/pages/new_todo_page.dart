@@ -115,7 +115,8 @@ class NewTodoPage extends HookConsumerWidget {
     });
 
     return Scaffold(
-      appBar: SharedAppBar('new todo', Colors.blue, Colors.white),
+      appBar: SharedAppBar(title: 'New todo'),
+      bottomNavigationBar: SharedBottomNav(currentRoute: '/todo'),
       body: Form(
         key: formKey,
         child: SingleChildScrollView(
@@ -139,7 +140,6 @@ class NewTodoPage extends HookConsumerWidget {
           ),
         ),
       ),
-      bottomNavigationBar: SharedBottomNav(currentRoute: '/todo'),
     );
   }
 

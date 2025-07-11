@@ -3,14 +3,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SharedAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final String title;
-  final Color backgroundColor;
-  final Color foregroundColor;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
 
-  const SharedAppBar(
-    this.title,
-    this.backgroundColor,
-    this.foregroundColor, {
+  const SharedAppBar({
     super.key,
+    required this.title,
+    this.backgroundColor = Colors.blue,
+    this.foregroundColor = Colors.white,
   });
 
   @override

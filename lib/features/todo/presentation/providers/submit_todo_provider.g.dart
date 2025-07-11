@@ -6,7 +6,7 @@ part of 'submit_todo_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$submitTodoHash() => r'8c680aafe649c8a7588fa49bd07c8cc56124ee63';
+String _$submitTodoHash() => r'458d10e5b17dacd56a6e7e59ba87e89253876279';
 
 /// See also [SubmitTodo].
 @ProviderFor(SubmitTodo)

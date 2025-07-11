@@ -6,4 +6,3 @@ import 'package:learn_riverpod/app.dart';
 void main() {
   runApp(ProviderScope(child: App()));
 }
-

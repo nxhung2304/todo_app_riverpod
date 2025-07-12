@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:learn_riverpod/features/todo/presentation/pages/edit_todo_page.dart';
 import 'package:learn_riverpod/features/todo/presentation/pages/home_page.dart';
 import 'package:learn_riverpod/features/todo/presentation/pages/my_todo_page.dart';
 import 'package:learn_riverpod/features/todo/presentation/pages/new_todo_page.dart';
@@ -8,27 +9,22 @@ import 'package:learn_riverpod/features/todo/presentation/pages/settings_page.da
 final appRouter = GoRouter(
   initialLocation: '/home',
   routes: [
-    GoRoute(
-      path: '/home',
-      builder: (context, state) => HomePage(),
-    ),
+    GoRoute(path: '/home', builder: (context, state) => HomePage()),
     GoRoute(
       path: '/todo',
       builder: (context, state) => MyTodoPage(),
       routes: [
+        GoRoute(path: 'new', builder: (context, state) => NewTodoPage()),
         GoRoute(
-          path: 'new',
-          builder: (context, state) => NewTodoPage(),
+          path: 'edit/:todoId',
+          builder: (context, state) {
+            final todoId = int.parse(state.pathParameters['todoId']!);
+            return EditTodoPage(todoId: todoId);
+          },
         ),
       ],
     ),
-    GoRoute(
-      path: '/search',
-      builder: (context, state) => SearchPage(),
-    ),
-    GoRoute(
-      path: '/settings',
-      builder: (context, state) => SettingsPage(),
-    ),
+    GoRoute(path: '/search', builder: (context, state) => SearchPage()),
+    GoRoute(path: '/settings', builder: (context, state) => SettingsPage()),
   ],
 );

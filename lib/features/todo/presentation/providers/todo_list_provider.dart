@@ -1,5 +1,6 @@
-import 'package:flutter/src/material/time.dart';
+import 'package:flutter/material.dart';
 import 'package:learn_riverpod/features/todo/data/models/todo.dart';
+import 'package:learn_riverpod/shared/providers/storage_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'todo_list_provider.g.dart';
@@ -7,9 +8,9 @@ part 'todo_list_provider.g.dart';
 @riverpod
 class TodoList extends _$TodoList {
   @override
-  List<Todo> build() {
-    // TODO: read from API or Local storage
-    return [];
+  Future<List<Todo>> build() async {
+    final repository = ref.read(todoRepositoryProvider);
+    return await repository.getAllTodos();
   }
 
   void addTodo({
@@ -17,37 +18,39 @@ class TodoList extends _$TodoList {
     String? notes,
     TimeOfDay? time,
     DateTime? date,
-  }) {
-    final newTodo = Todo(
-      title: title,
-      userId: 1,
-      id: 1,
-      notes: notes,
-      time: _timeOfDayToString(time),
-      date: date,
-    );
-    print(newTodo);
+  }) async {
 
-    state = [...state, newTodo];
+    state = const AsyncLoading();
+
+    try {
+      final repository = ref.read(todoRepositoryProvider);
+      await repository.addTodo(title: title, notes: notes, time: time, date: date);
+
+      ref.invalidateSelf();
+    } catch (e) {
+      state = AsyncError(e, StackTrace.current);
+    }
   }
 
-  void toggleTodo(int id) {
-    state =
-        state.map((todo) {
-          if (todo.id == id) {
-            return todo.copyWith(completed: !todo.completed);
-          }
-
-          return todo;
-        }).toList();
+  void toggleTodo(int id) async {
+    try {
+      final repository = ref.read(todoRepositoryProvider);
+      await repository.toggleTodo(id);
+      
+      ref.invalidateSelf();
+    } catch (e) {
+      state = AsyncError(e, StackTrace.current);
+    }
   }
 
-  void deleteTodo(int id) {
-    state = state.where((todo) => todo.id != id).toList();
-  }
-
-  String? _timeOfDayToString(TimeOfDay? time) {
-    if (time == null) return null;
-    return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
+   Future<void> deleteTodo(int id) async {
+    try {
+      final repository = ref.read(todoRepositoryProvider);
+      await repository.deleteTodo(id);
+      
+      ref.invalidateSelf();
+    } catch (e) {
+      state = AsyncError(e, StackTrace.current);
+    }
   }
 }

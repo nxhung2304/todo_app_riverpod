@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:learn_riverpod/features/todo/presentation/providers/new_todo_form_provider.dart';
+import 'package:learn_riverpod/features/todo/presentation/providers/todo_form_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/validators/todo_validators.dart';
-import 'package:learn_riverpod/features/todo/presentation/widgets/input_form_field.dart';
+import 'package:learn_riverpod/features/todo/presentation/widgets/new/input_form_field.dart';
 
 class TodoTitleField extends ConsumerWidget {
   const TodoTitleField({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentTitle = ref.watch(newTodoFormProvider.select((s) => s.title));
+    final currentTitle = ref.watch(todoFormProvider.select((s) => s.title));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,7 +23,7 @@ class TodoTitleField extends ConsumerWidget {
           initialValue: currentTitle,
           onChanged:
               (value) =>
-                  ref.read(newTodoFormProvider.notifier).updateTitle(value),
+                  ref.read(todoFormProvider.notifier).updateTitle(value),
         ),
       ],
     );

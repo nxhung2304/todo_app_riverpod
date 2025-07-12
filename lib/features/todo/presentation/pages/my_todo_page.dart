@@ -4,67 +4,97 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/config/router/app_routes.dart';
 import 'package:learn_riverpod/features/app/presentation/widgets/shared_app_bar.dart';
 import 'package:learn_riverpod/features/app/presentation/widgets/shared_bottom_nav.dart';
-import 'package:learn_riverpod/features/todo/data/models/todo.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/todo_list_provider.dart';
+import 'package:learn_riverpod/features/todo/presentation/widgets/todos/todo_item_widget.dart';
 
-class MyTodoPage extends HookConsumerWidget with RouteAware {
+class MyTodoPage extends HookConsumerWidget {
   const MyTodoPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final todoList = ref.watch(todoListProvider);
-  
-    print("TodoList = ${todoList}");
+    final todosAsync = ref.watch(todoListProvider);
 
     return Scaffold(
-      appBar: SharedAppBar(title: 'My todo'),
-      bottomNavigationBar: SharedBottomNav(currentRoute: '/todo'),
+      appBar: const SharedAppBar(title: 'My todo'),
+      bottomNavigationBar: const SharedBottomNav(currentRoute: '/todo'),
       body: Column(
         children: [
-          TextButton(
-            child: Text("Add new"),
-            onPressed: () {
-              context.push(AppRoutes.newTodo);
-            },
+          _buildAddButton(context),
+          Expanded(
+            child: _buildTodoList(todosAsync, ref),
           ),
-          Expanded(child: _buildTodoList(todoList, ref)),
         ],
       ),
     );
   }
 
-  Widget _buildTodoList(List<Todo> todos, WidgetRef ref) {
+  Widget _buildAddButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: ElevatedButton(
+        onPressed: () => context.push(AppRoutes.newTodo),
+        child: const Text("Add new todo"),
+      ),
+    );
+  }
+
+  Widget _buildTodoList(AsyncValue<List<dynamic>> todosAsync, WidgetRef ref) {
+    return todosAsync.when(
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
+      ),
+      error: (error, stackTrace) => Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.error, size: 64, color: Colors.red),
+            const SizedBox(height: 16),
+            Text('Error: $error'),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () => ref.invalidate(todoListProvider),
+              child: const Text('Retry'),
+            ),
+          ],
+        ),
+      ),
+      data: (todos) => _buildTodoListView(todos, ref),
+    );
+  }
+
+  Widget _buildTodoListView(List<dynamic> todos, WidgetRef ref) {
+    if (todos.isEmpty) {
+      return _buildEmptyState();
+    }
+
     return ListView.builder(
       padding: const EdgeInsets.all(8),
       itemCount: todos.length,
       itemBuilder: (BuildContext context, int index) {
         final todo = todos[index];
-
-        return Card(
-          margin: EdgeInsets.symmetric(vertical: 4),
-          child: ListTile(
-            leading: Checkbox(
-              value: todo.completed,
-              onChanged: (value) {
-                ref.read(todoListProvider.notifier).toggleTodo(todo.id);
-              },
-            ),
-            title: Text(
-              todo.title,
-              style: TextStyle(
-                decoration:
-                    todo.completed ? TextDecoration.lineThrough : null,
-              ),
-            ),
-            trailing: IconButton(
-              icon: Icon(Icons.delete, color: Colors.red),
-              onPressed: () {
-                ref.read(todoListProvider.notifier).deleteTodo(todo.id);
-              },
-            ),
-          ),
-        );
+        return TodoItemWidget(todo: todo, ref: ref);
       },
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.task_alt, size: 64, color: Colors.grey),
+          SizedBox(height: 16),
+          Text(
+            'No todos yet',
+            style: TextStyle(fontSize: 18, color: Colors.grey),
+          ),
+          SizedBox(height: 8),
+          Text(
+            'Tap "Add new todo" to create your first task',
+            style: TextStyle(color: Colors.grey),
+          ),
+        ],
+      ),
     );
   }
 }

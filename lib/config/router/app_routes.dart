@@ -3,6 +3,7 @@ class AppRoutes {
 
   static String todo = '/todo';
   static String newTodo = '/todo/new';
+  static String editTodo = '/todo/edit';
 
 
   static String search = '/search';

@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:learn_riverpod/features/todo/presentation/providers/new_todo_form_provider.dart';
+import 'package:learn_riverpod/features/todo/presentation/providers/todo_form_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/submit_todo_provider.dart';
 
-class NewTodoFormService {
+class TodoFormService {
   final WidgetRef ref;
   final GlobalKey<FormState> formKey;
 
-  NewTodoFormService(this.ref, this.formKey);
+  TodoFormService(this.ref, this.formKey);
 
   Future<bool> submitForm() async {
     if (!formKey.currentState!.validate()) {
       return false;
     }
 
-    final formState = ref.read(newTodoFormProvider);
+    final formState = ref.read(todoFormProvider);
 
     await ref
         .read(submitTodoProvider.notifier)

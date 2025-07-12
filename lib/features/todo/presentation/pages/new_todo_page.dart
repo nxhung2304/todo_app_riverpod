@@ -1,9 +1,3 @@
-// 1. Architecture & State Management
-//
-// Tạo Form State Provider để quản lý toàn bộ form state thay vì dùng nhiều useState
-// Implement Loading/Error states khi submit todo
-// Tách Form Logic ra khỏi UI component
-//
 // 2. UX/UI Improvements
 //
 // Thêm Loading indicator khi submit
@@ -69,13 +63,13 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/features/app/presentation/widgets/shared_app_bar.dart';
 import 'package:learn_riverpod/features/app/presentation/widgets/shared_bottom_nav.dart';
-import 'package:learn_riverpod/features/todo/presentation/providers/new_todo_form_provider.dart';
+import 'package:learn_riverpod/features/todo/presentation/providers/todo_form_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/submit_todo_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/services/new_todo_form_service.dart';
 import 'package:learn_riverpod/features/todo/presentation/validators/todo_validators.dart';
-import 'package:learn_riverpod/features/todo/presentation/widgets/date_form_field.dart';
-import 'package:learn_riverpod/features/todo/presentation/widgets/input_form_field.dart';
-import 'package:learn_riverpod/features/todo/presentation/widgets/time_form_field.dart';
+import 'package:learn_riverpod/features/todo/presentation/widgets/new/date_form_field.dart';
+import 'package:learn_riverpod/features/todo/presentation/widgets/new/input_form_field.dart';
+import 'package:learn_riverpod/features/todo/presentation/widgets/new/time_form_field.dart';
 
 class NewTodoPage extends HookConsumerWidget {
   const NewTodoPage({super.key});
@@ -83,9 +77,9 @@ class NewTodoPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = useMemoized(() => GlobalKey<FormState>());
-    final formService = useMemoized(() => NewTodoFormService(ref, formKey));
+    final formService = useMemoized(() => TodoFormService(ref, formKey));
 
-    final formState = ref.watch(newTodoFormProvider);
+    final formState = ref.watch(todoFormProvider);
     final submitState = ref.watch(submitTodoProvider);
 
     ref.listen(submitTodoProvider, (prev, next) {
@@ -156,7 +150,7 @@ class NewTodoPage extends HookConsumerWidget {
           initialValue: currentTitle,
           onChanged:
               (value) =>
-                  ref.read(newTodoFormProvider.notifier).updateTitle(value),
+                  ref.read(todoFormProvider.notifier).updateTitle(value),
         ),
       ],
     );
@@ -176,7 +170,7 @@ class NewTodoPage extends HookConsumerWidget {
           labelText: "",
           validator: TodoValidators.validateDate,
           onChanged:
-              (date) => ref.read(newTodoFormProvider.notifier).updateDate(date),
+              (date) => ref.read(todoFormProvider.notifier).updateDate(date),
         ),
       ],
     );
@@ -196,7 +190,7 @@ class NewTodoPage extends HookConsumerWidget {
           maxLines: 6,
           onChanged:
               (value) =>
-                  ref.read(newTodoFormProvider.notifier).updateNotes(value),
+                  ref.read(todoFormProvider.notifier).updateNotes(value),
         ),
       ],
     );
@@ -215,7 +209,7 @@ class NewTodoPage extends HookConsumerWidget {
           labelText: "",
           validator: TodoValidators.validateTime,
           onChanged:
-              (time) => ref.read(newTodoFormProvider.notifier).updateTime(time),
+              (time) => ref.read(todoFormProvider.notifier).updateTime(time),
         ),
       ],
     );
@@ -223,7 +217,7 @@ class NewTodoPage extends HookConsumerWidget {
 
   Widget _buildSubmitButton(
     WidgetRef ref,
-    NewTodoFormService formService,
+    TodoFormService formService,
     AsyncValue<void> submitState,
   ) {
     return SizedBox(

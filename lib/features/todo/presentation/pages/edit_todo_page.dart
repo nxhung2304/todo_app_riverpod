@@ -1,0 +1,230 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:learn_riverpod/features/app/presentation/widgets/shared_app_bar.dart';
+import 'package:learn_riverpod/features/app/presentation/widgets/shared_bottom_nav.dart';
+import 'package:learn_riverpod/features/todo/data/models/todo.dart';
+import 'package:learn_riverpod/features/todo/presentation/providers/submit_todo_provider.dart';
+import 'package:learn_riverpod/features/todo/presentation/providers/todo_form_provider.dart';
+import 'package:learn_riverpod/features/todo/presentation/providers/todo_list_provider.dart';
+import 'package:learn_riverpod/features/todo/presentation/services/new_todo_form_service.dart';
+import 'package:learn_riverpod/features/todo/presentation/validators/todo_validators.dart';
+import 'package:learn_riverpod/features/todo/presentation/widgets/new/date_form_field.dart';
+import 'package:learn_riverpod/features/todo/presentation/widgets/new/input_form_field.dart';
+import 'package:learn_riverpod/features/todo/presentation/widgets/new/time_form_field.dart';
+
+class EditTodoPage extends HookConsumerWidget {
+  final int todoId;
+
+  const EditTodoPage({super.key, required this.todoId});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final todoListAsync = ref.watch(todoListProvider);
+    return todoListAsync.when(
+      loading:
+          () =>
+              const Scaffold(body: Center(child: CircularProgressIndicator())),
+      error:
+          (error, stackTree) => Scaffold(
+            appBar: const SharedAppBar(title: 'Error'),
+            body: Center(child: Text('Error: $error')),
+          ),
+      data: (todos) {
+        final todo = todos.firstWhere(
+          (todo) => todo.id == todoId,
+          orElse: () => throw Exception('Todo not found'),
+        );
+
+        return _buildEditForm(context, ref, todo);
+      },
+    );
+  }
+
+  Widget _buildTodoTitle(WidgetRef ref, String currentTitle) {
+    final titleKey = "title_field_$currentTitle";
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Title",
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+        ),
+        InputFormField(
+          key: ValueKey(titleKey),
+          validator: TodoValidators.validateTitle,
+          initialValue: currentTitle,
+          onChanged:
+              (value) => ref.read(todoFormProvider.notifier).updateTitle(value),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDateField(WidgetRef ref, DateTime? selectedDate) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Date", style: TextStyle(fontSize: 14)),
+        DateFormField(
+          initialDate: selectedDate,
+          labelText: "",
+          validator: TodoValidators.validateDate,
+          onChanged:
+              (date) => ref.read(todoFormProvider.notifier).updateDate(date),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildNotesField(WidgetRef ref, String currentNotes) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Notes",
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+        ),
+        InputFormField(
+          initialValue: currentNotes,
+          validator: TodoValidators.validateNotes,
+          maxLines: 6,
+          onChanged:
+              (value) => ref.read(todoFormProvider.notifier).updateNotes(value),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTimeField(WidgetRef ref, TimeOfDay? selectedTime) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Time",
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+        ),
+        TimeFormField(
+          labelText: "",
+          validator: TodoValidators.validateTime,
+          onChanged:
+              (time) => ref.read(todoFormProvider.notifier).updateTime(time),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSubmitButton(
+    WidgetRef ref,
+    TodoFormService formService,
+    AsyncValue<void> submitState,
+  ) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () async {
+          formService.submitForm();
+          final formKey = useMemoized(() => GlobalKey<FormState>());
+          if (!formKey.currentState!.validate()) {
+            return;
+          }
+
+          final formState = ref.read(todoFormProvider);
+
+          await ref
+              .read(submitTodoProvider.notifier)
+              .submit(
+                title: formState.title,
+                date: formState.selectedDate,
+                time: formState.selectedTime,
+                notes: formState.notes,
+              );
+        },
+        child:
+            submitState.isLoading
+                ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                    SizedBox(width: 8),
+                    Text("Editing..."),
+                  ],
+                )
+                : Text("Save"),
+      ),
+    );
+  }
+
+  Widget _buildEditForm(BuildContext context, WidgetRef ref, Todo todo) {
+    final formKey = useMemoized(() => GlobalKey<FormState>());
+    final formService = useMemoized(() => TodoFormService(ref, formKey));
+
+    final formState = ref.watch(todoFormProvider);
+    final submitState = ref.watch(submitTodoProvider);
+
+    useEffect(() {
+      Future.microtask(() {
+        ref.read(todoFormProvider.notifier).loadTodo(todo);
+      });
+      return null;
+    }, [todo.id]);
+    ref.listen(submitTodoProvider, (prev, next) {
+      next.when(
+        data: (_) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Todo đã được tạo thành công!"),
+              backgroundColor: Colors.green,
+            ),
+          );
+          context.pop();
+        },
+        error: (error, _) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Lỗi: ${error.toString()}"),
+              backgroundColor: Colors.red,
+            ),
+          );
+        },
+        loading: () {
+          CircularProgressIndicator();
+        },
+      );
+    });
+
+    return Scaffold(
+      appBar: SharedAppBar(title: 'Edit todo'),
+      bottomNavigationBar: SharedBottomNav(currentRoute: '/todo'),
+      body: Form(
+        key: formKey,
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              _buildTodoTitle(ref, formState.title),
+              SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(child: _buildDateField(ref, formState.selectedDate)),
+                  SizedBox(width: 16),
+                  Expanded(child: _buildTimeField(ref, formState.selectedTime)),
+                ],
+              ),
+              SizedBox(height: 16),
+              _buildNotesField(ref, formState.notes),
+              SizedBox(height: 24),
+              _buildSubmitButton(ref, formService, submitState),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

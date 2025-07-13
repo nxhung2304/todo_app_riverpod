@@ -33,8 +33,35 @@ class TodoValidators {
     return null;
   }
 
+  static String? Function(TimeOfDay?) validateTimeWithDate(
+    DateTime? selectedDate,
+  ) {
+    return (TimeOfDay? value) {
+      if (selectedDate != null && value == null) {
+        return "Vui lòng chọn thời gian khi đã chọn ngày";
+      }
+
+      if (selectedDate != null && value != null) {
+        final now = DateTime.now();
+        final selectedDateTime = DateTime(
+          selectedDate.year,
+          selectedDate.month,
+          selectedDate.day,
+          value.hour,
+          value.minute,
+        );
+
+        if (selectedDateTime.isBefore(now)) {
+          return "Thời gian không được trong quá khứ";
+        }
+      }
+
+      return null;
+    };
+  }
+
   static String? validateNotes(String? notes) {
-    if (notes == null ) {
+    if (notes == null) {
       return null;
     }
 

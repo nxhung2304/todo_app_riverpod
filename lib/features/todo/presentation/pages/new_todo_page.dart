@@ -1,16 +1,3 @@
-// 2. UX/UI Improvements
-//
-// Confirm dialog khi user back mà chưa save
-// Keyboard shortcuts (Ctrl+S to save)
-// Focus management tự động chuyển field
-//
-// 3. Validation Enhancements
-//
-// Real-time validation thay vì chỉ validate khi submit
-// Auto-format date/time input
-// Smart defaults (default time = current time + 1 hour)
-// Conditional validation (time required nếu có date)
-//
 // 4. Performance Optimizations
 //
 // Memoize các widget builder methods
@@ -59,9 +46,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:learn_riverpod/features/app/presentation/widgets/shared_app_bar.dart';
-import 'package:learn_riverpod/features/app/presentation/widgets/shared_bottom_nav.dart';
-import 'package:learn_riverpod/features/todo/data/models/todo_form_state.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/todo_form_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/submit_todo_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/services/new_todo_form_service.dart';
@@ -69,6 +53,8 @@ import 'package:learn_riverpod/features/todo/presentation/validators/todo_valida
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/date_form_field.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/input_form_field.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/time_form_field.dart';
+import 'package:learn_riverpod/shared/presentation/widgets/shared_app_bar.dart';
+import 'package:learn_riverpod/shared/presentation/widgets/shared_bottom_nav.dart';
 
 class NewTodoPage extends HookConsumerWidget {
   const NewTodoPage({super.key});
@@ -183,8 +169,10 @@ class NewTodoPage extends HookConsumerWidget {
         InputFormField(
           validator: TodoValidators.validateTitle,
           initialValue: currentTitle,
-          onChanged:
-              (value) => ref.read(todoFormProvider.notifier).updateTitle(value),
+          onChanged: (value) {
+            ref.read(todoFormProvider.notifier).updateTitle(value);
+          },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
         ),
       ],
     );
@@ -195,7 +183,7 @@ class NewTodoPage extends HookConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Ngày",
+          "Date",
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         SizedBox(height: 8),
@@ -230,17 +218,20 @@ class NewTodoPage extends HookConsumerWidget {
   }
 
   Widget _buildTimeField(WidgetRef ref, TimeOfDay? selectedTime) {
+    final formState = ref.watch(todoFormProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Thời gian",
+          "Time",
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         SizedBox(height: 8),
         TimeFormField(
           labelText: "",
-          validator: TodoValidators.validateTime,
+          validator: TodoValidators.validateTimeWithDate(
+            formState.selectedDate,
+          ),
           onChanged:
               (time) => ref.read(todoFormProvider.notifier).updateTime(time),
         ),

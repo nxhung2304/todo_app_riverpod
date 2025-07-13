@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/config/router/app_routes.dart';
-import 'package:learn_riverpod/features/app/presentation/widgets/shared_app_bar.dart';
-import 'package:learn_riverpod/features/app/presentation/widgets/shared_bottom_nav.dart';
+import 'package:learn_riverpod/features/todo/constants/todo_strings.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/todo_list_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/todos/todo_item_widget.dart';
+import 'package:learn_riverpod/shared/presentation/widgets/shared_app_bar.dart';
+import 'package:learn_riverpod/shared/presentation/widgets/shared_bottom_nav.dart';
 
 class MyTodoPage extends HookConsumerWidget {
   const MyTodoPage({super.key});
@@ -15,14 +16,12 @@ class MyTodoPage extends HookConsumerWidget {
     final todosAsync = ref.watch(todoListProvider);
 
     return Scaffold(
-      appBar: const SharedAppBar(title: 'My todo'),
+      appBar: const SharedAppBar(title: TodoStrings.title),
       bottomNavigationBar: const SharedBottomNav(currentRoute: '/todo'),
       body: Column(
         children: [
           _buildAddButton(context),
-          Expanded(
-            child: _buildTodoList(todosAsync, ref),
-          ),
+          Expanded(child: _buildTodoList(todosAsync, ref)),
         ],
       ),
     );
@@ -33,31 +32,30 @@ class MyTodoPage extends HookConsumerWidget {
       padding: const EdgeInsets.all(16.0),
       child: ElevatedButton(
         onPressed: () => context.push(AppRoutes.newTodo),
-        child: const Text("Add new todo"),
+        child: const Text(TodoStrings.newTodo),
       ),
     );
   }
 
   Widget _buildTodoList(AsyncValue<List<dynamic>> todosAsync, WidgetRef ref) {
     return todosAsync.when(
-      loading: () => const Center(
-        child: CircularProgressIndicator(),
-      ),
-      error: (error, stackTrace) => Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.error, size: 64, color: Colors.red),
-            const SizedBox(height: 16),
-            Text('Error: $error'),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () => ref.invalidate(todoListProvider),
-              child: const Text('Retry'),
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error:
+          (error, stackTrace) => Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.error, size: 64, color: Colors.red),
+                const SizedBox(height: 16),
+                Text('Error: $error'),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () => ref.invalidate(todoListProvider),
+                  child: const Text('Retry'),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
       data: (todos) => _buildTodoListView(todos, ref),
     );
   }
@@ -85,14 +83,11 @@ class MyTodoPage extends HookConsumerWidget {
           Icon(Icons.task_alt, size: 64, color: Colors.grey),
           SizedBox(height: 16),
           Text(
-            'No todos yet',
+            TodoStrings.noTodosYet,
             style: TextStyle(fontSize: 18, color: Colors.grey),
           ),
           SizedBox(height: 8),
-          Text(
-            'Tap "Add new todo" to create your first task',
-            style: TextStyle(color: Colors.grey),
-          ),
+          Text(TodoStrings.newTodoNote, style: TextStyle(color: Colors.grey)),
         ],
       ),
     );

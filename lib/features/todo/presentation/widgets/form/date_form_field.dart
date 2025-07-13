@@ -33,6 +33,7 @@ class _DateFormFieldState extends State<DateFormField> {
     return FormField<DateTime>(
       initialValue: _selectedDate,
       validator: widget.validator,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       builder: (FormFieldState<DateTime> field) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -7,6 +7,7 @@ class InputFormField extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final String? initialValue;
   final ValueChanged<String>? onChanged;
+  final AutovalidateMode? autovalidateMode;
 
   const InputFormField({
     super.key,
@@ -16,14 +17,19 @@ class InputFormField extends StatelessWidget {
     this.hintText,
     this.labelText,
     this.maxLines = 1,
+    this.autovalidateMode,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTapOutside: (event) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       initialValue: initialValue,
       onChanged: onChanged,
       maxLines: maxLines,
+      autovalidateMode: autovalidateMode,
       decoration: InputDecoration(
         hintText: hintText,
         labelText: labelText,

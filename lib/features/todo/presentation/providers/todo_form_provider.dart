@@ -12,6 +12,15 @@ class TodoForm extends _$TodoForm {
     return TodoFormState();
   }
 
+  bool isUnsaved() {
+    if (state.title.isNotEmpty) return true;
+    if (state.notes.isNotEmpty) return true;
+    if (state.selectedDate != null) return true;
+    if (state.selectedTime != null) return true;
+
+    return false;
+  }
+
   void loadTodo(Todo todo) {
     state = TodoFormState.fromTodo(todo);
   }

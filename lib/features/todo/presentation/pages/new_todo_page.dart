@@ -1,7 +1,5 @@
 // 2. UX/UI Improvements
 //
-// Thêm Loading indicator khi submit
-// Auto-save draft khi user gõ
 // Confirm dialog khi user back mà chưa save
 // Keyboard shortcuts (Ctrl+S to save)
 // Focus management tự động chuyển field
@@ -63,13 +61,14 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/features/app/presentation/widgets/shared_app_bar.dart';
 import 'package:learn_riverpod/features/app/presentation/widgets/shared_bottom_nav.dart';
+import 'package:learn_riverpod/features/todo/data/models/todo_form_state.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/todo_form_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/submit_todo_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/services/new_todo_form_service.dart';
 import 'package:learn_riverpod/features/todo/presentation/validators/todo_validators.dart';
-import 'package:learn_riverpod/features/todo/presentation/widgets/new/date_form_field.dart';
-import 'package:learn_riverpod/features/todo/presentation/widgets/new/input_form_field.dart';
-import 'package:learn_riverpod/features/todo/presentation/widgets/new/time_form_field.dart';
+import 'package:learn_riverpod/features/todo/presentation/widgets/form/date_form_field.dart';
+import 'package:learn_riverpod/features/todo/presentation/widgets/form/input_form_field.dart';
+import 'package:learn_riverpod/features/todo/presentation/widgets/form/time_form_field.dart';
 
 class NewTodoPage extends HookConsumerWidget {
   const NewTodoPage({super.key});
@@ -108,32 +107,68 @@ class NewTodoPage extends HookConsumerWidget {
       );
     });
 
-    return Scaffold(
-      appBar: SharedAppBar(title: 'New todo'),
-      bottomNavigationBar: SharedBottomNav(currentRoute: '/todo'),
-      body: Form(
-        key: formKey,
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              _buildTodoTitle(ref, formState.title),
-              SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(child: _buildDateField(ref, formState.selectedDate)),
-                  SizedBox(width: 16),
-                  Expanded(child: _buildTimeField(ref, formState.selectedTime)),
-                ],
-              ),
-              SizedBox(height: 16),
-              _buildNotesField(ref, formState.notes),
-              SizedBox(height: 24),
-              _buildSubmitButton(ref, formService, submitState),
-            ],
+    return WillPopScope(
+      child: Scaffold(
+        appBar: SharedAppBar(title: 'New todo'),
+        bottomNavigationBar: SharedBottomNav(currentRoute: '/todo'),
+        body: Form(
+          key: formKey,
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                _buildTodoTitle(ref, formState.title),
+                SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _buildDateField(ref, formState.selectedDate),
+                    ),
+                    SizedBox(width: 16),
+                    Expanded(
+                      child: _buildTimeField(ref, formState.selectedTime),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16),
+                _buildNotesField(ref, formState.notes),
+                SizedBox(height: 24),
+                _buildSubmitButton(ref, formService, submitState, formKey),
+              ],
+            ),
           ),
         ),
       ),
+      onWillPop: () async {
+        final isUnsaved = ref.read(todoFormProvider.notifier).isUnsaved();
+        if (!isUnsaved) {
+          return true;
+        }
+
+        final willPop = await _showExitDialog(context);
+        return willPop ?? false;
+      },
+    );
+  }
+
+  Future<bool?> _showExitDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      builder:
+          (BuildContext context) => AlertDialog(
+            title: Text('Confirm exit'),
+            content: Text('Are you want to exit? Data unsave will be lost.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text('OK'),
+              ),
+            ],
+          ),
     );
   }
 
@@ -149,8 +184,7 @@ class NewTodoPage extends HookConsumerWidget {
           validator: TodoValidators.validateTitle,
           initialValue: currentTitle,
           onChanged:
-              (value) =>
-                  ref.read(todoFormProvider.notifier).updateTitle(value),
+              (value) => ref.read(todoFormProvider.notifier).updateTitle(value),
         ),
       ],
     );
@@ -189,8 +223,7 @@ class NewTodoPage extends HookConsumerWidget {
           validator: TodoValidators.validateNotes,
           maxLines: 6,
           onChanged:
-              (value) =>
-                  ref.read(todoFormProvider.notifier).updateNotes(value),
+              (value) => ref.read(todoFormProvider.notifier).updateNotes(value),
         ),
       ],
     );
@@ -219,12 +252,27 @@ class NewTodoPage extends HookConsumerWidget {
     WidgetRef ref,
     TodoFormService formService,
     AsyncValue<void> submitState,
+    GlobalKey<FormState> formKey,
   ) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {
-          formService.submitForm();
+        onPressed: () async {
+          if (!formKey.currentState!.validate()) {
+            print("Todo invalid");
+            return;
+          }
+
+          final formState = ref.read(todoFormProvider);
+
+          await ref
+              .read(submitTodoProvider.notifier)
+              .submit(
+                title: formState.title,
+                date: formState.selectedDate,
+                time: formState.selectedTime,
+                notes: formState.notes,
+              );
         },
         child:
             submitState.isLoading

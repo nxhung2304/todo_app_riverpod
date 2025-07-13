@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TodoValidators {
   static String? validateTitle(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return "Vui lòng nhập tiêu đề todo";
+      return "Vui lòng nhập tiêu đề";
     }
     if (value.trim().length < 3) {
       return "Tiêu đề phải có ít nhất 3 ký tự";

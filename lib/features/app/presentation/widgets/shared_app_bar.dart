@@ -19,6 +19,7 @@ class SharedAppBar extends ConsumerWidget implements PreferredSizeWidget {
       title: Center(child: Text(title)),
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
+      
     );
   }
 

@@ -10,9 +10,9 @@ import 'package:learn_riverpod/features/todo/presentation/providers/todo_form_pr
 import 'package:learn_riverpod/features/todo/presentation/providers/todo_list_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/services/new_todo_form_service.dart';
 import 'package:learn_riverpod/features/todo/presentation/validators/todo_validators.dart';
-import 'package:learn_riverpod/features/todo/presentation/widgets/new/date_form_field.dart';
-import 'package:learn_riverpod/features/todo/presentation/widgets/new/input_form_field.dart';
-import 'package:learn_riverpod/features/todo/presentation/widgets/new/time_form_field.dart';
+import 'package:learn_riverpod/features/todo/presentation/widgets/form/date_form_field.dart';
+import 'package:learn_riverpod/features/todo/presentation/widgets/form/input_form_field.dart';
+import 'package:learn_riverpod/features/todo/presentation/widgets/form/time_form_field.dart';
 
 class EditTodoPage extends HookConsumerWidget {
   final int todoId;

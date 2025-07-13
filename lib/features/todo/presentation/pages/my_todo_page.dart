@@ -5,8 +5,7 @@ import 'package:learn_riverpod/config/router/app_routes.dart';
 import 'package:learn_riverpod/features/todo/constants/todo_strings.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/todo_list_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/todos/todo_item_widget.dart';
-import 'package:learn_riverpod/shared/presentation/widgets/shared_app_bar.dart';
-import 'package:learn_riverpod/shared/presentation/widgets/shared_bottom_nav.dart';
+import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
 
 class MyTodoPage extends HookConsumerWidget {
   const MyTodoPage({super.key});
@@ -15,15 +14,15 @@ class MyTodoPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final todosAsync = ref.watch(todoListProvider);
 
-    return Scaffold(
-      appBar: const SharedAppBar(title: TodoStrings.title),
-      bottomNavigationBar: const SharedBottomNav(currentRoute: '/todo'),
+    return SharedScaffold(
       body: Column(
         children: [
           _buildAddButton(context),
           Expanded(child: _buildTodoList(todosAsync, ref)),
         ],
       ),
+      title: TodoStrings.title,
+      currentRoute: '/todo',
     );
   }
 

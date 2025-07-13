@@ -46,6 +46,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:learn_riverpod/features/todo/constants/new_todo_strings.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/todo_form_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/submit_todo_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/services/new_todo_form_service.dart';
@@ -53,8 +54,7 @@ import 'package:learn_riverpod/features/todo/presentation/validators/todo_valida
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/date_form_field.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/input_form_field.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/time_form_field.dart';
-import 'package:learn_riverpod/shared/presentation/widgets/shared_app_bar.dart';
-import 'package:learn_riverpod/shared/presentation/widgets/shared_bottom_nav.dart';
+import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
 
 class NewTodoPage extends HookConsumerWidget {
   const NewTodoPage({super.key});
@@ -94,9 +94,9 @@ class NewTodoPage extends HookConsumerWidget {
     });
 
     return WillPopScope(
-      child: Scaffold(
-        appBar: SharedAppBar(title: 'New todo'),
-        bottomNavigationBar: SharedBottomNav(currentRoute: '/todo'),
+      child: SharedScaffold(
+        title: NewTodoStrings.title,
+        currentRoute: '/todo',
         body: Form(
           key: formKey,
           child: SingleChildScrollView(

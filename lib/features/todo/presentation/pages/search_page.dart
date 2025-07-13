@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:learn_riverpod/config/router/app_routes.dart';
-import 'package:learn_riverpod/shared/presentation/widgets/shared_app_bar.dart';
-import 'package:learn_riverpod/shared/presentation/widgets/shared_bottom_nav.dart';
+import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
 
-    @override
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: SharedAppBar(title: 'Search Page'),
+    return SharedScaffold(
+      title: "Search",
+      currentRoute: '/search',
       body: Center(child: Text('Search')),
-      bottomNavigationBar: SharedBottomNav(currentRoute: AppRoutes.search),
     );
   }
 }

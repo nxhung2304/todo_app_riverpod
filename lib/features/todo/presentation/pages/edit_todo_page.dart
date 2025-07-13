@@ -12,8 +12,8 @@ import 'package:learn_riverpod/features/todo/presentation/validators/todo_valida
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/date_form_field.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/input_form_field.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/time_form_field.dart';
-import 'package:learn_riverpod/shared/presentation/widgets/shared_app_bar.dart';
-import 'package:learn_riverpod/shared/presentation/widgets/shared_bottom_nav.dart';
+import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
+import 'package:learn_riverpod/shared/widgets/shared_app_bar.dart';
 
 class EditTodoPage extends HookConsumerWidget {
   final int todoId;
@@ -200,9 +200,8 @@ class EditTodoPage extends HookConsumerWidget {
       );
     });
 
-    return Scaffold(
-      appBar: SharedAppBar(title: EditTodoStrings.title),
-      bottomNavigationBar: SharedBottomNav(currentRoute: '/todo'),
+    return SharedScaffold(
+      title: EditTodoStrings.title,
       body: Form(
         key: formKey,
         child: SingleChildScrollView(
@@ -226,6 +225,8 @@ class EditTodoPage extends HookConsumerWidget {
           ),
         ),
       ),
+      currentRoute: '/todos',
     );
+
   }
 }

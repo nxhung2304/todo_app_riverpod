@@ -3,25 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:learn_riverpod/app.dart';
-import 'package:learn_riverpod/config/localization/supported_locales.dart';
-import 'package:learn_riverpod/core/services/storage_service.dart';
-
-Future<void> injection() async {
-  await EasyLocalization.ensureInitialized();
-  await StorageService().init();
-}
+import 'package:learn_riverpod/config/localization/localization_config.dart';
+import 'package:learn_riverpod/core/di/injection.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await injection();
+  try {
+    await AppInjection.init();
+  } catch (e) {
+    print('App initialization failed: $e');
+  }
 
   runApp(
     ProviderScope(
       child: EasyLocalization(
-        supportedLocales: SupportedLocales.locales,
-        path: 'assets/translations',
-        fallbackLocale: SupportedLocales.defaultLocale,
+        supportedLocales: LocalizationConfig.supportedLocales,
+        path: LocalizationConfig.translationsPath,
+        fallbackLocale: LocalizationConfig.fallbackLocale,
         child: App(),
       ),
     ),

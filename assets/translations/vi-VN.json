@@ -41,6 +41,8 @@
    "title": "Tìm kiếm"
  },
  "settings": {
-   "title": "Cài đặt"
+   "title": "Cài đặt",
+    "select_language": "Chọn ngôn ngữ",
+    "language_changed": "Đã thay đổi ngôn ngữ"
  }
 }

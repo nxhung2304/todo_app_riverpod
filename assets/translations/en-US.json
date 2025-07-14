@@ -41,6 +41,8 @@
     "title": "Search"
   },
   "settings": {
-    "title": "Settings"
+    "title": "Settings",
+    "select_language": "Select Language",
+    "language_changed": "Language changed"
   }
 }

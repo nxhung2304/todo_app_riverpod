@@ -1,9 +1,8 @@
-class TodoStrings {
-  static const String newTodo = 'New todo';
-  static const String title = 'My todos';
-  static const String save = 'Save';
-  static const String creating = 'Creating...';
+import 'package:easy_localization/easy_localization.dart';
 
-  static const String noTodosYet = "No todos yet";
-  static const String newTodoNote = 'Tap "Add new todo" to create your first task';
+class TodoStrings {
+  static String get title => "todo.title".tr();
+  static String get newTodo => "todo.new_todo".tr();
+  static String get noTodosYet => "todo.no_todos_yet".tr();
+  static String get needNewTodo => "todo.need_new_todo".tr();
 }

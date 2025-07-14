@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+
 class HomeStrings {
-  static const String title = 'Home page';
+  static String get title => "home.title".tr();
 }

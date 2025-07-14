@@ -1,0 +1,39 @@
+{
+ "common": {
+   "save": "Lưu",
+   "cancel": "Hủy",
+   "ok": "Đồng ý",
+   "error": "Lỗi",
+   "loading": "Đang tải...",
+   "retry": "Thử lại",
+   "delete": "Xóa",
+   "edit": "Sửa",
+   "confirm": "Xác nhận",
+   "yes": "Có",
+   "no": "Không"
+ },
+ "todo": {
+   "title": "Danh sách công việc",
+   "new_todo": "Công việc mới",
+   "no_todos_yet": "Chưa có công việc nào",
+   "need_new_todo": "Cần tạo công việc mới",
+   "new": {
+     "title": "Trang tạo công việc mới",
+     "created_todo_success": "Tạo công việc thành công"
+   },
+   "edit": {
+     "title": "Trang chỉnh sửa công việc",
+     "todo_not_found": "Không tìm thấy công việc",
+     "editting": "Đang chỉnh sửa"
+   }
+ },
+ "home": {
+   "title": "Trang chủ"
+ },
+ "search": {
+   "title": "Tìm kiếm"
+ },
+ "settings": {
+   "title": "Cài đặt"
+ }
+}

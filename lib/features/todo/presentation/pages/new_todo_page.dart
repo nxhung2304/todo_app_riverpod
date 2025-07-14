@@ -54,13 +54,14 @@ import 'package:learn_riverpod/features/todo/presentation/validators/todo_valida
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/date_form_field.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/input_form_field.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/time_form_field.dart';
+import 'package:learn_riverpod/shared/widgets/base/localized_cosumer_widget.dart';
 import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
 
-class NewTodoPage extends HookConsumerWidget {
+class NewTodoPage extends LocalizedConsumerWidget {
   const NewTodoPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget buildLocalized(BuildContext context, WidgetRef ref) {
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final formService = useMemoized(() => TodoFormService(ref, formKey));
 
@@ -72,12 +73,12 @@ class NewTodoPage extends HookConsumerWidget {
         data: (_) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text("Todo đã được tạo thành công!"),
+              content: Text(NewTodoStrings.createdTodo),
+              // content: Text(context.tr("todo.new.created_todo")),
               backgroundColor: Colors.green,
             ),
           );
           context.pop();
-          // context.go(AppRoutes.home);
         },
         error: (error, _) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -96,6 +97,7 @@ class NewTodoPage extends HookConsumerWidget {
     return WillPopScope(
       child: SharedScaffold(
         title: NewTodoStrings.title,
+        // title: context.tr("todo.new.title"),
         currentRoute: '/todo',
         body: Form(
           key: formKey,

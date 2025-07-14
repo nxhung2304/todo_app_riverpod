@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:learn_riverpod/config/localization/locale_provider.dart';
 import 'package:learn_riverpod/shared/widgets/navigation/shared_app_bar.dart';
 import 'package:learn_riverpod/shared/widgets/navigation/shared_bottom_nav.dart';
 
-class SharedScaffold extends StatelessWidget {
+class SharedScaffold extends ConsumerWidget {
   final String title;
   final Widget body;
   final String currentRoute;
@@ -23,15 +25,13 @@ class SharedScaffold extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(localeNotifierProvider);
+
     return Scaffold(
-      appBar: showAppBar ? SharedAppBar(
-        title: title,
-        // actions: appBarActions,
-      ) : null,
-      bottomNavigationBar: showBottomNav ? SharedBottomNav(
-        currentRoute: currentRoute,
-      ) : null,
+      appBar: showAppBar ? SharedAppBar(title: title) : null,
+      bottomNavigationBar:
+          showBottomNav ? SharedBottomNav(currentRoute: currentRoute) : null,
       body: body,
       floatingActionButton: floatingActionButton,
     );

@@ -12,16 +12,17 @@ import 'package:learn_riverpod/features/todo/presentation/validators/todo_valida
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/date_form_field.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/input_form_field.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/time_form_field.dart';
+import 'package:learn_riverpod/shared/widgets/base/localized_cosumer_widget.dart';
 import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
-import 'package:learn_riverpod/shared/widgets/shared_app_bar.dart';
+import 'package:learn_riverpod/shared/widgets/navigation/shared_app_bar.dart';
 
-class EditTodoPage extends HookConsumerWidget {
+class EditTodoPage extends LocalizedConsumerWidget {
   final int todoId;
 
   const EditTodoPage({super.key, required this.todoId});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget buildLocalized(BuildContext context, WidgetRef ref) {
     final todoListAsync = ref.watch(todoListProvider);
     return todoListAsync.when(
       loading:
@@ -36,31 +37,11 @@ class EditTodoPage extends HookConsumerWidget {
         final todo = todos.firstWhere(
           (todo) => todo.id == todoId,
           orElse: () => throw Exception(EditTodoStrings.todoNotFound),
+          // orElse: () => throw Exception(context.tr("todo.edit.todo_not_found")),
         );
 
         return _buildEditForm(context, ref, todo);
       },
-    );
-  }
-
-  Widget _buildTodoTitle(WidgetRef ref, String currentTitle) {
-    final titleKey = "title_field_$currentTitle";
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Title",
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-        ),
-        InputFormField(
-          key: ValueKey(titleKey),
-          validator: TodoValidators.validateTitle,
-          initialValue: currentTitle,
-          onChanged:
-              (value) => ref.read(todoFormProvider.notifier).updateTitle(value),
-        ),
-      ],
     );
   }
 
@@ -77,88 +58,6 @@ class EditTodoPage extends HookConsumerWidget {
               (date) => ref.read(todoFormProvider.notifier).updateDate(date),
         ),
       ],
-    );
-  }
-
-  Widget _buildNotesField(WidgetRef ref, String currentNotes) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Notes",
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-        ),
-        InputFormField(
-          initialValue: currentNotes,
-          validator: TodoValidators.validateNotes,
-          maxLines: 6,
-          onChanged:
-              (value) => ref.read(todoFormProvider.notifier).updateNotes(value),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTimeField(WidgetRef ref, TimeOfDay? selectedTime) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Time",
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-        ),
-        TimeFormField(
-          labelText: "",
-          validator: TodoValidators.validateTime,
-          onChanged:
-              (time) => ref.read(todoFormProvider.notifier).updateTime(time),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSubmitButton(
-    WidgetRef ref,
-    TodoFormService formService,
-    AsyncValue<void> submitState,
-  ) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () async {
-          formService.submitForm();
-          final formKey = useMemoized(() => GlobalKey<FormState>());
-          if (!formKey.currentState!.validate()) {
-            return;
-          }
-
-          final formState = ref.read(todoFormProvider);
-
-          await ref
-              .read(submitTodoProvider.notifier)
-              .submit(
-                title: formState.title,
-                date: formState.selectedDate,
-                time: formState.selectedTime,
-                notes: formState.notes,
-              );
-        },
-        child:
-            submitState.isLoading
-                ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 16,
-                      height: 16,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    ),
-                    SizedBox(width: 8),
-                    Text(EditTodoStrings.editting),
-                  ],
-                )
-                : Text("Save"),
-      ),
     );
   }
 
@@ -202,6 +101,7 @@ class EditTodoPage extends HookConsumerWidget {
 
     return SharedScaffold(
       title: EditTodoStrings.title,
+      // title: context.tr("todo.edit.title"),
       body: Form(
         key: formKey,
         child: SingleChildScrollView(
@@ -220,13 +120,117 @@ class EditTodoPage extends HookConsumerWidget {
               SizedBox(height: 16),
               _buildNotesField(ref, formState.notes),
               SizedBox(height: 24),
-              _buildSubmitButton(ref, formService, submitState),
+              _buildSubmitButton(context, ref, formService, submitState),
             ],
           ),
         ),
       ),
       currentRoute: '/todos',
     );
+  }
 
+  Widget _buildNotesField(WidgetRef ref, String currentNotes) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Notes",
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+        ),
+        InputFormField(
+          initialValue: currentNotes,
+          validator: TodoValidators.validateNotes,
+          maxLines: 6,
+          onChanged:
+              (value) => ref.read(todoFormProvider.notifier).updateNotes(value),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSubmitButton(
+    BuildContext context,
+    WidgetRef ref,
+    TodoFormService formService,
+    AsyncValue<void> submitState,
+  ) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () async {
+          formService.submitForm();
+          final formKey = useMemoized(() => GlobalKey<FormState>());
+          if (!formKey.currentState!.validate()) {
+            return;
+          }
+
+          final formState = ref.read(todoFormProvider);
+
+          await ref
+              .read(submitTodoProvider.notifier)
+              .submit(
+                title: formState.title,
+                date: formState.selectedDate,
+                time: formState.selectedTime,
+                notes: formState.notes,
+              );
+        },
+        child:
+            submitState.isLoading
+                ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                    SizedBox(width: 8),
+                    Text(EditTodoStrings.editting),
+                    // Text(context.tr("todo.edit.edtting")),
+                  ],
+                )
+                : Text("Save"),
+      ),
+    );
+  }
+
+  Widget _buildTimeField(WidgetRef ref, TimeOfDay? selectedTime) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Time",
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+        ),
+        TimeFormField(
+          labelText: "",
+          validator: TodoValidators.validateTime,
+          onChanged:
+              (time) => ref.read(todoFormProvider.notifier).updateTime(time),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTodoTitle(WidgetRef ref, String currentTitle) {
+    final titleKey = "title_field_$currentTitle";
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Title",
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+        ),
+        InputFormField(
+          key: ValueKey(titleKey),
+          validator: TodoValidators.validateTitle,
+          initialValue: currentTitle,
+          onChanged:
+              (value) => ref.read(todoFormProvider.notifier).updateTitle(value),
+        ),
+      ],
+    );
   }
 }

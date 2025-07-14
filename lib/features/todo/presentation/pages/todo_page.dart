@@ -5,23 +5,25 @@ import 'package:learn_riverpod/config/router/app_routes.dart';
 import 'package:learn_riverpod/features/todo/constants/todo_strings.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/todo_list_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/todos/todo_item_widget.dart';
+import 'package:learn_riverpod/shared/widgets/base/localized_cosumer_widget.dart';
 import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
 
-class MyTodoPage extends HookConsumerWidget {
-  const MyTodoPage({super.key});
+class TodoPage extends LocalizedConsumerWidget {
+  const TodoPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget buildLocalized(BuildContext context, WidgetRef ref) {
     final todosAsync = ref.watch(todoListProvider);
 
     return SharedScaffold(
       body: Column(
         children: [
           _buildAddButton(context),
-          Expanded(child: _buildTodoList(todosAsync, ref)),
+          Expanded(child: _buildTodoList(todosAsync, ref, context)),
         ],
       ),
       title: TodoStrings.title,
+      // title: "todo.title",
       currentRoute: '/todo',
     );
   }
@@ -31,12 +33,17 @@ class MyTodoPage extends HookConsumerWidget {
       padding: const EdgeInsets.all(16.0),
       child: ElevatedButton(
         onPressed: () => context.push(AppRoutes.newTodo),
-        child: const Text(TodoStrings.newTodo),
+        child: Text(TodoStrings.newTodo),
+        // child: Text(context.tr("todo.new_todo")),
       ),
     );
   }
 
-  Widget _buildTodoList(AsyncValue<List<dynamic>> todosAsync, WidgetRef ref) {
+  Widget _buildTodoList(
+    AsyncValue<List<dynamic>> todosAsync,
+    WidgetRef ref,
+    BuildContext context,
+  ) {
     return todosAsync.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error:
@@ -55,13 +62,17 @@ class MyTodoPage extends HookConsumerWidget {
               ],
             ),
           ),
-      data: (todos) => _buildTodoListView(todos, ref),
+      data: (todos) => _buildTodoListView(todos, ref, context),
     );
   }
 
-  Widget _buildTodoListView(List<dynamic> todos, WidgetRef ref) {
+  Widget _buildTodoListView(
+    List<dynamic> todos,
+    WidgetRef ref,
+    BuildContext context,
+  ) {
     if (todos.isEmpty) {
-      return _buildEmptyState();
+      return _buildEmptyState(context);
     }
 
     return ListView.builder(
@@ -74,8 +85,8 @@ class MyTodoPage extends HookConsumerWidget {
     );
   }
 
-  Widget _buildEmptyState() {
-    return const Center(
+  Widget _buildEmptyState(BuildContext context) {
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -83,10 +94,15 @@ class MyTodoPage extends HookConsumerWidget {
           SizedBox(height: 16),
           Text(
             TodoStrings.noTodosYet,
+            // context.tr("todo.no_todos_yet"),
             style: TextStyle(fontSize: 18, color: Colors.grey),
           ),
           SizedBox(height: 8),
-          Text(TodoStrings.newTodoNote, style: TextStyle(color: Colors.grey)),
+          Text(TodoStrings.needNewTodo, style: TextStyle(color: Colors.grey)),
+          // Text(
+          //   context.tr("todo.need_new_todo"),
+          //   style: TextStyle(color: Colors.grey),
+          // ),
         ],
       ),
     );

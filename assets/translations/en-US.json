@@ -1,0 +1,39 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "error": "Error",
+    "loading": "Loading...",
+    "retry": "Retry",
+    "delete": "Delete",
+    "edit": "Edit",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "todo": {
+    "title": "Todos",
+    "new_todo": "New todo",
+    "no_todos_yet": "No todos yet",
+    "need_new_todo": "Need new todo",
+    "new": {
+      "title": "New todo page",
+      "created_todo_success": "Created todo success"
+    },
+    "edit": {
+      "title": "Edit todo page",
+      "todo_not_found": "Todo not found",
+      "editting": "Editting"
+    }
+  },
+  "home": {
+    "title": "Home"
+  },
+  "search": {
+    "title": "Search"
+  },
+  "settings": {
+    "title": "Settings"
+  }
+}

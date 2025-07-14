@@ -1,16 +1,16 @@
 {
-  "common": {
-    "save": "Save",
-    "cancel": "Cancel",
-    "ok": "OK",
-    "error": "Error",
-    "loading": "Loading...",
-    "retry": "Retry",
-    "delete": "Delete",
-    "edit": "Edit",
-    "confirm": "Confirm",
-    "yes": "Yes",
-    "no": "No"
+  "shared": {
+    "error": {
+      "title": "Error",
+      "default_message": "An error occurred",
+      "back_to_home": "Back to Home"
+    },
+    "common": {
+      "loading": "Loading...",
+      "retry": "Retry",
+      "cancel": "Cancel",
+      "confirm": "Confirm"
+    }
   },
   "todo": {
     "title": "Todos",
@@ -25,6 +25,12 @@
       "title": "Edit todo page",
       "todo_not_found": "Todo not found",
       "editting": "Editting"
+    },
+    "error": {
+      "id_not_found": "Todo id not found",
+      "invalid_id": "Invalid id",
+      "not_found": "Not found",
+      "load_failed": "Load failed"
     }
   },
   "home": {

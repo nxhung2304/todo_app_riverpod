@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:learn_riverpod/features/todo/constants/edit_todo_strings.dart';
+import 'package:learn_riverpod/features/todo/strings/edit_todo_strings.dart';
 import 'package:learn_riverpod/features/todo/data/models/todo.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/submit_todo_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/todo_form_provider.dart';

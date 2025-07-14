@@ -1,18 +1,18 @@
 {
- "common": {
-   "save": "Lưu",
-   "cancel": "Hủy",
-   "ok": "Đồng ý",
-   "error": "Lỗi",
-   "loading": "Đang tải...",
-   "retry": "Thử lại",
-   "delete": "Xóa",
-   "edit": "Sửa",
-   "confirm": "Xác nhận",
-   "yes": "Có",
-   "no": "Không"
- },
- "todo": {
+  "shared": {
+    "error": {
+      "title": "Lỗi",
+      "default_message": "Đã xảy ra lỗi",
+      "back_to_home": "Về trang chủ"
+    },
+    "common": {
+      "loading": "Đang tải...",
+      "retry": "Thử lại",
+      "cancel": "Hủy",
+      "confirm": "Xác nhận"
+    }
+  },
+  "todo": {
    "title": "Danh sách công việc",
    "new_todo": "Công việc mới",
    "no_todos_yet": "Chưa có công việc nào",

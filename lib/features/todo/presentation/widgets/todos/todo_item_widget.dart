@@ -24,7 +24,8 @@ class TodoItemWidget extends StatelessWidget {
         ),
         title: TextButton(
           onPressed: () {
-            context.push('${AppRoutes.editTodo}/${todo.id}');
+            // context.push('${AppRoutes.editTodo}/${todo.id}');
+            context.push(AppRoutes.editTodoPath(todo.id));
           },
           child: Text(
             todo.title,

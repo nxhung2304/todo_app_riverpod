@@ -3,7 +3,8 @@
     "error": {
       "title": "Lỗi",
       "default_message": "Đã xảy ra lỗi",
-      "back_to_home": "Về trang chủ"
+      "back_to_home": "Về trang chủ",
+      "page_not_found": "Trang không tồn tại"
     },
     "common": {
       "loading": "Đang tải...",
@@ -25,7 +26,13 @@
      "title": "Trang chỉnh sửa công việc",
      "todo_not_found": "Không tìm thấy công việc",
      "editting": "Đang chỉnh sửa"
-   }
+   },
+    "error": {
+      "id_not_found": "Không tìm thấy ID công việc",
+      "invalid_id": "ID công việc không hợp lệ",
+      "not_found": "Không tìm thấy công việc",
+      "load_failed": "Không thể tải danh sách công việc"
+    }
  },
  "home": {
    "title": "Trang chủ"

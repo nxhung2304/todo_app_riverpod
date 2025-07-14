@@ -12,6 +12,8 @@ class SharedScaffold extends ConsumerWidget {
   final FloatingActionButton? floatingActionButton;
   final bool showBottomNav;
   final bool showAppBar;
+  final bool centerTitle;
+  final Color? appBarBackgroundColor;
 
   const SharedScaffold({
     super.key,
@@ -22,6 +24,8 @@ class SharedScaffold extends ConsumerWidget {
     this.floatingActionButton,
     this.showBottomNav = true,
     this.showAppBar = true,
+    this.centerTitle = true,
+    this.appBarBackgroundColor,
   });
 
   @override
@@ -29,7 +33,15 @@ class SharedScaffold extends ConsumerWidget {
     ref.watch(localeNotifierProvider);
 
     return Scaffold(
-      appBar: showAppBar ? SharedAppBar(title: title) : null,
+      appBar:
+          showAppBar
+              ? SharedAppBar(
+                title: title,
+                actions: appBarActions,
+                centerTitle: centerTitle,
+                backgroundColor: appBarBackgroundColor,
+              )
+              : null,
       bottomNavigationBar:
           showBottomNav ? SharedBottomNav(currentRoute: currentRoute) : null,
       body: body,

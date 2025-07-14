@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:learn_riverpod/config/localization/locale_provider.dart';
-import 'package:learn_riverpod/shared/widgets/language_switcher.dart';
 
 class SharedAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final String title;
   final Color? backgroundColor;
   final Color? foregroundColor;
+  final List<Widget>? actions;
+  final bool centerTitle;
 
   const SharedAppBar({
     super.key,
     required this.title,
     this.backgroundColor = Colors.blue,
     this.foregroundColor = Colors.white,
+    this.actions,
+    this.centerTitle = true,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // ref.watch(localeNotifierProvider);
-
     return AppBar(
-      title: Center(child: Text(title)),
-      backgroundColor: backgroundColor,
+      title: Text(title),
+      centerTitle: centerTitle,
+      backgroundColor: backgroundColor ?? Colors.blue,
       foregroundColor: foregroundColor,
-      actions: [LanguageSwitcher(key: key)],
+      actions: actions,
     );
   }
 

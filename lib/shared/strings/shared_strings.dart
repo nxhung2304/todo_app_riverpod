@@ -5,6 +5,7 @@ class SharedStrings {
   static String get errorTitle => "shared.error.title".tr();
   static String get errorDefaultMessage => "shared.error.default_message".tr();
   static String get errorBackToHome => "shared.error.back_to_home".tr();
+  static String get errorPageNotFound => "shared.error.page_not_found".tr();
   
   // Common
   static String get loading => "shared.common.loading".tr();

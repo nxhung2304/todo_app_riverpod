@@ -7,13 +7,14 @@ import 'package:learn_riverpod/features/todo/presentation/pages/new_todo_page.da
 import 'package:learn_riverpod/features/todo/presentation/pages/search_page.dart';
 import 'package:learn_riverpod/features/todo/presentation/pages/settings_page.dart';
 import 'package:learn_riverpod/features/todo/strings/todo_error_strings.dart';
+import 'package:learn_riverpod/shared/strings/shared_strings.dart';
 import 'package:learn_riverpod/shared/widgets/layout/error_page.dart';
 
 final appRouter = GoRouter(
   initialLocation: AppRoutes.home,
   errorBuilder:
       (context, state) => ErrorPage(
-        message: 'Không tìm thấy trang',
+        message: SharedStrings.errorPageNotFound,
         error: state.error.toString(),
       ),
   routes: [
@@ -26,19 +27,18 @@ final appRouter = GoRouter(
         GoRoute(
           path: 'edit/:todoId',
           builder: (context, state) {
-            final todoIdString = state.pathParameters['todoIdd'];
+            final todoIdString = state.pathParameters['todoId'];
+            if (todoIdString == null) {
               return ErrorPage(message: TodoErrorStrings.idNotFound);
-            // if (todoIdString == null) {
-            //   return ErrorPage(message: TodoErrorStrings.idNotFound);
-            // }
-            //
-            // final todoId = int.parse(todoIdString);
-            //
-            // if (todoId == null) {
-            //   return ErrorPage(message: TodoErrorStrings.invalidId);
-            // }
-            //
-            // return EditTodoPage(todoId: todoId);
+            }
+
+            final todoId = int.parse(todoIdString);
+
+            if (todoId == null) {
+              return ErrorPage(message: TodoErrorStrings.invalidId);
+            }
+
+            return EditTodoPage(todoId: todoId);
           },
         ),
       ],

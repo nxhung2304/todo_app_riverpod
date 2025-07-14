@@ -3,7 +3,8 @@
     "error": {
       "title": "Error",
       "default_message": "An error occurred",
-      "back_to_home": "Back to Home"
+      "back_to_home": "Back to Home",
+      "page_not_found": "Page not found"
     },
     "common": {
       "loading": "Loading...",

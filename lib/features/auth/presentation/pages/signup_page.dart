@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/config/router/app_routes.dart';
 import 'package:learn_riverpod/features/auth/presentation/validators/auth_validators.dart';
 import 'package:learn_riverpod/features/auth/strings/auth_strings.dart';
+import 'package:learn_riverpod/shared/providers/auth_state_provider.dart';
 import 'package:learn_riverpod/shared/strings/shared_strings.dart';
 import 'package:learn_riverpod/shared/widgets/form/input_field_form.dart';
 import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
@@ -19,6 +20,8 @@ class SignupPage extends HookConsumerWidget {
     final emailController = useTextEditingController(text: '');
     final passwordController = useTextEditingController(text: '');
     final confirmPasswordController = useTextEditingController(text: '');
+
+    final authActions = ref.read(authActionsProvider.notifier);
 
     return WillPopScope(
       onWillPop: () async {
@@ -98,11 +101,17 @@ class SignupPage extends HookConsumerWidget {
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size.fromHeight(40),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (!signupFormKey.currentState!.validate()) {
                       print("User signup invalid");
                       return;
                     }
+
+                    await authActions.signup(
+                      fullNameController.text,
+                      email: emailController.text,
+                      password: passwordController.text,
+                    );
 
                     print("Signup ===");
                     print("Fullname: ${fullNameController.text}");

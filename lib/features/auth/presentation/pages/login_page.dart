@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/config/router/app_routes.dart';
 import 'package:learn_riverpod/features/auth/strings/auth_strings.dart';
+import 'package:learn_riverpod/shared/providers/auth_state_provider.dart';
 import 'package:learn_riverpod/shared/widgets/form/input_field_form.dart';
 import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
 
@@ -28,7 +29,12 @@ class LoginPage extends HookConsumerWidget {
           key: loginFormKey,
           child: Column(
             children: [
-              ..._buildLoginForm(context, emailController, passwordController),
+              ..._buildLoginForm(
+                context,
+                ref,
+                emailController,
+                passwordController,
+              ),
               ..._buildSocialLogin(),
             ],
           ),
@@ -39,6 +45,7 @@ class LoginPage extends HookConsumerWidget {
 
   List<Widget> _buildLoginForm(
     BuildContext context,
+    WidgetRef ref,
     TextEditingController emailController,
     TextEditingController passwordController,
   ) {
@@ -62,8 +69,14 @@ class LoginPage extends HookConsumerWidget {
       SizedBox(height: 12),
       ElevatedButton(
         style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight(40)),
-        onPressed: () {
-          print("Login ===");
+        onPressed: () async {
+          print("Submit Login ===");
+          await ref
+              .read(authActionsProvider.notifier)
+              .login(
+                email: emailController.text,
+                password: passwordController.text,
+              );
           print("Email: ${emailController.text}");
           print("Password: ${passwordController.text}");
         },

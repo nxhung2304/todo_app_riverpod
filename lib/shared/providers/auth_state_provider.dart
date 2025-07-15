@@ -1,5 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/features/auth/data/models/user.dart';
+import 'package:learn_riverpod/features/auth/presentation/repository/auth_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_state_provider.g.dart';
@@ -34,8 +35,27 @@ class AuthActions extends _$AuthActions {
   @override
   void build() {}
 
-  Future<void> login(Ref ref, String email, String password) async {
+  Future<void> login({required String email, required String password}) async {
     print("Login");
+    try {
+      await AuthRepository().login(email: email, password: password);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> signup(
+    String fullName, {
+    required String email,
+    required String password,
+  }) async {
+    print("Signup");
+
+    try {
+      await AuthRepository().signup(fullName, email: email, password: password);
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future<void> logout(Ref ref) async {

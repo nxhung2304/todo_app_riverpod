@@ -10,9 +10,9 @@ import 'package:learn_riverpod/features/todo/presentation/providers/todo_list_pr
 import 'package:learn_riverpod/features/todo/presentation/services/new_todo_form_service.dart';
 import 'package:learn_riverpod/features/todo/presentation/validators/todo_validators.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/date_form_field.dart';
-import 'package:learn_riverpod/features/todo/presentation/widgets/form/input_form_field.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/time_form_field.dart';
 import 'package:learn_riverpod/shared/widgets/base/localized_cosumer_widget.dart';
+import 'package:learn_riverpod/shared/widgets/form/input_field_form.dart';
 import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
 import 'package:learn_riverpod/shared/widgets/navigation/shared_app_bar.dart';
 

@@ -8,5 +8,9 @@ class AppRoutes {
   static String search = '/search';
   static String settings = '/settings';
 
+  // Auth
+  static String login = '/login';
+
+  // Helper
   static String editTodoPath(int todoId) => '/todo/edit/$todoId';
 }

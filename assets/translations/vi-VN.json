@@ -44,5 +44,17 @@
    "title": "Cài đặt",
     "select_language": "Chọn ngôn ngữ",
     "language_changed": "Đã thay đổi ngôn ngữ"
- }
+ },
+  "auth": {
+    "login": {
+      "title": "Đăng nhập",
+      "email": "Email",
+      "password": "Mật khẩu",
+      "dont_have_an_account": "Bạn chưa có tài khoản?",
+      "google": "Google"
+    },
+    "signup": {
+      "title": "Đăng ký"
+    }
+  }
 }

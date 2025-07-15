@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:learn_riverpod/app.dart';
 import 'package:learn_riverpod/config/localization/app_locale.dart';
-import 'package:learn_riverpod/core/di/injection.dart';
+import 'package:learn_riverpod/core/di/app_injection.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

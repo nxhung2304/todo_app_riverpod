@@ -30,7 +30,7 @@ class InputFormField extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final obscure = useState(!isPassword);
+    final obscure = useState(isPassword);
 
     return TextFormField(
       onTapOutside: (event) {

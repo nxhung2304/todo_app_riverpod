@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "772511266335",
+    "project_id": "todo-app-riverpod-98e77",
+    "storage_bucket": "todo-app-riverpod-98e77.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772511266335:android:ac6a310c279706aad8072a",
+        "android_client_info": {
+          "package_name": "com.example.learn_riverpod"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6yIgmKHKxrlx-pgJ69H0uQAW3vrZuxMs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772511266335:android:301b12b30b926c9fd8072a",
+        "android_client_info": {
+          "package_name": "com.example.todo_app_riverpod"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6yIgmKHKxrlx-pgJ69H0uQAW3vrZuxMs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

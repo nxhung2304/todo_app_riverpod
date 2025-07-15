@@ -11,7 +11,8 @@
       "retry": "Retry",
       "cancel": "Cancel",
       "confirm": "Confirm"
-    }
+    },
+    "full_name": "Full name"
   },
   "todo": {
     "title": "Todos",
@@ -46,15 +47,17 @@
     "language_changed": "Language changed"
   },
   "auth": {
+    "email": "Email",
+    "password": "Password",
+
     "login": {
       "title": "Login",
-      "email": "Email",
-      "password": "Password",
       "dont_have_an_account": "Don't have an account?",
       "google": "Google"
     },
     "signup": {
-      "title": "Signup"
+      "title": "Signup",
+      "confirm_password": "Confirm Password"
     }
   }
 }

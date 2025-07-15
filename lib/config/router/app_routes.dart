@@ -10,6 +10,7 @@ class AppRoutes {
 
   // Auth
   static String login = '/login';
+  static String signup = '/signup';
 
   // Helper
   static String editTodoPath(int todoId) => '/todo/edit/$todoId';

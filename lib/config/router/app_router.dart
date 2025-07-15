@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:learn_riverpod/config/router/app_routes.dart';
 import 'package:learn_riverpod/features/auth/presentation/pages/login_page.dart';
+import 'package:learn_riverpod/features/auth/presentation/pages/signup_page.dart';
 import 'package:learn_riverpod/features/todo/presentation/pages/edit_todo_page.dart';
 import 'package:learn_riverpod/features/todo/presentation/pages/home_page.dart';
 import 'package:learn_riverpod/features/todo/presentation/pages/todo_page.dart';
@@ -21,6 +22,8 @@ final appRouter = GoRouter(
       ),
   routes: [
     GoRoute(path: AppRoutes.login, builder: (context, state) => LoginPage()),
+    GoRoute(path: AppRoutes.signup, builder: (context, state) => SignupPage()),
+
     ShellRoute(
       builder: (context, state, child) => ProtectedRoute(child: child),
       routes: _protectedRoutes,

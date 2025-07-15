@@ -48,6 +48,9 @@ dependencies:
     sdk: flutter
   flutter_i18n: ^0.36.3
   easy_localization: ^3.0.7+1
+  firebase_core: ^3.15.1
+  flutter_dotenv: ^5.2.1
+  firebase_auth: ^5.6.2
 
 dev_dependencies:
   flutter_test:

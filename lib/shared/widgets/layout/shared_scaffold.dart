@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:learn_riverpod/config/localization/app_locale_provider.dart';
 import 'package:learn_riverpod/shared/providers/auth_state_provider.dart';
 import 'package:learn_riverpod/shared/widgets/navigation/shared_app_bar.dart';
 import 'package:learn_riverpod/shared/widgets/navigation/shared_bottom_nav.dart';
@@ -31,7 +30,6 @@ class SharedScaffold extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // ref.watch(appLocaleNotifierProvider);
     final authState = ref.watch(authStateProvider);
 
     return Scaffold(

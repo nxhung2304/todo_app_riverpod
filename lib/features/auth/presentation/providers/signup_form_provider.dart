@@ -1,7 +1,6 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:learn_riverpod/features/auth/presentation/states/signup_form_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'signup_form_provider.freezed.dart';
 part 'signup_form_provider.g.dart';
 
 @riverpod
@@ -36,14 +35,4 @@ class SignupFormNotifier extends _$SignupFormNotifier {
   void reset() {
     state = const SignupFormState();
   }
-}
-
-@freezed
-sealed class SignupFormState with _$SignupFormState {
-  const factory SignupFormState({
-    @Default('') String fullName,
-    @Default('') String email,
-    @Default('') String password,
-    @Default('') String confirmPassword,
-  }) = _SignupFormState;
 }

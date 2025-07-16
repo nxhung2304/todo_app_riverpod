@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/core/config/router/app_routes.dart';
 import 'package:learn_riverpod/features/todo/data/models/todo.dart';
-import 'package:learn_riverpod/features/todo/presentation/providers/todo_list_provider.dart';
+import 'package:learn_riverpod/features/todo/presentation/providers/todo_provider.dart';
 
 class TodoItemWidget extends StatelessWidget {
   final Todo todo;
@@ -19,12 +19,11 @@ class TodoItemWidget extends StatelessWidget {
         leading: Checkbox(
           value: todo.completed,
           onChanged: (value) {
-            ref.read(todoListProvider.notifier).toggleTodo(todo.id);
+            ref.read(todoNotifierProvider.notifier).toggleTodo(todo.id);
           },
         ),
         title: TextButton(
           onPressed: () {
-            // context.push('${AppRoutes.editTodo}/${todo.id}');
             context.push(AppRoutes.editTodoPath(todo.id));
           },
           child: Text(
@@ -37,7 +36,7 @@ class TodoItemWidget extends StatelessWidget {
         trailing: IconButton(
           icon: Icon(Icons.delete, color: Colors.red),
           onPressed: () {
-            ref.read(todoListProvider.notifier).deleteTodo(todo.id);
+            ref.read(todoNotifierProvider.notifier).deleteTodo(todo.id);
           },
         ),
       ),

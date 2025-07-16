@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'user.dart';
+import 'package:learn_riverpod/features/auth/data/models/user.dart';
 
 part 'auth_state.freezed.dart';
 

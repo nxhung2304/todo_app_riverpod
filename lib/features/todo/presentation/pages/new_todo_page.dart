@@ -46,9 +46,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:learn_riverpod/core/config/router/app_routes.dart';
+import 'package:learn_riverpod/features/todo/presentation/providers/todo_provider.dart';
 import 'package:learn_riverpod/features/todo/strings/new_todo_strings.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/todo_form_provider.dart';
-import 'package:learn_riverpod/features/todo/presentation/providers/submit_todo_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/services/new_todo_form_service.dart';
 import 'package:learn_riverpod/features/todo/presentation/validators/todo_validators.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/date_form_field.dart';
@@ -66,9 +67,9 @@ class NewTodoPage extends LocalizedConsumerWidget {
     final formService = useMemoized(() => TodoFormService(ref, formKey));
 
     final formState = ref.watch(todoFormProvider);
-    final submitState = ref.watch(submitTodoProvider);
+    final submitState = ref.watch(todoNotifierProvider);
 
-    ref.listen(submitTodoProvider, (prev, next) {
+    ref.listen(todoNotifierProvider, (prev, next) {
       next.when(
         data: (_) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -97,8 +98,7 @@ class NewTodoPage extends LocalizedConsumerWidget {
     return WillPopScope(
       child: SharedScaffold(
         title: NewTodoStrings.title,
-        // title: context.tr("todo.new.title"),
-        currentRoute: '/todo',
+        currentRoute: AppRoutes.todo,
         body: Form(
           key: formKey,
           child: SingleChildScrollView(
@@ -128,8 +128,8 @@ class NewTodoPage extends LocalizedConsumerWidget {
         ),
       ),
       onWillPop: () async {
-        final isUnsaved = ref.read(todoFormProvider.notifier).isUnsaved();
-        if (!isUnsaved) {
+        final hasChanges = ref.read(todoFormProvider.notifier).hasChanges();
+        if (!hasChanges) {
           return true;
         }
 
@@ -171,9 +171,10 @@ class NewTodoPage extends LocalizedConsumerWidget {
         InputFormField(
           validator: TodoValidators.validateTitle,
           initialValue: currentTitle,
-          onChanged: (value) {
-            ref.read(todoFormProvider.notifier).updateTitle(value);
-          },
+          // onChanged: (value) {
+          //   ref.read(todoFormProvider.notifier).updateTitle(value);
+          // },
+          onChanged: ref.read(todoFormProvider.notifier).updateTitle,
           autovalidateMode: AutovalidateMode.onUserInteraction,
         ),
       ],
@@ -193,8 +194,7 @@ class NewTodoPage extends LocalizedConsumerWidget {
           initialDate: selectedDate,
           labelText: "",
           validator: TodoValidators.validateDate,
-          onChanged:
-              (date) => ref.read(todoFormProvider.notifier).updateDate(date),
+          onChanged: ref.read(todoFormProvider.notifier).updateDate,
         ),
       ],
     );
@@ -212,8 +212,7 @@ class NewTodoPage extends LocalizedConsumerWidget {
           initialValue: currentNotes,
           validator: TodoValidators.validateNotes,
           maxLines: 6,
-          onChanged:
-              (value) => ref.read(todoFormProvider.notifier).updateNotes(value),
+          onChanged: ref.read(todoFormProvider.notifier).updateNotes,
         ),
       ],
     );
@@ -234,8 +233,7 @@ class NewTodoPage extends LocalizedConsumerWidget {
           validator: TodoValidators.validateTimeWithDate(
             formState.selectedDate,
           ),
-          onChanged:
-              (time) => ref.read(todoFormProvider.notifier).updateTime(time),
+          onChanged: ref.read(todoFormProvider.notifier).updateTime,
         ),
       ],
     );
@@ -259,8 +257,8 @@ class NewTodoPage extends LocalizedConsumerWidget {
           final formState = ref.read(todoFormProvider);
 
           await ref
-              .read(submitTodoProvider.notifier)
-              .submit(
+              .read(todoNotifierProvider.notifier)
+              .addTodo(
                 title: formState.title,
                 date: formState.selectedDate,
                 time: formState.selectedTime,

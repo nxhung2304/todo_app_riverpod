@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/core/config/router/app_routes.dart';
+import 'package:learn_riverpod/features/todo/presentation/providers/todo_provider.dart';
 import 'package:learn_riverpod/features/todo/strings/todo_strings.dart';
-import 'package:learn_riverpod/features/todo/presentation/providers/todo_list_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/todos/todo_item_widget.dart';
 import 'package:learn_riverpod/shared/widgets/base/localized_cosumer_widget.dart';
 import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
@@ -13,7 +13,7 @@ class TodoPage extends LocalizedConsumerWidget {
 
   @override
   Widget buildLocalized(BuildContext context, WidgetRef ref) {
-    final todosAsync = ref.watch(todoListProvider);
+    final todosAsync = ref.watch(todoNotifierProvider);
 
     return SharedScaffold(
       body: Column(
@@ -23,8 +23,7 @@ class TodoPage extends LocalizedConsumerWidget {
         ],
       ),
       title: TodoStrings.title,
-      // title: "todo.title",
-      currentRoute: '/todo',
+      currentRoute: AppRoutes.todo,
     );
   }
 
@@ -34,7 +33,6 @@ class TodoPage extends LocalizedConsumerWidget {
       child: ElevatedButton(
         onPressed: () => context.push(AppRoutes.newTodo),
         child: Text(TodoStrings.newTodo),
-        // child: Text(context.tr("todo.new_todo")),
       ),
     );
   }
@@ -56,7 +54,7 @@ class TodoPage extends LocalizedConsumerWidget {
                 Text('Error: $error'),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () => ref.invalidate(todoListProvider),
+                  onPressed: () => ref.invalidate(todoNotifierProvider),
                   child: const Text('Retry'),
                 ),
               ],
@@ -94,15 +92,10 @@ class TodoPage extends LocalizedConsumerWidget {
           SizedBox(height: 16),
           Text(
             TodoStrings.noTodosYet,
-            // context.tr("todo.no_todos_yet"),
             style: TextStyle(fontSize: 18, color: Colors.grey),
           ),
           SizedBox(height: 8),
           Text(TodoStrings.needNewTodo, style: TextStyle(color: Colors.grey)),
-          // Text(
-          //   context.tr("todo.need_new_todo"),
-          //   style: TextStyle(color: Colors.grey),
-          // ),
         ],
       ),
     );

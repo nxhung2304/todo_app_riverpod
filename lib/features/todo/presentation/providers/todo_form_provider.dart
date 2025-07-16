@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:learn_riverpod/features/todo/data/models/todo_form_state.dart';
-import 'package:learn_riverpod/shared/hooks/use_debounce.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:learn_riverpod/features/todo/data/models/todo.dart';
 
@@ -11,15 +10,6 @@ class TodoForm extends _$TodoForm {
   @override
   TodoFormState build() {
     return TodoFormState();
-  }
-
-  bool isUnsaved() {
-    if (state.title.isNotEmpty) return true;
-    if (state.notes.isNotEmpty) return true;
-    if (state.selectedDate != null) return true;
-    if (state.selectedTime != null) return true;
-
-    return false;
   }
 
   void loadTodo(Todo todo) {
@@ -44,5 +34,14 @@ class TodoForm extends _$TodoForm {
 
   void reset() {
     state = TodoFormState();
+  }
+
+  bool hasChanges() {
+    if (state.title.isNotEmpty) return true;
+    if (state.notes.isNotEmpty) return true;
+    if (state.selectedDate != null) return true;
+    if (state.selectedTime != null) return true;
+
+    return false;
   }
 }

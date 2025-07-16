@@ -20,8 +20,7 @@ class TodoTimeField extends ConsumerWidget {
         TimeFormField(
           labelText: "",
           validator: TodoValidators.validateTime,
-          onChanged:
-              (time) => ref.read(todoFormProvider.notifier).updateTime(time),
+          onChanged: ref.read(todoFormProvider.notifier).updateTime,
         ),
       ],
     );

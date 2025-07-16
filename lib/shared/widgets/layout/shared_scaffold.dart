@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:learn_riverpod/features/auth/data/models/auth_state.dart';
-import 'package:learn_riverpod/features/auth/presentation/providers/auth_state_provider.dart';
+import 'package:learn_riverpod/features/auth/presentation/providers/auth_provider.dart';
+import 'package:learn_riverpod/features/auth/presentation/states/auth_state.dart';
 import 'package:learn_riverpod/shared/widgets/navigation/shared_app_bar.dart';
 import 'package:learn_riverpod/shared/widgets/navigation/shared_bottom_nav.dart';
 

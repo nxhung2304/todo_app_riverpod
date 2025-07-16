@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/core/config/router/app_routes.dart';
-import 'package:learn_riverpod/features/auth/data/models/auth_state.dart';
 import 'package:learn_riverpod/features/auth/presentation/forms/login_form.dart';
-import 'package:learn_riverpod/features/auth/presentation/providers/auth_state_provider.dart';
+import 'package:learn_riverpod/features/auth/presentation/providers/auth_provider.dart';
+import 'package:learn_riverpod/features/auth/presentation/states/auth_state.dart';
 import 'package:learn_riverpod/features/auth/strings/auth_strings.dart';
 import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
 

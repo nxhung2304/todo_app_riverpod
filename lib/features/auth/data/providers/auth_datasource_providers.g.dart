@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_providers.dart';
+part of 'auth_datasource_providers.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -26,23 +26,25 @@ final authLocalDataSourceProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AuthLocalDataSourceRef = AutoDisposeProviderRef<AuthLocalDataSource>;
-String _$authRepositoryHash() => r'845ee6c3b30939ac84ecfcbc32c3f84f0cd9da79';
+String _$authRemoteDataSourceHash() =>
+    r'3cec951ab5e810f73d89dd3d15c2054995954322';
 
-/// See also [authRepository].
-@ProviderFor(authRepository)
-final authRepositoryProvider = AutoDisposeProvider<AuthRepository>.internal(
-  authRepository,
-  name: r'authRepositoryProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$authRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+/// See also [authRemoteDataSource].
+@ProviderFor(authRemoteDataSource)
+final authRemoteDataSourceProvider =
+    AutoDisposeProvider<AuthRemoteDatasource>.internal(
+      authRemoteDataSource,
+      name: r'authRemoteDataSourceProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$authRemoteDataSourceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef AuthRepositoryRef = AutoDisposeProviderRef<AuthRepository>;
+typedef AuthRemoteDataSourceRef = AutoDisposeProviderRef<AuthRemoteDatasource>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

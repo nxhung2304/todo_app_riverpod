@@ -3,17 +3,17 @@ import 'package:learn_riverpod/features/todo/data/models/todo.dart';
 import 'package:learn_riverpod/features/todo/data/providers/todo_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'todo_list_provider.g.dart';
+part 'todo_provider.g.dart';
 
 @riverpod
-class TodoList extends _$TodoList {
+class TodoNotifier extends _$TodoNotifier {
   @override
   Future<List<Todo>> build() async {
     final repository = ref.read(todoRepositoryProvider);
     return await repository.getAllTodos();
   }
 
-  void addTodo({
+  Future<void> addTodo({
     required String title,
     String? notes,
     TimeOfDay? time,

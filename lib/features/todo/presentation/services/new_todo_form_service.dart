@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/todo_form_provider.dart';
-import 'package:learn_riverpod/features/todo/presentation/providers/submit_todo_provider.dart';
+import 'package:learn_riverpod/features/todo/presentation/providers/todo_provider.dart';
 
 class TodoFormService {
   final WidgetRef ref;
@@ -17,15 +17,16 @@ class TodoFormService {
     final formState = ref.read(todoFormProvider);
 
     await ref
-        .read(submitTodoProvider.notifier)
-        .submit(
+        .read(todoNotifierProvider
+        .notifier)
+        .addTodo(
           title: formState.title,
           date: formState.selectedDate,
           time: formState.selectedTime,
           notes: formState.notes,
         );
 
-    final submitState = ref.read(submitTodoProvider);
+    final submitState = ref.read(todoNotifierProvider);
 
     return !submitState.hasError;
   }

@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/core/config/router/app_routes.dart';
-import 'package:learn_riverpod/features/auth/presentation/providers/auth_state_provider.dart';
+import 'package:learn_riverpod/features/auth/presentation/providers/auth_provider.dart';
 import 'package:learn_riverpod/features/auth/strings/auth_strings.dart';
 import 'package:learn_riverpod/shared/widgets/form/form_fields.dart';
 

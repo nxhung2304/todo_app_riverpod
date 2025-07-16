@@ -1,11 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:learn_riverpod/core/utils/result.dart';
 import 'package:learn_riverpod/features/auth/data/datasources/auth_local_datasource.dart';
+import 'package:learn_riverpod/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:learn_riverpod/features/auth/data/models/user.dart';
 
 class AuthRepository {
-  final AuthLocalDataSource authLocalDataSource;
+  final AuthLocalDataSource localDataSource;
+  final AuthRemoteDatasource remoteDataSource;
 
-  AuthRepository({required this.authLocalDataSource});
+  AuthRepository({
+    required this.localDataSource,
+    required this.remoteDataSource,
+  });
 
   Future<void> signup(
     String fullName, {
@@ -13,14 +19,15 @@ class AuthRepository {
     required String password,
   }) async {
     try {
-      final credential = await firebase_auth.FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-      print(credential);
+      final firebaseUser = await remoteDataSource.signup(
+        fullName,
+        email: email,
+        password: password,
+      );
+      print(firebaseUser);
 
-      if (credential.user != null) {
-        final user = User.toUser(credential.user!);
-        authLocalDataSource.saveCurrentUser(user);
-      }
+      final user = User.fromFirebaseUser(firebaseUser);
+      localDataSource.saveCurrentUser(user);
     } on firebase_auth.FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -32,53 +39,39 @@ class AuthRepository {
     }
   }
 
-  Future<User> login({required String email, required String password}) async {
+  Future<Result<User>> login({
+    required String email,
+    required String password,
+  }) async {
     try {
-      final credential = await firebase_auth.FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      final firebaseUser = await remoteDataSource.login(
+        email: email,
+        password: password,
+      );
+      final user = User.fromFirebaseUser(firebaseUser);
+      await localDataSource.saveCurrentUser(user);
 
-      if (credential.user != null) {
-        final user = User.toUser(credential.user!);
-        await authLocalDataSource.saveCurrentUser(user);
-
-        return user;
-      } else {
-        throw Exception('No user found');
-      }
-    } on firebase_auth.FirebaseAuthException catch (e) {
-      switch (e.code) {
-        case 'user-not-found':
-          throw Exception('No user found for that email.');
-        case 'wrong-password':
-          throw Exception('Wrong password provided.');
-        case 'invalid-email':
-          throw Exception('The email address is not valid.');
-        case 'user-disabled':
-          throw Exception('This user has been disabled.');
-        case 'too-many-requests':
-          throw Exception('Too many failed attempts. Please try again later.');
-        case 'invalid-credential':
-          throw Exception('Invalid email or password.');
-        default:
-          throw Exception('Login failed: ${e.message}');
-      }
+      return Result.success(user);
     } catch (e) {
-      print(e);
-      throw Exception('An unexpected error occurred. Please try again.');
+      return Result.failure(
+        e.toString().replaceFirst('Exception: ', ''),
+        e is Exception ? e : Exception(e.toString()),
+      );
     }
   }
 
   Future<void> logout() async {
     try {
-      await firebase_auth.FirebaseAuth.instance.signOut();
+      await remoteDataSource.logout();
+      await localDataSource.removeCurrentUser();
     } catch (e) {
-      throw Exception("Cannot signOut by FirebaseAuth");
+      rethrow;
     }
   }
 
   Future<User?> getCurrentUser() async {
     try {
-      final savedUser = await authLocalDataSource.getCurrentUser();
+      final savedUser = await localDataSource.getCurrentUser();
       if (savedUser == null) {
         return null;
       }

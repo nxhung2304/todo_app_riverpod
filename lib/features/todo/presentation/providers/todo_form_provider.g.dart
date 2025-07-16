@@ -6,7 +6,7 @@ part of 'todo_form_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$todoFormHash() => r'f33fa968e36c222d67dadd191e1e3f34b0b79ca2';
+String _$todoFormHash() => r'5f0c8b84de6d82ce5787ae867c9edae21db14457';
 
 /// See also [TodoForm].
 @ProviderFor(TodoForm)

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:learn_riverpod/core/config/router/app_routes.dart';
 import 'package:learn_riverpod/features/todo/strings/home_strings.dart';
 import 'package:learn_riverpod/shared/widgets/base/localized_cosumer_widget.dart';
 import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
@@ -12,7 +13,7 @@ class HomePage extends LocalizedConsumerWidget {
     return SharedScaffold(
       title: HomeStrings.title,
       body: Text(HomeStrings.title),
-      currentRoute: '/home',
+      currentRoute: AppRoutes.home,
     );
   }
 }

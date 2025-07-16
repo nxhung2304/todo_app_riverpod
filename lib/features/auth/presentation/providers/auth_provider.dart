@@ -1,8 +1,9 @@
-import 'package:learn_riverpod/features/auth/data/models/auth_state.dart';
-import 'package:learn_riverpod/features/auth/data/providers/auth_providers.dart';
+import 'package:learn_riverpod/core/utils/result.dart';
+import 'package:learn_riverpod/features/auth/data/providers/auth_repository_providers.dart';
+import 'package:learn_riverpod/features/auth/presentation/states/auth_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'auth_state_provider.g.dart';
+part 'auth_provider.g.dart';
 
 @riverpod
 class AuthNotifier extends _$AuthNotifier {
@@ -16,9 +17,16 @@ class AuthNotifier extends _$AuthNotifier {
     state = const AuthState.loading();
     try {
       final repository = ref.read(authRepositoryProvider);
-      final user = await repository.login(email: email, password: password);
+      final result = await repository.login(email: email, password: password);
 
-      state = AuthState.authenticated(user);
+      result.when(
+        success: (user) {
+          state = AuthState.authenticated(user);
+        },
+        failure: (message, exception) {
+          state = AuthState.error(message);
+        },
+      );
     } catch (e) {
       state = AuthState.error(e.toString());
     }

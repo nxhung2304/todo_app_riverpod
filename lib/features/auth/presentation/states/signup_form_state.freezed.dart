@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'signup_form_provider.dart';
+part of 'signup_form_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SignupFormState {
 
- String get fullName; String get email; String get password; String get confirmPassword;
+ String get fullName; String get email; String get password; String get confirmPassword; bool get isLoading; bool get obscurePassword; bool get obscureConfirmPassword;
 /// Create a copy of SignupFormState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $SignupFormStateCopyWith<SignupFormState> get copyWith => _$SignupFormStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignupFormState&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.confirmPassword, confirmPassword) || other.confirmPassword == confirmPassword));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignupFormState&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.confirmPassword, confirmPassword) || other.confirmPassword == confirmPassword)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.obscurePassword, obscurePassword) || other.obscurePassword == obscurePassword)&&(identical(other.obscureConfirmPassword, obscureConfirmPassword) || other.obscureConfirmPassword == obscureConfirmPassword));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,fullName,email,password,confirmPassword);
+int get hashCode => Object.hash(runtimeType,fullName,email,password,confirmPassword,isLoading,obscurePassword,obscureConfirmPassword);
 
 @override
 String toString() {
-  return 'SignupFormState(fullName: $fullName, email: $email, password: $password, confirmPassword: $confirmPassword)';
+  return 'SignupFormState(fullName: $fullName, email: $email, password: $password, confirmPassword: $confirmPassword, isLoading: $isLoading, obscurePassword: $obscurePassword, obscureConfirmPassword: $obscureConfirmPassword)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $SignupFormStateCopyWith<$Res>  {
   factory $SignupFormStateCopyWith(SignupFormState value, $Res Function(SignupFormState) _then) = _$SignupFormStateCopyWithImpl;
 @useResult
 $Res call({
- String fullName, String email, String password, String confirmPassword
+ String fullName, String email, String password, String confirmPassword, bool isLoading, bool obscurePassword, bool obscureConfirmPassword
 });
 
 
@@ -62,13 +62,16 @@ class _$SignupFormStateCopyWithImpl<$Res>
 
 /// Create a copy of SignupFormState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? fullName = null,Object? email = null,Object? password = null,Object? confirmPassword = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? fullName = null,Object? email = null,Object? password = null,Object? confirmPassword = null,Object? isLoading = null,Object? obscurePassword = null,Object? obscureConfirmPassword = null,}) {
   return _then(_self.copyWith(
 fullName: null == fullName ? _self.fullName : fullName // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,confirmPassword: null == confirmPassword ? _self.confirmPassword : confirmPassword // ignore: cast_nullable_to_non_nullable
-as String,
+as String,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as bool,obscurePassword: null == obscurePassword ? _self.obscurePassword : obscurePassword // ignore: cast_nullable_to_non_nullable
+as bool,obscureConfirmPassword: null == obscureConfirmPassword ? _self.obscureConfirmPassword : obscureConfirmPassword // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -150,10 +153,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String fullName,  String email,  String password,  String confirmPassword)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String fullName,  String email,  String password,  String confirmPassword,  bool isLoading,  bool obscurePassword,  bool obscureConfirmPassword)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SignupFormState() when $default != null:
-return $default(_that.fullName,_that.email,_that.password,_that.confirmPassword);case _:
+return $default(_that.fullName,_that.email,_that.password,_that.confirmPassword,_that.isLoading,_that.obscurePassword,_that.obscureConfirmPassword);case _:
   return orElse();
 
 }
@@ -171,10 +174,10 @@ return $default(_that.fullName,_that.email,_that.password,_that.confirmPassword)
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String fullName,  String email,  String password,  String confirmPassword)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String fullName,  String email,  String password,  String confirmPassword,  bool isLoading,  bool obscurePassword,  bool obscureConfirmPassword)  $default,) {final _that = this;
 switch (_that) {
 case _SignupFormState():
-return $default(_that.fullName,_that.email,_that.password,_that.confirmPassword);}
+return $default(_that.fullName,_that.email,_that.password,_that.confirmPassword,_that.isLoading,_that.obscurePassword,_that.obscureConfirmPassword);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -188,10 +191,10 @@ return $default(_that.fullName,_that.email,_that.password,_that.confirmPassword)
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String fullName,  String email,  String password,  String confirmPassword)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String fullName,  String email,  String password,  String confirmPassword,  bool isLoading,  bool obscurePassword,  bool obscureConfirmPassword)?  $default,) {final _that = this;
 switch (_that) {
 case _SignupFormState() when $default != null:
-return $default(_that.fullName,_that.email,_that.password,_that.confirmPassword);case _:
+return $default(_that.fullName,_that.email,_that.password,_that.confirmPassword,_that.isLoading,_that.obscurePassword,_that.obscureConfirmPassword);case _:
   return null;
 
 }
@@ -202,14 +205,17 @@ return $default(_that.fullName,_that.email,_that.password,_that.confirmPassword)
 /// @nodoc
 
 
-class _SignupFormState implements SignupFormState {
-  const _SignupFormState({this.fullName = '', this.email = '', this.password = '', this.confirmPassword = ''});
+class _SignupFormState extends SignupFormState {
+  const _SignupFormState({this.fullName = '', this.email = '', this.password = '', this.confirmPassword = '', this.isLoading = false, this.obscurePassword = false, this.obscureConfirmPassword = false}): super._();
   
 
 @override@JsonKey() final  String fullName;
 @override@JsonKey() final  String email;
 @override@JsonKey() final  String password;
 @override@JsonKey() final  String confirmPassword;
+@override@JsonKey() final  bool isLoading;
+@override@JsonKey() final  bool obscurePassword;
+@override@JsonKey() final  bool obscureConfirmPassword;
 
 /// Create a copy of SignupFormState
 /// with the given fields replaced by the non-null parameter values.
@@ -221,16 +227,16 @@ _$SignupFormStateCopyWith<_SignupFormState> get copyWith => __$SignupFormStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignupFormState&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.confirmPassword, confirmPassword) || other.confirmPassword == confirmPassword));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignupFormState&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.confirmPassword, confirmPassword) || other.confirmPassword == confirmPassword)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.obscurePassword, obscurePassword) || other.obscurePassword == obscurePassword)&&(identical(other.obscureConfirmPassword, obscureConfirmPassword) || other.obscureConfirmPassword == obscureConfirmPassword));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,fullName,email,password,confirmPassword);
+int get hashCode => Object.hash(runtimeType,fullName,email,password,confirmPassword,isLoading,obscurePassword,obscureConfirmPassword);
 
 @override
 String toString() {
-  return 'SignupFormState(fullName: $fullName, email: $email, password: $password, confirmPassword: $confirmPassword)';
+  return 'SignupFormState(fullName: $fullName, email: $email, password: $password, confirmPassword: $confirmPassword, isLoading: $isLoading, obscurePassword: $obscurePassword, obscureConfirmPassword: $obscureConfirmPassword)';
 }
 
 
@@ -241,7 +247,7 @@ abstract mixin class _$SignupFormStateCopyWith<$Res> implements $SignupFormState
   factory _$SignupFormStateCopyWith(_SignupFormState value, $Res Function(_SignupFormState) _then) = __$SignupFormStateCopyWithImpl;
 @override @useResult
 $Res call({
- String fullName, String email, String password, String confirmPassword
+ String fullName, String email, String password, String confirmPassword, bool isLoading, bool obscurePassword, bool obscureConfirmPassword
 });
 
 
@@ -258,13 +264,16 @@ class __$SignupFormStateCopyWithImpl<$Res>
 
 /// Create a copy of SignupFormState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? fullName = null,Object? email = null,Object? password = null,Object? confirmPassword = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? fullName = null,Object? email = null,Object? password = null,Object? confirmPassword = null,Object? isLoading = null,Object? obscurePassword = null,Object? obscureConfirmPassword = null,}) {
   return _then(_SignupFormState(
 fullName: null == fullName ? _self.fullName : fullName // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,confirmPassword: null == confirmPassword ? _self.confirmPassword : confirmPassword // ignore: cast_nullable_to_non_nullable
-as String,
+as String,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as bool,obscurePassword: null == obscurePassword ? _self.obscurePassword : obscurePassword // ignore: cast_nullable_to_non_nullable
+as bool,obscureConfirmPassword: null == obscureConfirmPassword ? _self.obscureConfirmPassword : obscureConfirmPassword // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

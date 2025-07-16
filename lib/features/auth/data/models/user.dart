@@ -14,7 +14,7 @@ sealed class User with _$User {
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
-  factory User.toUser(firebase_auth.User user) {
+  factory User.fromFirebaseUser(firebase_auth.User user) {
     return User(id: user.uid, email: user.email, fullName: user.displayName);
   }
 }

@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'submit_todo_provider.dart';
+part of 'auth_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$submitTodoHash() => r'458d10e5b17dacd56a6e7e59ba87e89253876279';
+String _$authNotifierHash() => r'135f9f2607cc4f1cf2426af4fbcb7290b5bc3ef7';
 
-/// See also [SubmitTodo].
-@ProviderFor(SubmitTodo)
-final submitTodoProvider =
-    AutoDisposeNotifierProvider<SubmitTodo, AsyncValue<void>>.internal(
-      SubmitTodo.new,
-      name: r'submitTodoProvider',
+/// See also [AuthNotifier].
+@ProviderFor(AuthNotifier)
+final authNotifierProvider =
+    AutoDisposeNotifierProvider<AuthNotifier, AuthState>.internal(
+      AuthNotifier.new,
+      name: r'authNotifierProvider',
       debugGetCreateSourceHash:
           const bool.fromEnvironment('dart.vm.product')
               ? null
-              : _$submitTodoHash,
+              : _$authNotifierHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$SubmitTodo = AutoDisposeNotifier<AsyncValue<void>>;
+typedef _$AuthNotifier = AutoDisposeNotifier<AuthState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

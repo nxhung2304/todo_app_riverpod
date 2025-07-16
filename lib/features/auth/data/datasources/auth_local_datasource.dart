@@ -19,4 +19,8 @@ class AuthLocalDataSource {
   Future<User?> getCurrentUser() async {
     return storageService.getModel(StorageKeys.currentUser, User.fromJson);
   }
+
+  Future<void> removeCurrentUser() async {
+    await storageService.remove(StorageKeys.currentUser);
+  }
 }

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:learn_riverpod/core/config/router/app_routes.dart';
+import 'package:learn_riverpod/features/todo/presentation/providers/todo_provider.dart';
 import 'package:learn_riverpod/features/todo/strings/edit_todo_strings.dart';
 import 'package:learn_riverpod/features/todo/data/models/todo.dart';
-import 'package:learn_riverpod/features/todo/presentation/providers/submit_todo_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/todo_form_provider.dart';
-import 'package:learn_riverpod/features/todo/presentation/providers/todo_list_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/services/new_todo_form_service.dart';
 import 'package:learn_riverpod/features/todo/presentation/validators/todo_validators.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/date_form_field.dart';
@@ -23,8 +23,8 @@ class EditTodoPage extends LocalizedConsumerWidget {
 
   @override
   Widget buildLocalized(BuildContext context, WidgetRef ref) {
-    final todoListAsync = ref.watch(todoListProvider);
-    return todoListAsync.when(
+    final todoNotifierAsync = ref.watch(todoNotifierProvider);
+    return todoNotifierAsync.when(
       loading:
           () =>
               const Scaffold(body: Center(child: CircularProgressIndicator())),
@@ -37,7 +37,6 @@ class EditTodoPage extends LocalizedConsumerWidget {
         final todo = todos.firstWhere(
           (todo) => todo.id == todoId,
           orElse: () => throw Exception(EditTodoStrings.todoNotFound),
-          // orElse: () => throw Exception(context.tr("todo.edit.todo_not_found")),
         );
 
         return _buildEditForm(context, ref, todo);
@@ -54,8 +53,7 @@ class EditTodoPage extends LocalizedConsumerWidget {
           initialDate: selectedDate,
           labelText: "",
           validator: TodoValidators.validateDate,
-          onChanged:
-              (date) => ref.read(todoFormProvider.notifier).updateDate(date),
+          onChanged: ref.read(todoFormProvider.notifier).updateDate,
         ),
       ],
     );
@@ -66,7 +64,7 @@ class EditTodoPage extends LocalizedConsumerWidget {
     final formService = useMemoized(() => TodoFormService(ref, formKey));
 
     final formState = ref.watch(todoFormProvider);
-    final submitState = ref.watch(submitTodoProvider);
+    final submitState = ref.watch(todoNotifierProvider);
 
     useEffect(() {
       Future.microtask(() {
@@ -74,7 +72,7 @@ class EditTodoPage extends LocalizedConsumerWidget {
       });
       return null;
     }, [todo.id]);
-    ref.listen(submitTodoProvider, (prev, next) {
+    ref.listen(todoNotifierProvider, (prev, next) {
       next.when(
         data: (_) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -101,7 +99,6 @@ class EditTodoPage extends LocalizedConsumerWidget {
 
     return SharedScaffold(
       title: EditTodoStrings.title,
-      // title: context.tr("todo.edit.title"),
       body: Form(
         key: formKey,
         child: SingleChildScrollView(
@@ -125,7 +122,7 @@ class EditTodoPage extends LocalizedConsumerWidget {
           ),
         ),
       ),
-      currentRoute: '/todos',
+      currentRoute: AppRoutes.todo,
     );
   }
 
@@ -141,8 +138,7 @@ class EditTodoPage extends LocalizedConsumerWidget {
           initialValue: currentNotes,
           validator: TodoValidators.validateNotes,
           maxLines: 6,
-          onChanged:
-              (value) => ref.read(todoFormProvider.notifier).updateNotes(value),
+          onChanged: ref.read(todoFormProvider.notifier).updateNotes,
         ),
       ],
     );
@@ -167,8 +163,8 @@ class EditTodoPage extends LocalizedConsumerWidget {
           final formState = ref.read(todoFormProvider);
 
           await ref
-              .read(submitTodoProvider.notifier)
-              .submit(
+              .read(todoNotifierProvider.notifier)
+              .addTodo(
                 title: formState.title,
                 date: formState.selectedDate,
                 time: formState.selectedTime,
@@ -206,8 +202,7 @@ class EditTodoPage extends LocalizedConsumerWidget {
         TimeFormField(
           labelText: "",
           validator: TodoValidators.validateTime,
-          onChanged:
-              (time) => ref.read(todoFormProvider.notifier).updateTime(time),
+          onChanged: ref.read(todoFormProvider.notifier).updateTime,
         ),
       ],
     );
@@ -227,8 +222,7 @@ class EditTodoPage extends LocalizedConsumerWidget {
           key: ValueKey(titleKey),
           validator: TodoValidators.validateTitle,
           initialValue: currentTitle,
-          onChanged:
-              (value) => ref.read(todoFormProvider.notifier).updateTitle(value),
+          onChanged: ref.read(todoFormProvider.notifier).updateTitle,
         ),
       ],
     );

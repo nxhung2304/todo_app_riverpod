@@ -21,9 +21,7 @@ class TodoTitleField extends ConsumerWidget {
         InputFormField(
           validator: TodoValidators.validateTitle,
           initialValue: currentTitle,
-          onChanged:
-              (value) =>
-                  ref.read(todoFormProvider.notifier).updateTitle(value),
+          onChanged: ref.read(todoFormProvider.notifier).updateTitle,
         ),
       ],
     );

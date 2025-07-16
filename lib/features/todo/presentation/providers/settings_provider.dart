@@ -1,23 +1,10 @@
+import 'package:learn_riverpod/features/todo/presentation/states/settings_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'settings_provider.g.dart';
 
-class SettingsState {
-  final bool isDarkMode;
-  final String language;
-
-  const SettingsState({this.isDarkMode = false, this.language = 'vi'});
-
-  SettingsState copyWith({bool? isDarkMode, String? language}) {
-    return SettingsState(
-      isDarkMode: isDarkMode ?? this.isDarkMode,
-      language: language ?? this.language,
-    );
-  }
-}
-
 @riverpod
-class SettingsProvider extends _$SettingsProvider {
+class SettingsNotifier extends _$SettingsNotifier {
   @override
   SettingsState build() {
     return SettingsState();

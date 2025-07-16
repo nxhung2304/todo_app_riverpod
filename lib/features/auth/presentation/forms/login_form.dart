@@ -5,8 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/core/config/router/app_routes.dart';
 import 'package:learn_riverpod/features/auth/presentation/providers/auth_state_provider.dart';
 import 'package:learn_riverpod/features/auth/strings/auth_strings.dart';
-import 'package:learn_riverpod/shared/widgets/form/input_field_form.dart';
-import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
+import 'package:learn_riverpod/shared/widgets/form/form_fields.dart';
 
 class LoginForm extends HookConsumerWidget {
   const LoginForm({super.key});
@@ -17,27 +16,13 @@ class LoginForm extends HookConsumerWidget {
 
     final emailController = useTextEditingController(text: '');
     final passwordController = useTextEditingController(text: '');
-    return SharedScaffold(
-      title: AuthStrings.login,
-      currentRoute: AppRoutes.login,
-      showAppBar: true,
-      showBottomNav: false,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: loginFormKey,
-          child: Column(
-            children: [
-              ..._buildLoginForm(
-                context,
-                ref,
-                emailController,
-                passwordController,
-              ),
-              ..._buildSocialLogin(),
-            ],
-          ),
-        ),
+    return Form(
+      key: loginFormKey,
+      child: Column(
+        children: [
+          ..._buildLoginForm(context, ref, emailController, passwordController),
+          ..._buildSocialLogin(),
+        ],
       ),
     );
   }
@@ -49,18 +34,13 @@ class LoginForm extends HookConsumerWidget {
     TextEditingController passwordController,
   ) {
     return [
-      InputFormField(
-        hintText: AuthStrings.email,
-        prefixIcon: Icons.email_outlined,
+      FormFields.email(
         onChanged: (newEmail) {
           emailController.text = newEmail;
         },
       ),
       SizedBox(height: 12),
-      InputFormField(
-        hintText: AuthStrings.password,
-        prefixIcon: Icons.password_outlined,
-        isPassword: true,
+      FormFields.password(
         onChanged: (newPassword) {
           passwordController.text = newPassword;
         },

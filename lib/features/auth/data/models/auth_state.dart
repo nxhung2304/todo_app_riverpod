@@ -1,4 +1,3 @@
-// models/auth_state.dart
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'user.dart';
 

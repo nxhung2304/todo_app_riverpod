@@ -13,6 +13,7 @@ class InputFormField extends HookConsumerWidget {
   final IconData? prefixIcon;
   final bool enabled;
   final bool isPassword;
+  final TextEditingController? controller;
 
   const InputFormField({
     super.key,
@@ -26,6 +27,7 @@ class InputFormField extends HookConsumerWidget {
     this.prefixIcon,
     this.enabled = true,
     this.isPassword = false,
+    this.controller,
   });
 
   @override
@@ -44,9 +46,12 @@ class InputFormField extends HookConsumerWidget {
         prefixIcon: _buildPrefixIcon(),
         suffixIcon: isPassword ? _buildSuffixIcon(obscure) : null,
 
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+
         hintText: hintText,
         labelText: labelText,
-        border: const OutlineInputBorder(),
         errorMaxLines: 2,
         errorStyle: TextStyle(color: Colors.red, fontSize: 12),
       ),
@@ -75,6 +80,74 @@ class InputFormField extends HookConsumerWidget {
         obscure.value = !obscure.value;
       },
       icon: Icon(Icons.remove_red_eye),
+    );
+  }
+}
+
+// shared/widgets/form/input_form_field.dart
+extension InputFormFieldExtensions on InputFormField {
+  // ✅ Email field constructor
+  static InputFormField email({
+    String? initialValue,
+    ValueChanged<String>? onChanged,
+    FormFieldValidator<String>? validator,
+    TextEditingController? controller,
+    bool enabled = true,
+  }) {
+    return InputFormField(
+      labelText: 'Email',
+      hintText: 'Enter your email',
+      // keyboardType: TextInputType.emailAddress,
+      prefixIcon: Icons.email_outlined,
+      // textCapitalization: TextCapitalization.none,
+      initialValue: initialValue,
+      onChanged: onChanged,
+      // validator: validator ?? AuthValidators.email,
+      controller: controller,
+      enabled: enabled,
+    );
+  }
+
+  // ✅ Password field constructor
+  static InputFormField password({
+    String? labelText,
+    String? initialValue,
+    ValueChanged<String>? onChanged,
+    FormFieldValidator<String>? validator,
+    TextEditingController? controller,
+    bool enabled = true,
+  }) {
+    return InputFormField(
+      labelText: labelText ?? 'Password',
+      hintText: 'Enter your password',
+      isPassword: true,
+      prefixIcon: Icons.lock_outlined,
+      initialValue: initialValue,
+      onChanged: onChanged,
+      // validator: validator ?? AuthValidators.password,
+      controller: controller,
+      enabled: enabled,
+    );
+  }
+
+  // ✅ Name field constructor
+  static InputFormField name({
+    String? initialValue,
+    ValueChanged<String>? onChanged,
+    FormFieldValidator<String>? validator,
+    TextEditingController? controller,
+    bool enabled = true,
+  }) {
+    return InputFormField(
+      labelText: 'Full Name',
+      hintText: 'Enter your full name',
+      prefixIcon: Icons.person_outlined,
+      // textCapitalization: TextCapitalization.words,
+      initialValue: initialValue,
+      onChanged: onChanged,
+      // validator: validator ?? AuthValidators.fullName,
+      controller: controller,
+      enabled: enabled,
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learn_riverpod/config/localization/app_locale.dart';
+import 'package:learn_riverpod/core/config/localization/app_locale.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_locale_provider.g.dart';

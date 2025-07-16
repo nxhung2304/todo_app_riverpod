@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:learn_riverpod/shared/providers/auth_state_provider.dart';
+import 'package:learn_riverpod/features/auth/data/models/auth_state.dart';
+import 'package:learn_riverpod/features/auth/presentation/providers/auth_state_provider.dart';
 import 'package:learn_riverpod/shared/widgets/navigation/shared_app_bar.dart';
 import 'package:learn_riverpod/shared/widgets/navigation/shared_bottom_nav.dart';
 
@@ -30,7 +31,7 @@ class SharedScaffold extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authState = ref.watch(authStateProvider);
+    final authState = ref.watch(authNotifierProvider);
 
     return Scaffold(
       appBar:
@@ -39,13 +40,16 @@ class SharedScaffold extends ConsumerWidget {
                 title: title,
                 actions: [
                   ...?appBarActions,
-                  if (authState.value != null)
-                    IconButton(
-                      onPressed: () {
-                        print("Logout");
-                      },
-                      icon: Icon(Icons.logout),
-                    ),
+                  authState.maybeWhen(
+                    authenticated:
+                        (_) => IconButton(
+                          onPressed: () {
+                            ref.read(authNotifierProvider.notifier).logout();
+                          },
+                          icon: const Icon(Icons.logout),
+                        ),
+                    orElse: () => const SizedBox.shrink(),
+                  ),
                 ],
                 centerTitle: centerTitle,
                 backgroundColor: appBarBackgroundColor,

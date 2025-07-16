@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:learn_riverpod/config/router/app_routes.dart';
+import 'package:learn_riverpod/core/config/router/app_routes.dart';
 import 'package:learn_riverpod/features/auth/presentation/pages/login_page.dart';
 import 'package:learn_riverpod/features/auth/presentation/pages/signup_page.dart';
 import 'package:learn_riverpod/features/todo/presentation/pages/edit_todo_page.dart';

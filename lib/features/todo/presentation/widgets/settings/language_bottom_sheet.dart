@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:learn_riverpod/config/localization/app_locale.dart';
-import 'package:learn_riverpod/config/localization/app_locale_provider.dart';
+import 'package:learn_riverpod/core/config/localization/app_locale.dart';
+import 'package:learn_riverpod/core/config/localization/app_locale_provider.dart';
 import 'package:learn_riverpod/features/todo/strings/settings_strings.dart';
 
 class LanguageBottomSheet extends ConsumerWidget {

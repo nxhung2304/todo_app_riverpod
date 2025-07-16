@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:learn_riverpod/config/router/app_routes.dart';
+import 'package:learn_riverpod/core/config/router/app_routes.dart';
 import 'package:learn_riverpod/features/todo/strings/home_strings.dart';
 import 'package:learn_riverpod/features/todo/strings/search_strings.dart';
 import 'package:learn_riverpod/features/todo/strings/settings_strings.dart';

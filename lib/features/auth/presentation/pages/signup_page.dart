@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:learn_riverpod/config/router/app_routes.dart';
+import 'package:learn_riverpod/core/config/router/app_routes.dart';
+import 'package:learn_riverpod/features/auth/presentation/providers/auth_state_provider.dart';
 import 'package:learn_riverpod/features/auth/presentation/validators/auth_validators.dart';
 import 'package:learn_riverpod/features/auth/strings/auth_strings.dart';
-import 'package:learn_riverpod/shared/providers/auth_state_provider.dart';
 import 'package:learn_riverpod/shared/strings/shared_strings.dart';
 import 'package:learn_riverpod/shared/widgets/form/input_field_form.dart';
 import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
@@ -21,7 +21,7 @@ class SignupPage extends HookConsumerWidget {
     final passwordController = useTextEditingController(text: '');
     final confirmPasswordController = useTextEditingController(text: '');
 
-    final authActions = ref.read(authActionsProvider.notifier);
+    final authNotifier = ref.read(authNotifierProvider.notifier);
 
     return WillPopScope(
       onWillPop: () async {
@@ -107,7 +107,7 @@ class SignupPage extends HookConsumerWidget {
                       return;
                     }
 
-                    await authActions.signup(
+                    await authNotifier.signup(
                       fullNameController.text,
                       email: emailController.text,
                       password: passwordController.text,

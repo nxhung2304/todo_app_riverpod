@@ -1,29 +1,11 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'storage_provider.dart';
+part of 'todo_providers.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$storageServiceHash() => r'a6d23bc030486b6d1106efa40d3a7733b6bf906f';
-
-/// See also [storageService].
-@ProviderFor(storageService)
-final storageServiceProvider = AutoDisposeProvider<StorageService>.internal(
-  storageService,
-  name: r'storageServiceProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$storageServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef StorageServiceRef = AutoDisposeProviderRef<StorageService>;
 String _$todoLocalDataSourceHash() =>
     r'24b7dc1c232efd1e8cb74f3b66e2c331716f984b';
 

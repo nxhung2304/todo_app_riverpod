@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/features/todo/presentation/providers/todo_form_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/validators/todo_validators.dart';
-import 'package:learn_riverpod/features/todo/presentation/widgets/form/input_form_field.dart';
+import 'package:learn_riverpod/shared/widgets/form/input_field_form.dart';
 
 class TodoTitleField extends ConsumerWidget {
   const TodoTitleField({super.key});

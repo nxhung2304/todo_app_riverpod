@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learn_riverpod/features/todo/data/models/todo.dart';
-import 'package:learn_riverpod/shared/providers/storage_provider.dart';
+import 'package:learn_riverpod/features/todo/data/providers/todo_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'todo_list_provider.g.dart';

@@ -1,0 +1,30 @@
+#!/bin/sh
+
+commit_msg=$(cat "$1")
+
+conventional_regex="^(feat|fix|docs|style|refactor|test|chore|ci|perf|build)(\([a-zA-Z0-9_-]+\))?: .{1,}$"
+
+if echo "$commit_msg" | grep -Eq "$conventional_regex"; then
+  echo "✅ Conventional Commit passed."
+  exit 0
+else
+  echo "❌ Commit message not valid!"
+  echo "👉 Use format: <type>(<optional_scope>): description"
+  echo ""
+  echo "🔧 Allowed types:"
+  echo "  - feat:      New feature"
+  echo "  - fix:       Bug fix"
+  echo "  - docs:      Documentation only changes"
+  echo "  - style:     Code style changes (formatting, no logic)"
+  echo "  - refactor:  Code refactoring"
+  echo "  - test:      Adding or fixing tests"
+  echo "  - chore:     Maintenance, tooling, build config"
+  echo "  - ci:        CI/CD changes"
+  echo "  - perf:      Performance improvements"
+  echo "  - build:     Build system or dependencies"
+  echo ""
+  echo "💡 Example: feat(auth): add Google login"
+  echo "            fix(todo): handle null title bug"
+  exit 1
+fi
+

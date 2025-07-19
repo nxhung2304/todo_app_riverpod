@@ -32,13 +32,7 @@ class AuthNotifier extends _$AuthNotifier {
     }
   }
 
-  Future<void> signup(
-    String fullName, {
-    required String email,
-    required String password,
-  }) async {
-    state = const AuthState.loading();
-    try {
+  Future<void> signup( String fullName, { required String email, required String password, }) async { state = const AuthState.loading(); try {
       final repository = ref.read(authRepositoryProvider);
       await repository.signup(fullName, email: email, password: password);
     } catch (e) {

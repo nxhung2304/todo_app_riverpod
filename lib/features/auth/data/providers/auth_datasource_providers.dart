@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:learn_riverpod/core/providers/storage_provider.dart';
+import 'package:learn_riverpod/core/providers/core_providers.dart';
 import 'package:learn_riverpod/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -14,5 +14,6 @@ AuthLocalDataSource authLocalDataSource(Ref ref) {
 
 @riverpod
 AuthRemoteDatasource authRemoteDataSource(Ref ref) {
-  return AuthRemoteDatasource();
+  final apiClient = ref.watch(apiClientProvider);
+  return AuthRemoteDatasource(apiClient: apiClient);
 }

@@ -1,74 +1,54 @@
-import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:learn_riverpod/core/constants/api_endpoints.dart';
+import 'package:learn_riverpod/core/exceptions/server_exception.dart';
+import 'package:learn_riverpod/core/services/api_client.dart';
 
 class AuthRemoteDatasource {
-  Future<firebase_auth.User> login({
+  final ApiClient apiClient;
+
+  AuthRemoteDatasource({required this.apiClient});
+
+  Future<Map<String, dynamic>> login({
     required String email,
     required String password,
   }) async {
     try {
-      final credential = await firebase_auth.FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      if (credential.user != null) {
-        return credential.user!;
-      } else {
-        throw Exception('No user found');
-      }
-    } on firebase_auth.FirebaseAuthException catch (e) {
-      throw Exception(_mapFirebaseError(e.code));
+      final response = await apiClient.post(
+        ApiEndpoints.login,
+        data: {email: email, password: password},
+      );
+      print(response);
+      return response.data;
     } catch (e) {
       print(e);
       throw Exception('An unexpected error occurred. Please try again.');
     }
   }
 
-  Future<firebase_auth.User> signup(
+  Future<Map<String, dynamic>> signup(
     String fullName, {
     required String email,
     required String password,
   }) async {
     try {
-      final credential = await firebase_auth.FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-
-      if (credential.user != null) {
-        return credential.user!;
-      } else {
-        throw Exception('No user found');
-      }
-    } on firebase_auth.FirebaseAuthException catch (e) {
-      throw Exception(_mapFirebaseError(e.code));
+      final response = await apiClient.post(
+        ApiEndpoints.signup,
+        data: {email: email, password: password},
+      );
+      print(response);
+      return response.data;
     } catch (e) {
-      throw Exception("Cannot signOut by FirebaseAuth");
+      throw Exception("Cannot signup");
     }
   }
 
   Future<void> logout() async {
     try {
-      await firebase_auth.FirebaseAuth.instance.signOut();
+      final response = await apiClient.delete(ApiEndpoints.logout);
+      if (!response.isSuccess) {
+        throw ServerException(response.error ?? 'Logout failed', 500);
+      }
     } catch (e) {
-      throw Exception("Cannot signOut by FirebaseAuth");
-    }
-  }
-
-  String _mapFirebaseError(String errorCode) {
-    switch (errorCode) {
-      case 'user-not-found':
-        return 'No account found with this email';
-      case 'wrong-password':
-      case 'invalid-credential':
-        return 'Invalid email or password';
-      case 'invalid-email':
-        return 'Invalid email format';
-      case 'user-disabled':
-        return 'This account has been disabled';
-      case 'too-many-requests':
-        return 'Too many failed attempts. Try again later';
-      case 'weak-password':
-        return 'Password is too weak';
-      case 'email-already-in-use':
-        return 'Email is already registered';
-      default:
-        return 'Authentication failed: $errorCode';
+      throw Exception("Cannot signOut");
     }
   }
 }

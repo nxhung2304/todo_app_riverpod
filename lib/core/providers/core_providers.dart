@@ -2,14 +2,35 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/core/config/api_client_config.dart';
 import 'package:learn_riverpod/core/config/enviroment.dart';
 import 'package:learn_riverpod/core/services/api_client.dart';
+import 'package:learn_riverpod/core/services/app_logger.dart';
+import 'package:learn_riverpod/core/services/storage_service.dart';
+import 'package:logger/web.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'api_client_provider.g.dart';
+part 'core_providers.g.dart';
+
+@riverpod
+ApiClient apiClient(Ref ref) {
+  final config = ref.watch(apiClientConfigProvider);
+  print(config);
+
+  return ApiClient(baseUrl: config.baseUrl);
+}
+
+@riverpod
+AppLogger appLogger(Ref ref) {
+  return AppLogger();
+}
+
+@riverpod
+StorageService storageService(Ref ref) {
+  return StorageService();
+}
 
 @riverpod
 ApiClientConfig apiClientConfig(Ref ref) {
   switch (Environment.current) {
-  case AppEnvironment.test:
+    case AppEnvironment.test:
       return ApiClientConfig.test();
     case AppEnvironment.development:
       return ApiClientConfig.development();
@@ -21,6 +42,6 @@ ApiClientConfig apiClientConfig(Ref ref) {
 }
 
 @riverpod
-ApiClient apiClient(Ref ref, String baseUrl) {
-  return ApiClient(baseUrl: baseUrl);
+Logger logger(Ref ref) {
+  return Logger();
 }

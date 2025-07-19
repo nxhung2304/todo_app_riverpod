@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:learn_riverpod/core/utils/result.dart';
 import 'package:learn_riverpod/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:learn_riverpod/features/auth/data/datasources/auth_remote_datasource.dart';
@@ -19,21 +18,14 @@ class AuthRepository {
     required String password,
   }) async {
     try {
-      final firebaseUser = await remoteDataSource.signup(
+      final userJson = await remoteDataSource.signup(
         fullName,
         email: email,
         password: password,
       );
-      print(firebaseUser);
 
-      final user = User.fromFirebaseUser(firebaseUser);
+      final user = User.fromJson(userJson);
       localDataSource.saveCurrentUser(user);
-    } on firebase_auth.FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
     } catch (e) {
       print(e);
     }
@@ -44,11 +36,11 @@ class AuthRepository {
     required String password,
   }) async {
     try {
-      final firebaseUser = await remoteDataSource.login(
+      final userJson = await remoteDataSource.login(
         email: email,
         password: password,
       );
-      final user = User.fromFirebaseUser(firebaseUser);
+      final user = User.fromJson(userJson);
       await localDataSource.saveCurrentUser(user);
 
       return Result.success(user);

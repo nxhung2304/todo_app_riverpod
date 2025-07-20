@@ -1,14 +1,27 @@
 import 'package:dio/dio.dart';
 import 'package:learn_riverpod/core/services/app_logger.dart';
+import 'package:learn_riverpod/core/services/token_storage_service.dart';
 
 class AuthInterceptor extends Interceptor {
   final AppLogger logger;
+  final TokenStorageService tokenStorageService;
 
-  AuthInterceptor({required this.logger});
+  AuthInterceptor({required this.logger, required this.tokenStorageService});
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    _addBearerTokenToHeaders();
+  void onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
+    final tokens = tokenStorageService.currentTokens;
+    if (tokens != null) {
+      options.headers.addAll({
+        'access-token': tokens.accessToken,
+        'client': tokens.client,
+        'uid': tokens.uid,
+      });
+    }
+
     final isExpired = _isTokenExpiration();
     if (isExpired) {
       _refreshToken();
@@ -30,8 +43,16 @@ class AuthInterceptor extends Interceptor {
     return handler.next(err);
   }
 
-  void _addBearerTokenToHeaders() {
+  Future<void> _addBearerTokenToHeaders(RequestOptions options) async {
     // Add Bearer token to headers
+    final tokens = await tokenStorageService.currentTokens;
+    if (tokens != null) {
+      options.headers.addAll({
+        'access-token': tokens.accessToken,
+        'client': tokens.client,
+        'uid': tokens.uid,
+      });
+    }
   }
 
   void _refreshToken() {

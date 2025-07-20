@@ -40,8 +40,8 @@ class AuthValidators {
     if (password == null || password.trim().isEmpty) {
       return "Vui lòng nhập password";
     }
-    if (password.trim().length < 8) {
-      return "Password phải có ít nhất 8 ký tự";
+    if (password.trim().length < 6) {
+      return "Password phải có ít nhất 6 ký tự";
     }
     if (password.length > 100) {
       return "Password không được quá 100 ký tự";

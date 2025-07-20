@@ -4,9 +4,9 @@ class AppLogger {
   debug(String msg, {dynamic data}) {
     final Logger logger = Logger();
     if (data != null) {
-      logger.e("$msg: $data");
+      logger.d("$msg: $data");
     } else {
-      logger.e(msg);
+      logger.d(msg);
     }
   }
 

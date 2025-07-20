@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:learn_riverpod/core/exceptions/network_exception.dart';
+import 'package:learn_riverpod/core/models/api_response.dart';
 import 'package:learn_riverpod/core/services/app_logger.dart';
 import 'package:learn_riverpod/core/services/network_connectivity.dart';
-import 'package:learn_riverpod/core/utils/api_response.dart';
 
 class AppRequest {
   final AppLogger _appLogger;

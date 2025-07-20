@@ -1,6 +1,10 @@
-import 'package:learn_riverpod/core/utils/result.dart';
+import 'package:dio/dio.dart';
+import 'package:learn_riverpod/core/models/api_response.dart';
+import 'package:learn_riverpod/core/models/auth_tokens.dart';
 import 'package:learn_riverpod/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:learn_riverpod/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:learn_riverpod/features/auth/data/models/requests/login_request.dart';
+import 'package:learn_riverpod/features/auth/data/models/requests/signup_request.dart';
 import 'package:learn_riverpod/features/auth/data/models/user.dart';
 
 class AuthRepository {
@@ -12,65 +16,53 @@ class AuthRepository {
     required this.remoteDataSource,
   });
 
-  Future<void> signup(
-    String fullName, {
+  Future<ApiResponse<void>> signup({
+    required String fullName,
     required String email,
     required String password,
   }) async {
     try {
-      final userJson = await remoteDataSource.signup(
-        fullName,
+      final signupRequest = SignupRequest(
+        fullName: fullName,
         email: email,
         password: password,
       );
-
-      final user = User.fromJson(userJson);
-      localDataSource.saveCurrentUser(user);
+      final userJson = await remoteDataSource.signup(signupRequest);
+      return ApiResponse.success("Suggess");
     } catch (e) {
       print(e);
+      return ApiResponse.error(e.toString().replaceFirst('Exception: ', ''));
     }
   }
 
-  Future<Result<User>> login({
-    required String email,
-    required String password,
-  }) async {
+  Future<ApiResponse<AuthTokens>> login(LoginRequest loginRequest) async {
     try {
-      final userJson = await remoteDataSource.login(
-        email: email,
-        password: password,
-      );
-      final user = User.fromJson(userJson);
-      await localDataSource.saveCurrentUser(user);
+      final authToken = await remoteDataSource.login(loginRequest);
 
-      return Result.success(user);
+      return ApiResponse.success(authToken);
     } catch (e) {
-      return Result.failure(
-        e.toString().replaceFirst('Exception: ', ''),
-        e is Exception ? e : Exception(e.toString()),
-      );
+      return ApiResponse.error(e.toString().replaceFirst('Exception: ', ''));
     }
   }
 
-  Future<void> logout() async {
+  Future<ApiResponse<void>> logout() async {
     try {
       await remoteDataSource.logout();
       await localDataSource.removeCurrentUser();
+
+      return ApiResponse.success("Logout success");
     } catch (e) {
-      rethrow;
+      return ApiResponse.error(e.toString());
     }
   }
 
-  Future<User?> getCurrentUser() async {
+  Future<ApiResponse<User>> validateToken() async {
     try {
-      final savedUser = await localDataSource.getCurrentUser();
-      if (savedUser == null) {
-        return null;
-      }
+      final user = await remoteDataSource.validateToken();
 
-      return savedUser;
+      return ApiResponse.success(user);
     } catch (e) {
-      throw Exception("Erorr: $e");
+      return ApiResponse.error(e.toString());
     }
   }
 }

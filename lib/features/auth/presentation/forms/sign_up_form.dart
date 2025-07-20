@@ -59,7 +59,7 @@ class SignUpForm extends HookConsumerWidget {
               }
 
               await authNotifier.signup(
-                formState.fullName,
+                fullName: formState.fullName,
                 email: formState.email,
                 password: formState.password,
               );

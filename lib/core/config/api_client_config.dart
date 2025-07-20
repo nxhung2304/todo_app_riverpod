@@ -9,7 +9,7 @@ class ApiClientConfig {
   final int maxRetries;
   final bool cacheEnabled;
   final Duration cacheDuration;
-  
+
   const ApiClientConfig({
     required this.baseUrl,
     required this.connectTimeout,
@@ -20,7 +20,7 @@ class ApiClientConfig {
     required this.cacheEnabled,
     required this.cacheDuration,
   });
-  
+
   factory ApiClientConfig.fromEnvironment() {
     return ApiClientConfig(
       baseUrl: Environment.apiBaseUrl,
@@ -33,14 +33,11 @@ class ApiClientConfig {
       defaultHeaders: _buildDefaultHeaders(),
     );
   }
-  
+
   static Map<String, String> _buildDefaultHeaders() {
-    return {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    };
+    return {'Content-Type': 'application/json', 'Accept': 'application/json'};
   }
-  
+
   factory ApiClientConfig.test() {
     return ApiClientConfig.fromEnvironment().copyWith(
       enableLogging: true,
@@ -50,7 +47,7 @@ class ApiClientConfig {
       },
     );
   }
-  
+
   factory ApiClientConfig.development() {
     return ApiClientConfig.fromEnvironment().copyWith(
       enableLogging: true,
@@ -60,7 +57,7 @@ class ApiClientConfig {
       },
     );
   }
-  
+
   factory ApiClientConfig.staging() {
     return ApiClientConfig.fromEnvironment().copyWith(
       defaultHeaders: {
@@ -69,7 +66,7 @@ class ApiClientConfig {
       },
     );
   }
-  
+
   factory ApiClientConfig.production() {
     return ApiClientConfig.fromEnvironment().copyWith(
       enableLogging: false,
@@ -79,7 +76,7 @@ class ApiClientConfig {
       },
     );
   }
-  
+
   ApiClientConfig copyWith({
     String? baseUrl,
     Duration? connectTimeout,
@@ -100,5 +97,10 @@ class ApiClientConfig {
       cacheEnabled: cacheEnabled ?? this.cacheEnabled,
       cacheDuration: cacheDuration ?? this.cacheDuration,
     );
+  }
+
+  @override
+  String toString() {
+    return 'ApiClientConfig(baseUrl: $baseUrl, timeout: ${connectTimeout}ms, receiveTimeout: ${receiveTimeout}ms)';
   }
 }

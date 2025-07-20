@@ -31,11 +31,11 @@ class LoggingInterceptor extends Interceptor {
       _logError(err);
     }
 
-    return handler.next(err);
+    super.onError(err, handler);
   }
 
   void _logRequest(RequestOptions options) {
-    logger.debug("[Request] [${options.method}] ${options.path}");
+    logger.debug("[Request] [${options.method}] ${options.uri}");
   }
 
   void _logResponse(Response response) {

@@ -7,7 +7,7 @@ part 'signup_form_provider.g.dart';
 class SignupFormNotifier extends _$SignupFormNotifier {
   @override
   SignupFormState build() {
-    return SignupFormState();
+    return SignupFormState(email: "user6@example.com", fullName: "User 6", password: "123456", confirmPassword: "123456");
   }
 
   void updateFullName(String value) {

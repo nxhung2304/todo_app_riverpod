@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/core/config/router/app_routes.dart';
-import 'package:learn_riverpod/features/auth/presentation/forms/sign_up_form.dart';
+import 'package:learn_riverpod/features/auth/presentation/forms/signup_form.dart';
 import 'package:learn_riverpod/features/auth/presentation/providers/signup_form_provider.dart';
 import 'package:learn_riverpod/features/auth/strings/auth_strings.dart';
 import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
@@ -24,14 +24,14 @@ class SignupPage extends HookConsumerWidget {
         return true;
       },
       child: SharedScaffold(
-        title: AuthStrings.signUp,
+        title: AuthStrings.signup,
         currentRoute: AppRoutes.signup,
         showAppBar: true,
         showBottomNav: false,
         body: SafeArea(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
-            child: SignUpForm(),
+            child: SignupForm(),
           ),
         ),
       ),

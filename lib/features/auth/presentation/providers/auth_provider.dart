@@ -3,7 +3,7 @@ import 'package:learn_riverpod/core/models/auth_status.dart';
 import 'package:learn_riverpod/core/models/result.dart';
 import 'package:learn_riverpod/core/providers/core_providers.dart';
 import 'package:learn_riverpod/core/services/token_storage_service.dart';
-import 'package:learn_riverpod/features/auth/data/models/requests/login_request.dart';
+import 'package:learn_riverpod/features/auth/data/models/params/login_params.dart';
 import 'package:learn_riverpod/features/auth/data/models/user.dart';
 import 'package:learn_riverpod/features/auth/data/providers/auth_repository_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -15,8 +15,8 @@ class AuthNotifier extends _$AuthNotifier {
   @override
   Future<AuthStatus> build() async {
     final storedTokens = await ref.watch(tokenStorageServiceProvider.future);
-
     if (storedTokens == null) {
+      print('No stored tokens, returning unauthenticated');
       return const AuthStatus.unauthenticated();
     }
 
@@ -24,15 +24,18 @@ class AuthNotifier extends _$AuthNotifier {
       final authRepo = ref.read(authRepositoryProvider);
       final userResult = await authRepo.validateToken();
 
-      if (userResult is Success<User>) {
+      if (userResult is ApiSuccess<User>) {
         final user = userResult.data;
-
-        if (user != null) return AuthStatus.authenticated(user);
+        print('User from build validateToken: $user');
+        print('Returning authenticated from build');
+        return AuthStatus.authenticated(user);
       }
     } catch (e) {
+      print('Error in build validateToken: $e');
       return const AuthStatus.unauthenticated();
     }
 
+    print('Returning unauthenticated from build');
     return const AuthStatus.unauthenticated();
   }
 
@@ -41,34 +44,32 @@ class AuthNotifier extends _$AuthNotifier {
 
     try {
       final authRepo = ref.read(authRepositoryProvider);
-      final loginRequest = LoginRequest(email: email, password: password);
-      final result = await authRepo.login(loginRequest);
+      final loginParams = LoginParams(email: email, password: password);
+      final result = await authRepo.login(loginParams);
 
       if (result.data != null) {
         await ref
             .read(tokenStorageServiceProvider.notifier)
             .saveTokens(result.data!);
-            
-             ref.read(apiClientProvider).updateAuthHeaders(result.data!);
       }
-
 
       final userResult = await authRepo.validateToken();
 
       if (userResult is ApiSuccess<User>) {
         final user = userResult.data;
+
         state = AsyncValue.data(AuthStatus.authenticated(user));
       } else if (userResult is ApiError<User>) {
         state = AsyncValue.data(
           AuthStatus.error(userResult.error ?? 'Unknown error'),
         );
       }
-        } catch (e) {
+    } catch (e) {
       state = AsyncValue.data(AuthStatus.error(e.toString()));
     }
   }
 
-  Future<void> signup({
+  Future<ApiResponse> signup({
     required String fullName,
     required String email,
     required String password,
@@ -79,7 +80,7 @@ class AuthNotifier extends _$AuthNotifier {
     try {
       if (confirmPassword != null && password != confirmPassword) {
         state = AsyncValue.data(AuthStatus.error('Passwords do not match'));
-        return;
+        return ApiResponse.error('Passwords do not match');
       }
 
       final authRepo = ref.read(authRepositoryProvider);
@@ -89,16 +90,21 @@ class AuthNotifier extends _$AuthNotifier {
         password: password,
       );
 
-      if (result is Success) {
+      if (result.isSuccess) {
         state = const AsyncValue.data(AuthStatus.unauthenticated());
+        return ApiResponse.success('Signup successfully');
       } else if (result.isError) {
         state = AsyncValue.data(
           AuthStatus.error(result.error ?? 'Signup failed'),
         );
+        return ApiResponse.error(result.error ?? 'Signup failed');
       }
     } catch (e) {
       state = AsyncValue.data(AuthStatus.error(e.toString()));
+      return ApiResponse.error(e.toString());
     }
+
+    return ApiResponse.error('Signup failed');
   }
 
   Future<void> logout() async {

@@ -3,8 +3,8 @@ import 'package:learn_riverpod/core/models/api_response.dart';
 import 'package:learn_riverpod/core/models/auth_tokens.dart';
 import 'package:learn_riverpod/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:learn_riverpod/features/auth/data/datasources/auth_remote_datasource.dart';
-import 'package:learn_riverpod/features/auth/data/models/requests/login_request.dart';
-import 'package:learn_riverpod/features/auth/data/models/requests/signup_request.dart';
+import 'package:learn_riverpod/features/auth/data/models/params/login_params.dart';
+import 'package:learn_riverpod/features/auth/data/models/params/signup_params.dart';
 import 'package:learn_riverpod/features/auth/data/models/user.dart';
 
 class AuthRepository {
@@ -22,12 +22,12 @@ class AuthRepository {
     required String password,
   }) async {
     try {
-      final signupRequest = SignupRequest(
+      final signupParams = SignupParams(
         fullName: fullName,
         email: email,
         password: password,
       );
-      final userJson = await remoteDataSource.signup(signupRequest);
+      final userJson = await remoteDataSource.signup(signupParams);
       return ApiResponse.success("Suggess");
     } catch (e) {
       print(e);
@@ -35,9 +35,9 @@ class AuthRepository {
     }
   }
 
-  Future<ApiResponse<AuthTokens>> login(LoginRequest loginRequest) async {
+  Future<ApiResponse<AuthTokens>> login(LoginParams loginParams) async {
     try {
-      final authToken = await remoteDataSource.login(loginRequest);
+      final authToken = await remoteDataSource.login(loginParams);
 
       return ApiResponse.success(authToken);
     } catch (e) {
@@ -58,9 +58,9 @@ class AuthRepository {
 
   Future<ApiResponse<User>> validateToken() async {
     try {
-      final user = await remoteDataSource.validateToken();
+      final response = await remoteDataSource.validateToken();
 
-      return ApiResponse.success(user);
+      return response;
     } catch (e) {
       return ApiResponse.error(e.toString());
     }

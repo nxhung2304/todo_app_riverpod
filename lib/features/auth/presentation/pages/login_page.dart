@@ -18,6 +18,9 @@ class LoginPage extends HookConsumerWidget {
     final authState = ref.watch(authNotifierProvider);
 
     ref.listen(authNotifierProvider, (previous, next) {
+      print('=== AUTH STATE CHANGED ===');
+      print('Previous: $previous');
+      print('Next: $next');
       next.whenData((status) {
         status.whenOrNull(
           authenticated: (user) {
@@ -29,18 +32,39 @@ class LoginPage extends HookConsumerWidget {
     });
 
     return authState.when(
-      data:
-          (status) => status.when(
-            initialize: () => _buildLoginUI(context, ref, false),
-            loading: () => _buildLoginUI(context, ref, true),
-            unauthenticated: () => _buildLoginUI(context, ref, false),
-            authenticated: (user) {
-              return const SizedBox.shrink();
-            },
-            error: (message) => _buildErrorUI(context, ref, message),
-          ),
-      loading: () => _buildLoginUI(context, ref, true),
-      error: (error, _) => _buildErrorUI(context, ref, error.toString()),
+      data: (status) {
+        print('Building UI with status: $status');
+        return status.when(
+          initialize: () {
+            print('Building initialize UI');
+            return _buildLoginUI(context, ref, false);
+          },
+          loading: () {
+            print('Building loading UI');
+            return _buildLoginUI(context, ref, true);
+          },
+          unauthenticated: () {
+            print('Building unauthenticated UI');
+            return _buildLoginUI(context, ref, false);
+          },
+          authenticated: (user) {
+            print('Building authenticated UI for user: $user');
+            return const SizedBox.shrink();
+          },
+          error: (message) {
+            print('Building error UI: $message');
+            return _buildErrorUI(context, ref, message);
+          },
+        );
+      },
+      loading: () {
+        print('Building loading state');
+        return _buildLoginUI(context, ref, true);
+      },
+      error: (error, _) {
+        print('Building error state: $error');
+        return _buildErrorUI(context, ref, error.toString());
+      },
     );
   }
 

@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:learn_riverpod/core/constants/api_endpoints.dart';
 import 'package:learn_riverpod/core/exceptions/server_exception.dart';
+import 'package:learn_riverpod/core/models/api_response.dart';
 import 'package:learn_riverpod/core/models/auth_tokens.dart';
 import 'package:learn_riverpod/core/services/api_client.dart';
-import 'package:learn_riverpod/features/auth/data/models/requests/login_request.dart';
-import 'package:learn_riverpod/features/auth/data/models/requests/signup_request.dart';
+import 'package:learn_riverpod/features/auth/data/models/params/login_params.dart';
+import 'package:learn_riverpod/features/auth/data/models/params/signup_params.dart';
 import 'package:learn_riverpod/features/auth/data/models/user.dart';
 
 class AuthRemoteDatasource {
@@ -12,11 +13,11 @@ class AuthRemoteDatasource {
 
   AuthRemoteDatasource({required this.apiClient});
 
-  Future<AuthTokens> login(LoginRequest loginRequest) async {
+  Future<AuthTokens> login(LoginParams loginParams) async {
     try {
       final response = await apiClient.post(
         ApiEndpoints.login,
-        data: loginRequest.toJson(),
+        data: loginParams.toJson(),
       );
 
       if (response.statusCode == 200) {
@@ -32,21 +33,21 @@ class AuthRemoteDatasource {
     }
   }
 
-  Future<Map<String, dynamic>> signup(SignupRequest signupRequest) async {
+  Future<Map<String, dynamic>> signup(SignupParams signupParams) async {
     try {
       final response = await apiClient.post(
         ApiEndpoints.signup,
-        data: signupRequest.toJson(),
+        data: signupParams.toJson(),
       );
       final statusCode = response.statusCode;
-      if (statusCode == 201) {
+      if (statusCode == 200) {
         print("Signup success");
       } else {
         throw Exception("Signup failed with status: $statusCode");
       }
       return response.data;
     } catch (e) {
-      throw Exception("Cannot signup");
+      throw Exception("Cannot signup: ${e.toString()}");
     }
   }
 
@@ -64,17 +65,26 @@ class AuthRemoteDatasource {
     }
   }
 
-  Future<dynamic> validateToken() async {
+  Future<ApiResponse<User>> validateToken() async {
     try {
       final response = await apiClient.get(ApiEndpoints.validateToken);
-      if (response.statusCode == 200) {
-        print("Logout success");
-        return response.data;
+
+      if (response.statusCode == 200 && response.data != null) {
+        final responseData = response.data as Map<String, dynamic>;
+
+        final userData = responseData['data'] ?? responseData;
+        final user = User.fromJson(userData as Map<String, dynamic>);
+
+        print('Parsed user: $user');
+
+        return ApiSuccess(user);
       } else {
-        throw ServerException('Logout failed', 500);
+        return ApiError('Validation failed');
       }
     } catch (e) {
-      throw Exception("Cannot signOut");
+      print('validateToken error: $e');
+      print('Error type: ${e.runtimeType}');
+      return ApiError(e.toString());
     }
   }
 

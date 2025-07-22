@@ -6,7 +6,7 @@ part of 'core_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$apiClientHash() => r'ad7a285fef844e414d92623623155aa28da21a92';
+String _$apiClientHash() => r'c42ae0b1225625891ff5ccabd9fd0023f00d403a';
 
 /// See also [apiClient].
 @ProviderFor(apiClient)
@@ -22,23 +22,7 @@ final apiClientProvider = AutoDisposeProvider<ApiClient>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef ApiClientRef = AutoDisposeProviderRef<ApiClient>;
-String _$appLoggerHash() => r'7a3044f5a0d402b3650407c5580520f6e78a1e22';
-
-/// See also [appLogger].
-@ProviderFor(appLogger)
-final appLoggerProvider = AutoDisposeProvider<AppLogger>.internal(
-  appLogger,
-  name: r'appLoggerProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$appLoggerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef AppLoggerRef = AutoDisposeProviderRef<AppLogger>;
-String _$storageServiceHash() => r'a6d23bc030486b6d1106efa40d3a7733b6bf906f';
+String _$storageServiceHash() => r'ac6fc7dcc6b0c6f1ecd20d8e670ee04bf22261ca';
 
 /// See also [storageService].
 @ProviderFor(storageService)
@@ -74,21 +58,21 @@ final apiClientConfigProvider = AutoDisposeProvider<ApiClientConfig>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef ApiClientConfigRef = AutoDisposeProviderRef<ApiClientConfig>;
-String _$loggerHash() => r'e924b3a95e92172362ca2d61a41a6fa30c085925';
+String _$appLoggerHash() => r'7a3044f5a0d402b3650407c5580520f6e78a1e22';
 
-/// See also [logger].
-@ProviderFor(logger)
-final loggerProvider = AutoDisposeProvider<Logger>.internal(
-  logger,
-  name: r'loggerProvider',
+/// See also [appLogger].
+@ProviderFor(appLogger)
+final appLoggerProvider = AutoDisposeProvider<AppLogger>.internal(
+  appLogger,
+  name: r'appLoggerProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$loggerHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$appLoggerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef LoggerRef = AutoDisposeProviderRef<Logger>;
+typedef AppLoggerRef = AutoDisposeProviderRef<AppLogger>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

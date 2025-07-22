@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$User {
 
- String? get email; String? get fullName; String? get id;
+ String? get email;@JsonSerializable(fieldRename: FieldRename.snake) String? get fullName; int? get id;
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $UserCopyWith<$Res>  {
   factory $UserCopyWith(User value, $Res Function(User) _then) = _$UserCopyWithImpl;
 @useResult
 $Res call({
- String? email, String? fullName, String? id
+ String? email,@JsonSerializable(fieldRename: FieldRename.snake) String? fullName, int? id
 });
 
 
@@ -70,7 +70,7 @@ class _$UserCopyWithImpl<$Res>
 email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String?,fullName: freezed == fullName ? _self.fullName : fullName // ignore: cast_nullable_to_non_nullable
 as String?,id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String?,
+as int?,
   ));
 }
 
@@ -152,7 +152,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? email,  String? fullName,  String? id)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? email, @JsonSerializable(fieldRename: FieldRename.snake)  String? fullName,  int? id)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _User() when $default != null:
 return $default(_that.email,_that.fullName,_that.id);case _:
@@ -173,7 +173,7 @@ return $default(_that.email,_that.fullName,_that.id);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? email,  String? fullName,  String? id)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? email, @JsonSerializable(fieldRename: FieldRename.snake)  String? fullName,  int? id)  $default,) {final _that = this;
 switch (_that) {
 case _User():
 return $default(_that.email,_that.fullName,_that.id);}
@@ -190,7 +190,7 @@ return $default(_that.email,_that.fullName,_that.id);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? email,  String? fullName,  String? id)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? email, @JsonSerializable(fieldRename: FieldRename.snake)  String? fullName,  int? id)?  $default,) {final _that = this;
 switch (_that) {
 case _User() when $default != null:
 return $default(_that.email,_that.fullName,_that.id);case _:
@@ -205,12 +205,12 @@ return $default(_that.email,_that.fullName,_that.id);case _:
 @JsonSerializable()
 
 class _User implements User {
-   _User({required this.email, required this.fullName, this.id});
+   _User({required this.email, @JsonSerializable(fieldRename: FieldRename.snake) this.fullName, this.id});
   factory _User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
 @override final  String? email;
-@override final  String? fullName;
-@override final  String? id;
+@override@JsonSerializable(fieldRename: FieldRename.snake) final  String? fullName;
+@override final  int? id;
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
@@ -245,7 +245,7 @@ abstract mixin class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) _then) = __$UserCopyWithImpl;
 @override @useResult
 $Res call({
- String? email, String? fullName, String? id
+ String? email,@JsonSerializable(fieldRename: FieldRename.snake) String? fullName, int? id
 });
 
 
@@ -267,7 +267,7 @@ class __$UserCopyWithImpl<$Res>
 email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String?,fullName: freezed == fullName ? _self.fullName : fullName // ignore: cast_nullable_to_non_nullable
 as String?,id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String?,
+as int?,
   ));
 }
 

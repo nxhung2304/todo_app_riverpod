@@ -90,6 +90,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/translations/
+    - assets/icons/google_logo.png
+
     # envs
     - .env.development
     - .env.staging
@@ -121,8 +123,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
-
-flutter_intl:
-  enabled: true
-  arb_dir: lib/l10n
-  output_dir: lib/l10n

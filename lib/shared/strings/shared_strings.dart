@@ -13,5 +13,5 @@ class SharedStrings {
   static String get cancel => "shared.common.cancel".tr();
   static String get confirm => "shared.common.confirm".tr();
 
-  static String get fullName => "shared.full_name".tr();
+  static String get fullName => "shared.common.full_name".tr();
 }

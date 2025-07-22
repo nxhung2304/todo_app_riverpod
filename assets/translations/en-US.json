@@ -57,7 +57,33 @@
     },
     "signup": {
       "title": "Signup",
-      "confirm_password": "Confirm Password"
+      "confirm_password": "Confirm Password",
+      "success": "Signup successfully"
+    }
+  },
+  "errors": {
+    "auth": {
+      "email_already_exists": "Email already exists",
+      "invalid_email_format": "Invalid email format",
+      "user_not_found": "User not found",
+      "weak_password": "Password is too weak",
+      "unknown_error": "An unknown error occurred",
+      "password_is_required": "Password is required",
+      "email_is_required": "Email is required",
+      "password_confirmation_is_required": "Password confirmation is required",
+      "password_confirmation_does_not_match": "Password confirmation does not match",
+      "email_has_already_taken": "Email has already been taken",
+      "password_confirmation": "Password confirmation does not match",
+      "unknown": "An unknown error occurred",
+      "full_name_required": "Full name is required",
+      "full_name_too_short": "Full name must be at least 3 characters",
+      "full_name_too_long": "Full name must not exceed 100 characters",
+      "full_name": "Full name must not be empty",
+      "password_required": "Password is required",
+      "password_too_short": "Password must be at least 6 characters",
+      "password_too_long": "Password must not exceed 100 characters",
+      "confirm_password_is_required": "Confirm password is required",
+      "confirm_password_does_not_match": "Confirm password does not match"
     }
   }
 }

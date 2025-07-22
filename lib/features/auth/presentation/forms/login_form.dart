@@ -62,17 +62,17 @@ class LoginForm extends HookConsumerWidget {
 
     return [
       FormFields.email(
-        // controller: emailController, // Pass controller directly if supported
-        onChanged: (newEmail) {
-          emailController.text = newEmail;
-        },
+        controller: emailController, // Pass controller directly if supported
+        // onChanged: (newEmail) {
+        //   emailController.text = newEmail;
+        // },
       ),
       const SizedBox(height: 12),
       FormFields.password(
-        // controller: passwordController,
-        onChanged: (newPassword) {
-          passwordController.text = newPassword;
-        }, 
+        controller: passwordController,
+        // onChanged: (newPassword) {
+        //   passwordController.text = newPassword;
+        // },
       ),
       const SizedBox(height: 12),
 
@@ -162,7 +162,10 @@ class LoginForm extends HookConsumerWidget {
                     : () {
                       context.push(AppRoutes.signup);
                     },
-            child: const Text("Signup", style: TextStyle(color: Colors.blue)),
+            child: Text(
+              AuthStrings.signup,
+              style: TextStyle(color: Colors.blue),
+            ),
           ),
         ],
       ),
@@ -173,23 +176,43 @@ class LoginForm extends HookConsumerWidget {
     return [
       const SizedBox(height: 12),
       Container(
-        decoration: const BoxDecoration(color: Colors.blue),
-        child: const ListTile(
-          leading: Icon(Icons.facebook, color: Colors.white),
-          title: Text(
-            "Connect with Facebook",
-            style: TextStyle(color: Colors.white),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(
+            color: Colors.grey.shade300,
           ),
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.shade200,
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
-      ),
-      const Divider(color: Colors.white),
-      Container(
-        decoration: const BoxDecoration(color: Colors.blue),
-        child: const ListTile(
-          leading: Icon(Icons.facebook, color: Colors.white),
-          title: Text(
-            "Connect with Google",
-            style: TextStyle(color: Colors.white),
+        child: ListTile(
+        onTap: () {
+          print("Sign in with Google tapped");
+          // Implement Google Sign-In logic here
+        },
+          leading: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Image.asset(
+              'assets/icons/google_logo.png',
+              width: 24,
+              height: 24,
+            ),
+          ),
+          title: const Text(
+            "Sign in with Google",
+            style: TextStyle(
+              color: Colors.black87,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ),

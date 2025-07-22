@@ -12,12 +12,16 @@ class TokenStorageService extends _$TokenStorageService {
 
   @override
   Future<AuthTokens?> build() async {
-    await _loadTokens();
-    return null;
+    return await _loadTokens();
   }
 
-  AuthTokens? get currentTokens {
-    return state.valueOrNull;
+  Future<AuthTokens?> getTokens() async {
+    try {
+      final value = await future;
+      return value;
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<void> saveTokens(AuthTokens tokens) async {
@@ -25,6 +29,8 @@ class TokenStorageService extends _$TokenStorageService {
       final storage = ref.read(storageServiceProvider);
       final tokenJson = jsonEncode(tokens.toJson());
       await storage.setString(_tokenKey, tokenJson);
+
+      state = AsyncData(tokens);
     } catch (e) {
       print('Error saving tokens: $e');
       state = AsyncError(e, StackTrace.current);
@@ -53,6 +59,9 @@ class TokenStorageService extends _$TokenStorageService {
       final tokenJson = jsonDecode(tokenString) as Map<String, dynamic>;
       final tokens = AuthTokens.fromJson(tokenJson);
       if (_isTokenValid(tokens)) {
+        ref
+            .read(appLoggerProvider)
+            .debug("Loaded valid tokens", data: tokens.uid);
         return tokens;
       } else {
         await clearTokens();

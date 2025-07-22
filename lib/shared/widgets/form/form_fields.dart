@@ -19,7 +19,7 @@ class FormFields {
       prefixIcon: Icons.email_outlined,
       initialValue: initialValue,
       onChanged: onChanged,
-      validator: validator ?? AuthValidators.validatePassword,
+      validator: validator ?? AuthValidators.validateEmail,
       controller: controller,
       enabled: enabled,
     );
@@ -41,7 +41,7 @@ class FormFields {
       prefixIcon: Icons.lock_outlined,
       initialValue: initialValue,
       onChanged: onChanged,
-      validator: validator ?? AuthValidators.validateEmail,
+      validator: validator ?? AuthValidators.validatePassword,
       controller: controller,
       enabled: enabled,
     );

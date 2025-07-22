@@ -10,7 +10,8 @@
       "loading": "Đang tải...",
       "retry": "Thử lại",
       "cancel": "Hủy",
-      "confirm": "Xác nhận"
+      "confirm": "Xác nhận",
+      "full_name": "Họ tên"
     }
   },
   "todo": {
@@ -46,15 +47,42 @@
     "language_changed": "Đã thay đổi ngôn ngữ"
  },
   "auth": {
+    "email": "Email",
+    "password": "Mật khẩu",
     "login": {
       "title": "Đăng nhập",
-      "email": "Email",
-      "password": "Mật khẩu",
       "dont_have_an_account": "Bạn chưa có tài khoản?",
       "google": "Google"
     },
     "signup": {
-      "title": "Đăng ký"
+      "title": "Đăng ký",
+      "confirm_password": "Xác nhận mật khẩu",
+      "success": "Đăng ký thành công"
+    }
+  },
+  "errors": {
+    "auth": {
+      "email_already_exists": "Email đã tồn tại",
+      "invalid_email_format": "Định dạng email không hợp lệ",
+      "user_not_found": "Không tìm thấy người dùng",
+      "weak_password": "Mật khẩu quá yếu",
+      "unknown_error": "Đã xảy ra lỗi không xác định",
+      "password_is_required": "Mật khẩu là bắt buộc",
+      "email_is_required": "Email là bắt buộc",
+      "password_confirmation_is_required": "Xác nhận mật khẩu là bắt buộc",
+      "password_confirmation_does_not_match": "Xác nhận mật khẩu không khớp",
+      "email_has_already_taken": "Email đã được sử dụng",
+      "password_confirmation": "Xác nhận mật khẩu không khớp",
+      "unknown": "Đã xảy ra lỗi không xác định",
+      "full_name_required": "Họ tên là bắt buộc",
+      "full_name_too_short": "Họ tên phải có ít nhất 3 ký tự",
+      "full_name_too_long": "Họ tên không được quá 100 ký tự",
+      "full_name": "Họ tên không được để trống",
+      "password_required": "Mật khẩu là bắt buộc",
+      "password_too_short": "Mật khẩu phải có ít nhất 6 ký tự",
+      "password_too_long": "Mật khẩu không được quá 100 ký tự",
+      "confirm_password_is_required": "Xác nhận mật khẩu là bắt buộc",
+      "confirm_password_does_not_match": "Xác nhận mật khẩu không khớp"
     }
   }
 }

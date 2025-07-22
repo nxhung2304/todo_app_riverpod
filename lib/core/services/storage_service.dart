@@ -1,12 +1,20 @@
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageService {
-  static final StorageService _instance = StorageService._internal();
+  static StorageService? _instance;
+  static StorageService get instance =>
+      _instance ??= StorageService._internal();
 
-  factory StorageService() => _instance;
+  factory StorageService() => instance;
   StorageService._internal();
 
   SharedPreferences? _prefs;
+
+  @visibleForTesting
+  static void resetInstanceForTesting() {
+    _instance = null;
+  }
 
   Future<SharedPreferences> _getPrefs() async {
     _prefs ??= await SharedPreferences.getInstance();
@@ -36,7 +44,7 @@ class StorageService {
     return await prefs.setStringList(key, value);
   }
 
-  Future<List<String>?> getStringList(String key) async{
+  Future<List<String>?> getStringList(String key) async {
     final prefs = await _getPrefs();
 
     return prefs.getStringList(key);
@@ -50,7 +58,7 @@ class StorageService {
 
   Future<bool> clear() async {
     final prefs = await _getPrefs();
-    
+
     return await prefs.clear();
   }
 }

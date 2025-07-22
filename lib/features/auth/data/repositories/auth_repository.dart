@@ -1,7 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
-import 'package:learn_riverpod/core/utils/result.dart';
+import 'package:dio/dio.dart';
+import 'package:learn_riverpod/core/models/api_response.dart';
+import 'package:learn_riverpod/core/models/auth_tokens.dart';
 import 'package:learn_riverpod/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:learn_riverpod/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:learn_riverpod/features/auth/data/models/params/login_params.dart';
+import 'package:learn_riverpod/features/auth/data/models/params/signup_params.dart';
 import 'package:learn_riverpod/features/auth/data/models/user.dart';
 
 class AuthRepository {
@@ -13,72 +16,53 @@ class AuthRepository {
     required this.remoteDataSource,
   });
 
-  Future<void> signup(
-    String fullName, {
+  Future<ApiResponse<void>> signup({
+    required String fullName,
     required String email,
     required String password,
   }) async {
     try {
-      final firebaseUser = await remoteDataSource.signup(
-        fullName,
+      final signupParams = SignupParams(
+        fullName: fullName,
         email: email,
         password: password,
       );
-      print(firebaseUser);
-
-      final user = User.fromFirebaseUser(firebaseUser);
-      localDataSource.saveCurrentUser(user);
-    } on firebase_auth.FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
+      final userJson = await remoteDataSource.signup(signupParams);
+      return ApiResponse.success("Suggess");
     } catch (e) {
       print(e);
+      return ApiResponse.error(e.toString().replaceFirst('Exception: ', ''));
     }
   }
 
-  Future<Result<User>> login({
-    required String email,
-    required String password,
-  }) async {
+  Future<ApiResponse<AuthTokens>> login(LoginParams loginParams) async {
     try {
-      final firebaseUser = await remoteDataSource.login(
-        email: email,
-        password: password,
-      );
-      final user = User.fromFirebaseUser(firebaseUser);
-      await localDataSource.saveCurrentUser(user);
+      final authToken = await remoteDataSource.login(loginParams);
 
-      return Result.success(user);
+      return ApiResponse.success(authToken);
     } catch (e) {
-      return Result.failure(
-        e.toString().replaceFirst('Exception: ', ''),
-        e is Exception ? e : Exception(e.toString()),
-      );
+      return ApiResponse.error(e.toString().replaceFirst('Exception: ', ''));
     }
   }
 
-  Future<void> logout() async {
+  Future<ApiResponse<void>> logout() async {
     try {
       await remoteDataSource.logout();
       await localDataSource.removeCurrentUser();
+
+      return ApiResponse.success("Logout success");
     } catch (e) {
-      rethrow;
+      return ApiResponse.error(e.toString());
     }
   }
 
-  Future<User?> getCurrentUser() async {
+  Future<ApiResponse<User>> validateToken() async {
     try {
-      final savedUser = await localDataSource.getCurrentUser();
-      if (savedUser == null) {
-        return null;
-      }
+      final response = await remoteDataSource.validateToken();
 
-      return savedUser;
+      return response;
     } catch (e) {
-      throw Exception("Erorr: $e");
+      return ApiResponse.error(e.toString());
     }
   }
 }

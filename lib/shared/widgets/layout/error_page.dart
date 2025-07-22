@@ -38,7 +38,7 @@ class ErrorPage extends StatelessWidget {
             ],
             SizedBox(height: 24),
             ElevatedButton(
-              onPressed: () => context.go(AppRoutes.home),
+              onPressed: () => context.go(AppRoutes.login),
               child: Text(SharedStrings.errorBackToHome),
             ),
           ],

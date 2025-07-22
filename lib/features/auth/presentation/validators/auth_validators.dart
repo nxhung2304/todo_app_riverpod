@@ -1,36 +1,37 @@
+import 'package:learn_riverpod/core/extensions/string_extension.dart';
+import 'package:learn_riverpod/features/auth/strings/auth_error_strings.dart';
+
 class AuthValidators {
+  static int minLength = 3;
+  static int maxLength = 100;
+
   static String? validateFullName(String? fullName) {
     if (fullName == null || fullName.trim().isEmpty) {
-      return "Vui lòng nhập Full name";
+      return AuthErrorStrings.fullNameRequired;
     }
-    if (fullName.trim().length < 3) {
-      return "Full name phải có ít nhất 3 ký tự";
+    if (fullName.trim().length < minLength) {
+      return AuthErrorStrings.fullNameTooShort;
     }
-    if (fullName.length > 100) {
-      return "Full name không được quá 100 ký tự";
+    if (fullName.length > maxLength) {
+      return AuthErrorStrings.fullNameTooLong;
     }
 
     return null;
   }
 
   static String? validateEmail(String? email) {
-    final emailRegex =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-
     if (email == null || email.trim().isEmpty) {
-      return "Vui lòng nhập Email";
+      return AuthErrorStrings.emailRequired;
     }
-    if (email.trim().length < 3) {
-      return "Email phải có ít nhất 3 ký tự";
+    if (email.trim().length < minLength) {
+      return AuthErrorStrings.emailTooShort;
     }
-    if (email.length > 100) {
-      return "Email không được quá 100 ký tự";
+    if (email.length > maxLength) {
+      return AuthErrorStrings.emailTooLong;
     }
-    RegExp regExp = RegExp(emailRegex);
-    final validEmailFormat = regExp.hasMatch(email);
 
-    if (!validEmailFormat) {
-      return "Email khong dung dinh dang";
+    if (!email.isEmail()) {
+      return AuthErrorStrings.invalidEmailFormat;
     }
 
     return null;
@@ -38,14 +39,29 @@ class AuthValidators {
 
   static String? validatePassword(String? password) {
     if (password == null || password.trim().isEmpty) {
-      return "Vui lòng nhập password";
+      return AuthErrorStrings.passwordRequired;
     }
-    if (password.trim().length < 8) {
-      return "Password phải có ít nhất 8 ký tự";
+    if (password.trim().length < minLength) {
+      return AuthErrorStrings.passwordTooShort;
     }
-    if (password.length > 100) {
-      return "Password không được quá 100 ký tự";
+    if (password.length > maxLength) {
+      return AuthErrorStrings.passwordTooLong;
     }
+
+    return null;
+  }
+
+   static String? validateConfirmPassword(String password, String? confirmPassword) {
+   
+   if (confirmPassword == null || confirmPassword.trim().isEmpty) {
+      return AuthErrorStrings.confirmPasswordIsRequired;
+    }
+    
+    if (confirmPassword.trim() != password.trim()) {
+      return AuthErrorStrings.confirmPasswordDoesNotMatch;
+    }
+
+    validatePassword(confirmPassword);
 
     return null;
   }

@@ -38,7 +38,8 @@ class InputFormField extends HookConsumerWidget {
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
       },
-      initialValue: initialValue,
+      controller: controller,
+      initialValue: controller == null ? initialValue : null,
       onChanged: onChanged,
       maxLines: maxLines,
       autovalidateMode: autovalidateMode,
@@ -46,9 +47,7 @@ class InputFormField extends HookConsumerWidget {
         prefixIcon: _buildPrefixIcon(),
         suffixIcon: isPassword ? _buildSuffixIcon(obscure) : null,
 
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
 
         hintText: hintText,
         labelText: labelText,
@@ -84,9 +83,7 @@ class InputFormField extends HookConsumerWidget {
   }
 }
 
-// shared/widgets/form/input_form_field.dart
 extension InputFormFieldExtensions on InputFormField {
-  // ✅ Email field constructor
   static InputFormField email({
     String? initialValue,
     ValueChanged<String>? onChanged,
@@ -108,7 +105,6 @@ extension InputFormFieldExtensions on InputFormField {
     );
   }
 
-  // ✅ Password field constructor
   static InputFormField password({
     String? labelText,
     String? initialValue,
@@ -130,7 +126,6 @@ extension InputFormFieldExtensions on InputFormField {
     );
   }
 
-  // ✅ Name field constructor
   static InputFormField name({
     String? initialValue,
     ValueChanged<String>? onChanged,

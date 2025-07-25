@@ -54,6 +54,7 @@ dependencies:
   logger: ^2.6.0
   connectivity_plus: ^6.1.4
   flutter_flavor: ^3.1.4
+  google_sign_in: ^7.1.1
 
 dev_dependencies:
   flutter_test:

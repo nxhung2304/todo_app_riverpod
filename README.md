@@ -12,7 +12,7 @@
 ---
 
 ## Intermediate Features (Recommended)
-- [ ] Store todos to Firestore (Cloud sync)
+- [ ] Store todos to API (Cloud sync)
 - [ ] Fetch todos per user (scoped by uid)
 - [ ] Add `isDone`, `dueDate`, and `priority` to Todo model
 - [ ] Sort/filter todos (by dueDate, priority)

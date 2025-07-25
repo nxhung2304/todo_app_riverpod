@@ -1,11 +1,13 @@
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:learn_riverpod/core/models/api_response.dart';
 import 'package:learn_riverpod/core/models/auth_status.dart';
-import 'package:learn_riverpod/core/models/result.dart';
 import 'package:learn_riverpod/core/providers/core_providers.dart';
 import 'package:learn_riverpod/core/services/token_storage_service.dart';
 import 'package:learn_riverpod/features/auth/data/models/params/login_params.dart';
+import 'package:learn_riverpod/features/auth/data/models/responses/google_login_response.dart';
 import 'package:learn_riverpod/features/auth/data/models/user.dart';
 import 'package:learn_riverpod/features/auth/data/providers/auth_repository_providers.dart';
+import 'package:learn_riverpod/features/auth/data/services/google_signin_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_provider.g.dart';
@@ -45,12 +47,12 @@ class AuthNotifier extends _$AuthNotifier {
     try {
       final authRepo = ref.read(authRepositoryProvider);
       final loginParams = LoginParams(email: email, password: password);
-      final result = await authRepo.login(loginParams);
+      final authTokens = await authRepo.login(loginParams);
 
-      if (result.data != null) {
+      if (authTokens.data != null) {
         await ref
             .read(tokenStorageServiceProvider.notifier)
-            .saveTokens(result.data!);
+            .saveTokens(authTokens.data!);
       }
 
       final userResult = await authRepo.validateToken();
@@ -117,6 +119,39 @@ class AuthNotifier extends _$AuthNotifier {
       ref.read(apiClientProvider).clearAuthHeaders();
 
       state = const AsyncValue.data(AuthStatus.unauthenticated());
+    } catch (e) {
+      state = AsyncValue.data(AuthStatus.error(e.toString()));
+    }
+  }
+
+  Future<void> loginWithGoogle() async {
+    state = const AsyncValue.data(AuthStatus.loading());
+
+    try {
+      final GoogleSignInAccount? account = await GoogleSigninService().signIn();
+
+      if (account != null) {
+        final idToken = account.authentication.idToken;
+        if (idToken != null && idToken.isNotEmpty) {
+          final response = await ref
+              .read(authRepositoryProvider)
+              .verifyGoogleToken(idToken: idToken);
+          if (response is ApiSuccess<GoogleLoginResponse>) {
+            final googleResponse = response.data;
+            final tokens = googleResponse.authTokens;
+            final user = googleResponse.user;
+            await ref
+                .read(tokenStorageServiceProvider.notifier)
+                .saveTokens(tokens);
+
+            state = AsyncValue.data(AuthStatus.authenticated(user));
+          }
+        } else {
+          state = AsyncValue.data(AuthStatus.unauthenticated());
+        }
+      } else {
+        state = AsyncValue.data(AuthStatus.unauthenticated());
+      }
     } catch (e) {
       state = AsyncValue.data(AuthStatus.error(e.toString()));
     }

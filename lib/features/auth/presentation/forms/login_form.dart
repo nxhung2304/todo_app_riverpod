@@ -33,7 +33,7 @@ class LoginForm extends HookConsumerWidget {
             passwordController,
             authState,
           ),
-          ..._buildSocialLogin(),
+          ..._buildSocialLogin(ref),
         ],
       ),
     );
@@ -61,19 +61,9 @@ class LoginForm extends HookConsumerWidget {
     );
 
     return [
-      FormFields.email(
-        controller: emailController, // Pass controller directly if supported
-        // onChanged: (newEmail) {
-        //   emailController.text = newEmail;
-        // },
-      ),
+      FormFields.email(controller: emailController),
       const SizedBox(height: 12),
-      FormFields.password(
-        controller: passwordController,
-        // onChanged: (newPassword) {
-        //   passwordController.text = newPassword;
-        // },
-      ),
+      FormFields.password(controller: passwordController),
       const SizedBox(height: 12),
 
       authState.when(
@@ -172,15 +162,13 @@ class LoginForm extends HookConsumerWidget {
     ];
   }
 
-  List<Widget> _buildSocialLogin() {
+  List<Widget> _buildSocialLogin(WidgetRef ref) {
     return [
       const SizedBox(height: 12),
       Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(
-            color: Colors.grey.shade300,
-          ),
+          border: Border.all(color: Colors.grey.shade300),
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
@@ -191,10 +179,10 @@ class LoginForm extends HookConsumerWidget {
           ],
         ),
         child: ListTile(
-        onTap: () {
-          print("Sign in with Google tapped");
-          // Implement Google Sign-In logic here
-        },
+          onTap: () async {
+            print("Sign in with Google tapped");
+            ref.read(authNotifierProvider.notifier).loginWithGoogle();
+          },
           leading: Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(

@@ -4,8 +4,10 @@ import 'package:learn_riverpod/core/exceptions/server_exception.dart';
 import 'package:learn_riverpod/core/models/api_response.dart';
 import 'package:learn_riverpod/core/models/auth_tokens.dart';
 import 'package:learn_riverpod/core/services/api_client.dart';
+import 'package:learn_riverpod/features/auth/data/models/params/google_token_params.dart';
 import 'package:learn_riverpod/features/auth/data/models/params/login_params.dart';
 import 'package:learn_riverpod/features/auth/data/models/params/signup_params.dart';
+import 'package:learn_riverpod/features/auth/data/models/responses/google_login_response.dart';
 import 'package:learn_riverpod/features/auth/data/models/user.dart';
 
 class AuthRemoteDatasource {
@@ -78,6 +80,30 @@ class AuthRemoteDatasource {
         print('Parsed user: $user');
 
         return ApiSuccess(user);
+      } else {
+        return ApiError('Validation failed');
+      }
+    } catch (e) {
+      print('validateToken error: $e');
+      print('Error type: ${e.runtimeType}');
+      return ApiError(e.toString());
+    }
+  }
+
+  Future<ApiResponse<GoogleLoginResponse>> verifyGoogleToken(
+    GoogleTokenParams googleTokenParams,
+  ) async {
+    try {
+      final response = await apiClient.post(
+        ApiEndpoints.googleLogin,
+        data: googleTokenParams.toJson(),
+      );
+
+      if (response.statusCode == 200 && response.data != null) {
+        final googleResponseJson = response.data as Map<String, dynamic>;
+        final googleResponse = GoogleLoginResponse.fromJson(googleResponseJson);
+
+        return ApiSuccess(googleResponse);
       } else {
         return ApiError('Validation failed');
       }

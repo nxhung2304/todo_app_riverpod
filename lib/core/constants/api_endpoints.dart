@@ -4,4 +4,5 @@ class ApiEndpoints {
   static const String logout = '/auth/sign_out';
   static const String validateToken = '/auth/validate_token';
   static const String resetPassword = '/auth/password';
+  static const String googleLogin = '/auth/google_login';
 }

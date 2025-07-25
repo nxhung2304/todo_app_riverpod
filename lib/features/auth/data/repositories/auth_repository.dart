@@ -3,8 +3,10 @@ import 'package:learn_riverpod/core/models/api_response.dart';
 import 'package:learn_riverpod/core/models/auth_tokens.dart';
 import 'package:learn_riverpod/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:learn_riverpod/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:learn_riverpod/features/auth/data/models/params/google_token_params.dart';
 import 'package:learn_riverpod/features/auth/data/models/params/login_params.dart';
 import 'package:learn_riverpod/features/auth/data/models/params/signup_params.dart';
+import 'package:learn_riverpod/features/auth/data/models/responses/google_login_response.dart';
 import 'package:learn_riverpod/features/auth/data/models/user.dart';
 
 class AuthRepository {
@@ -59,6 +61,18 @@ class AuthRepository {
   Future<ApiResponse<User>> validateToken() async {
     try {
       final response = await remoteDataSource.validateToken();
+
+      return response;
+    } catch (e) {
+      return ApiResponse.error(e.toString());
+    }
+  }
+
+  Future<ApiResponse<GoogleLoginResponse>> verifyGoogleToken({required String idToken}) async {
+    try {
+      final GoogleTokenParams params =
+          GoogleTokenParams(idToken: idToken);
+      final response = await remoteDataSource.verifyGoogleToken(params);
 
       return response;
     } catch (e) {

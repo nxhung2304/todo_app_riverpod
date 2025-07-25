@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'auth_tokens.freezed.dart';
@@ -6,12 +8,11 @@ part 'auth_tokens.g.dart';
 @freezed
 sealed class AuthTokens with _$AuthTokens {
   const factory AuthTokens({
-    required String accessToken,
+    @JsonKey(name: 'access-token') required String accessToken,
     required String client,
     required String uid,
-    required String tokenType,
-    required int expiry,
-    DateTime? createdAt,
+    @JsonKey(name: 'token-type') String? tokenType,
+    @JsonKey(name: 'expiry') int? expiry,
   }) = _AuthTokens;
 
   factory AuthTokens.fromJson(Map<String, dynamic> json) =>
@@ -24,22 +25,23 @@ sealed class AuthTokens with _$AuthTokens {
       uid: headers['uid'] ?? '',
       tokenType: headers['token-type'] ?? 'Bearer',
       expiry: int.tryParse(headers['expiry']?.toString() ?? '0') ?? 0,
-      createdAt: DateTime.now(),
     );
   }
 
-   factory AuthTokens.fromDioHeaders(Map<String, List<String>> headers) {
+  factory AuthTokens.fromDioHeaders(Map<String, List<String>> headers) {
     return AuthTokens(
       accessToken: _getHeaderValue(headers, 'access-token') ?? '',
       client: _getHeaderValue(headers, 'client') ?? '',
       uid: _getHeaderValue(headers, 'uid') ?? '',
       tokenType: _getHeaderValue(headers, 'token-type') ?? 'Bearer',
       expiry: int.tryParse(_getHeaderValue(headers, 'expiry') ?? '0') ?? 0,
-      createdAt: DateTime.now(),
     );
   }
 
-  static String? _getHeaderValue(Map<String, List<String>> headers, String key) {
+  static String? _getHeaderValue(
+    Map<String, List<String>> headers,
+    String key,
+  ) {
     final values = headers[key];
     return values?.isNotEmpty == true ? values!.first : null;
   }

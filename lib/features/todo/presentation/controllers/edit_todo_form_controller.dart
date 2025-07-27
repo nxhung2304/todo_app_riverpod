@@ -3,10 +3,10 @@ import 'package:learn_riverpod/features/todo/data/models/todo.dart';
 import 'package:learn_riverpod/features/todo/data/models/todo_form_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'edit_todo_form_provider.g.dart';
+part 'edit_todo_form_controller.g.dart';
 
 @riverpod
-class EditTodoForm extends _$EditTodoForm {
+class EditTodoFormController extends _$EditTodoFormController {
   @override
   TodoFormState build(Todo? initialTodo) {
     if (initialTodo != null) {
@@ -28,7 +28,7 @@ class EditTodoForm extends _$EditTodoForm {
     state = state.copyWith(selectedTime: time);
   }
 
-  void updateNotes(String notes) {
-    state = state.copyWith(notes: notes);
+  void updateNotes(String description) {
+    state = state.copyWith(description: description);
   }
 }

@@ -68,8 +68,13 @@ class AuthInterceptor extends Interceptor {
 
   bool _isTokenValid(AuthTokens tokens) {
     try {
+      if (tokens.expiry == null || tokens.expiry == 0) {
+        logger.warning('Token has no expiry date');
+        return false;
+      }
+
       final expiryDate = DateTime.fromMillisecondsSinceEpoch(
-        tokens.expiry * 1000,
+        tokens.expiry! * 1000,
       );
       final now = DateTime.now();
       final isValid = now.isBefore(expiryDate);

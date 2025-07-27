@@ -15,37 +15,31 @@
     }
   },
   "todo": {
-   "title": "Danh sách công việc",
-   "new_todo": "Công việc mới",
-   "no_todos_yet": "Chưa có công việc nào",
-   "need_new_todo": "Cần tạo công việc mới",
-   "new": {
-     "title": "Trang tạo công việc mới",
-     "created_todo_success": "Tạo công việc thành công"
-   },
-   "edit": {
-     "title": "Trang chỉnh sửa công việc",
-     "todo_not_found": "Không tìm thấy công việc",
-     "editting": "Đang chỉnh sửa"
-   },
-    "error": {
-      "id_not_found": "Không tìm thấy ID công việc",
-      "invalid_id": "ID công việc không hợp lệ",
-      "not_found": "Không tìm thấy công việc",
-      "load_failed": "Không thể tải danh sách công việc"
+    "title": "Công việc",
+    "new_todo": "Công việc mới",
+    "no_todos_yet": "Chưa có công việc nào",
+    "need_new_todo": "Cần tạo công việc mới",
+    "new": {
+      "title": "Trang tạo công việc mới",
+      "created_todo_success": "Tạo công việc thành công"
+    },
+    "edit": {
+      "title": "Trang chỉnh sửa công việc",
+      "todo_not_found": "Không tìm thấy công việc",
+      "editting": "Đang chỉnh sửa"
     }
- },
- "home": {
-   "title": "Trang chủ"
- },
- "search": {
-   "title": "Tìm kiếm"
- },
- "settings": {
-   "title": "Cài đặt",
+  },
+  "home": {
+    "title": "Trang chủ"
+  },
+  "search": {
+    "title": "Tìm kiếm"
+  },
+  "settings": {
+    "title": "Cài đặt",
     "select_language": "Chọn ngôn ngữ",
     "language_changed": "Đã thay đổi ngôn ngữ"
- },
+  },
   "auth": {
     "email": "Email",
     "password": "Mật khẩu",
@@ -83,6 +77,19 @@
       "password_too_long": "Mật khẩu không được quá 100 ký tự",
       "confirm_password_is_required": "Xác nhận mật khẩu là bắt buộc",
       "confirm_password_does_not_match": "Xác nhận mật khẩu không khớp"
+    },
+    "todo": {
+      "title_required": "Tiêu đề công việc là bắt buộc",
+      "title_min_length": "Tiêu đề công việc phải có ít nhất 3 ký tự",
+      "title_max_length": "Tiêu đề công việc không được quá 100 ký tự",
+      "date_in_past": "Ngày không được trong quá khứ",
+      "time_in_past": "Thời gian không được trong quá khứ",
+      "select_date_when_time_selected": "Vui lòng chọn ngày khi đã chọn thời gian",
+      "description_max_length": "Mô tả công việc không được quá 500 ký tự",
+      "id_not_found": "Không tìm thấy ID công việc",
+      "invalid_id": "ID công việc không hợp lệ",
+      "not_found": "Không tìm thấy công việc",
+      "load_failed": "Không thể tải danh sách công việc"
     }
   }
 }

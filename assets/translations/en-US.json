@@ -84,6 +84,15 @@
       "password_too_long": "Password must not exceed 100 characters",
       "confirm_password_is_required": "Confirm password is required",
       "confirm_password_does_not_match": "Confirm password does not match"
+    },
+    "todo": {
+      "title_required": "Title is required",
+      "title_min_length": "Title must be at least 3 characters",
+      "title_max_length": "Title must not exceed 100 characters",
+      "date_in_past": "Date cannot be in the past",
+      "time_in_past": "Time cannot be in the past",
+      "select_date_when_time_selected": "Please select a date when time is selected",
+      "description_max_length": "Description must not exceed 500 characters"
     }
   }
 }

@@ -1,10 +1,10 @@
 import 'package:learn_riverpod/features/todo/presentation/states/settings_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'settings_provider.g.dart';
+part 'settings_controller.g.dart';
 
 @riverpod
-class SettingsNotifier extends _$SettingsNotifier {
+class SettingsController extends _$SettingsController {
   @override
   SettingsState build() {
     return SettingsState();

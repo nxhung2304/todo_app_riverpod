@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:learn_riverpod/features/todo/presentation/providers/todo_form_provider.dart';
+import 'package:learn_riverpod/features/todo/presentation/controllers/todo_form_controller.dart';
 import 'package:learn_riverpod/features/todo/presentation/validators/todo_validators.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/time_form_field.dart';
 
@@ -20,7 +20,7 @@ class TodoTimeField extends ConsumerWidget {
         TimeFormField(
           labelText: "",
           validator: TodoValidators.validateTime,
-          onChanged: ref.read(todoFormProvider.notifier).updateTime,
+          onChanged: ref.read(todoFormControllerProvider.notifier).updateTime,
         ),
       ],
     );

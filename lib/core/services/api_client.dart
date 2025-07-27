@@ -200,7 +200,7 @@ class ApiClient {
   }) async {
     _setHeaders(headers);
     try {
-      final response = await _dio.patch(
+      final response = await _dio.delete(
         endpoint,
         queryParameters: queryParameters,
       );

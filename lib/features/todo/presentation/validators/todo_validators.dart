@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:learn_riverpod/features/todo/strings/todo_error_strings.dart';
 
 class TodoValidators {
   static String? validateTitle(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return "Vui lòng nhập tiêu đề";
+      return TodoErrorStrings.titleRequired;
     }
     if (value.trim().length < 3) {
-      return "Tiêu đề phải có ít nhất 3 ký tự";
+      return TodoErrorStrings.titleMinLength;
     }
     if (value.length > 100) {
-      return "Tiêu đề không được quá 100 ký tự";
+      return TodoErrorStrings.titleMaxLength;
     }
 
     return null;
   }
 
   static String? validateDate(DateTime? value) {
-    // if (value == null) {
-    //   return "Vui lòng chọn ngày";
-    // }
     if (value == null) {
       return null;
     }
 
     if (value.isBefore(DateTime.now().subtract(Duration(days: 1)))) {
-      return "Ngày không được trong quá khứ";
+      return TodoErrorStrings.dateInPast;
     }
+
     return null;
   }
 
@@ -38,7 +37,7 @@ class TodoValidators {
   ) {
     return (TimeOfDay? value) {
       if (selectedDate != null && value == null) {
-        return "Vui lòng chọn thời gian khi đã chọn ngày";
+        return TodoErrorStrings.selectDateWhenTimeSelected;
       }
 
       if (selectedDate != null && value != null) {
@@ -52,7 +51,7 @@ class TodoValidators {
         );
 
         if (selectedDateTime.isBefore(now)) {
-          return "Thời gian không được trong quá khứ";
+          return TodoErrorStrings.timeInPast;
         }
       }
 
@@ -60,13 +59,13 @@ class TodoValidators {
     };
   }
 
-  static String? validateNotes(String? notes) {
-    if (notes == null) {
+  static String? validateNotes(String? description) {
+    if (description == null) {
       return null;
     }
 
-    if (notes.length > 500) {
-      return "Notes không được quá 500 ký tự";
+    if (description.length > 500) {
+      return TodoErrorStrings.descriptionMaxLength;
     }
 
     return null;

@@ -72,8 +72,12 @@ class TokenStorageService extends _$TokenStorageService {
   }
 
   bool _isTokenValid(AuthTokens tokens) {
+    if (tokens.expiry == null || tokens.expiry == 0) {
+      return false;
+    }
+
     final expiryDate = DateTime.fromMillisecondsSinceEpoch(
-      tokens.expiry * 1000,
+      tokens.expiry! * 1000,
     );
     final now = DateTime.now();
 

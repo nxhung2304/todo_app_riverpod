@@ -12,8 +12,7 @@
 ---
 
 ## Intermediate Features (Recommended)
-- [ ] Store todos to API (Cloud sync)
-- [ ] Fetch todos per user (scoped by uid)
+- [x] CRUD todos per user (scoped by uid)
 - [ ] Add `isDone`, `dueDate`, and `priority` to Todo model
 - [ ] Sort/filter todos (by dueDate, priority)
 - [ ] Add search bar

@@ -66,7 +66,7 @@ class _DateFormFieldState extends State<DateFormField> {
                     Text(
                       _selectedDate != null
                           ? DateFormat('dd/MM/yyyy').format(_selectedDate!)
-                          : widget.labelText ?? 'Chọn ngày',
+                          : widget.labelText ?? '',
                       style: TextStyle(
                         color:
                             _selectedDate != null ? Colors.black : Colors.grey,

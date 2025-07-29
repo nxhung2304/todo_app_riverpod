@@ -19,6 +19,10 @@
     "new_todo": "Công việc mới",
     "no_todos_yet": "Chưa có công việc nào",
     "need_new_todo": "Cần tạo công việc mới",
+    "name": "Tên",
+    "date": "Ngày tháng",
+    "time": "Thời gian",
+    "description": "Mô tả",
     "new": {
       "title": "Trang tạo công việc mới",
       "created_todo_success": "Tạo công việc thành công"
@@ -26,7 +30,8 @@
     "edit": {
       "title": "Trang chỉnh sửa công việc",
       "todo_not_found": "Không tìm thấy công việc",
-      "editting": "Đang chỉnh sửa"
+      "editting": "Đang chỉnh sửa",
+      "edited_todo_success": "Đã chỉnh sửa công việc thành công"
     }
   },
   "home": {

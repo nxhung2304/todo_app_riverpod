@@ -14,6 +14,7 @@ class InputFormField extends HookConsumerWidget {
   final bool enabled;
   final bool isPassword;
   final TextEditingController? controller;
+  final TextInputAction? textInputAction;
 
   const InputFormField({
     super.key,
@@ -28,6 +29,7 @@ class InputFormField extends HookConsumerWidget {
     this.enabled = true,
     this.isPassword = false,
     this.controller,
+    this.textInputAction,
   });
 
   @override
@@ -56,7 +58,7 @@ class InputFormField extends HookConsumerWidget {
       ),
       validator: validator,
       autofocus: false,
-      textInputAction: TextInputAction.done,
+      textInputAction: textInputAction ?? _getDefaultTextInputAction(),
 
       obscureText: obscure.value,
       enableSuggestions: !obscure.value,
@@ -81,9 +83,16 @@ class InputFormField extends HookConsumerWidget {
       icon: Icon(Icons.remove_red_eye),
     );
   }
+
+  TextInputAction _getDefaultTextInputAction() {
+    if (maxLines != null && maxLines! > 1) {
+      return TextInputAction.newline;
+    }
+    return TextInputAction.next;
+  }
 }
 
-extension InputFormFieldExtensions on InputFormField {
+extension InputFormFieldX on InputFormField {
   static InputFormField email({
     String? initialValue,
     ValueChanged<String>? onChanged,
@@ -94,14 +103,12 @@ extension InputFormFieldExtensions on InputFormField {
     return InputFormField(
       labelText: 'Email',
       hintText: 'Enter your email',
-      // keyboardType: TextInputType.emailAddress,
       prefixIcon: Icons.email_outlined,
-      // textCapitalization: TextCapitalization.none,
       initialValue: initialValue,
       onChanged: onChanged,
-      // validator: validator ?? AuthValidators.email,
       controller: controller,
       enabled: enabled,
+      textInputAction: TextInputAction.next
     );
   }
 
@@ -120,9 +127,9 @@ extension InputFormFieldExtensions on InputFormField {
       prefixIcon: Icons.lock_outlined,
       initialValue: initialValue,
       onChanged: onChanged,
-      // validator: validator ?? AuthValidators.password,
       controller: controller,
       enabled: enabled,
+      textInputAction: TextInputAction.next
     );
   }
 
@@ -137,12 +144,11 @@ extension InputFormFieldExtensions on InputFormField {
       labelText: 'Full Name',
       hintText: 'Enter your full name',
       prefixIcon: Icons.person_outlined,
-      // textCapitalization: TextCapitalization.words,
       initialValue: initialValue,
       onChanged: onChanged,
-      // validator: validator ?? AuthValidators.fullName,
       controller: controller,
       enabled: enabled,
+      textInputAction: TextInputAction.next
     );
   }
 }

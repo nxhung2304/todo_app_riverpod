@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:learn_riverpod/core/extensions/string_extension.dart';
+import 'package:learn_riverpod/core/extensions/time_of_day_extension.dart';
 
 part 'todo_params.freezed.dart';
 part 'todo_params.g.dart';
@@ -11,7 +13,7 @@ sealed class TodoParams with _$TodoParams {
     String? description,
     String? time,
     DateTime? date,
-    String? dueDate,
+    @JsonKey(name: 'due_date') String? dueDate,
   }) = _TodoParams;
 
   factory TodoParams.fromJson(Map<String, dynamic> json) =>
@@ -20,17 +22,10 @@ sealed class TodoParams with _$TodoParams {
 
 extension TodoParamsExtension on TodoParams {
   TimeOfDay? get timeOfDay {
-    if (time == null) return null;
-    final parts = time!.split(':');
-    return TimeOfDay(hour: int.parse(parts[0]), minute: int.parse(parts[1]));
+    return time?.toTimeOfDay();
   }
 
   TodoParams copyWithTimeOfDay(TimeOfDay? timeOfDay) {
-    return copyWith(
-      time:
-          timeOfDay != null
-              ? '${timeOfDay.hour.toString().padLeft(2, '0')}:${timeOfDay.minute.toString().padLeft(2, '0')}'
-              : null,
-    );
+    return copyWith(time: timeOfDay?.toFormattedString());
   }
 }

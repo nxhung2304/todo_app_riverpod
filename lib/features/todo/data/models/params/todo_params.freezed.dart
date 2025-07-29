@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TodoParams {
 
- String get title; String? get description; String? get time; DateTime? get date; String? get dueDate;
+ String get title; String? get description; String? get time; DateTime? get date;@JsonKey(name: 'due_date') String? get dueDate;
 /// Create a copy of TodoParams
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $TodoParamsCopyWith<$Res>  {
   factory $TodoParamsCopyWith(TodoParams value, $Res Function(TodoParams) _then) = _$TodoParamsCopyWithImpl;
 @useResult
 $Res call({
- String title, String? description, String? time, DateTime? date, String? dueDate
+ String title, String? description, String? time, DateTime? date,@JsonKey(name: 'due_date') String? dueDate
 });
 
 
@@ -154,7 +154,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  String? description,  String? time,  DateTime? date,  String? dueDate)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  String? description,  String? time,  DateTime? date, @JsonKey(name: 'due_date')  String? dueDate)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TodoParams() when $default != null:
 return $default(_that.title,_that.description,_that.time,_that.date,_that.dueDate);case _:
@@ -175,7 +175,7 @@ return $default(_that.title,_that.description,_that.time,_that.date,_that.dueDat
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  String? description,  String? time,  DateTime? date,  String? dueDate)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  String? description,  String? time,  DateTime? date, @JsonKey(name: 'due_date')  String? dueDate)  $default,) {final _that = this;
 switch (_that) {
 case _TodoParams():
 return $default(_that.title,_that.description,_that.time,_that.date,_that.dueDate);}
@@ -192,7 +192,7 @@ return $default(_that.title,_that.description,_that.time,_that.date,_that.dueDat
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  String? description,  String? time,  DateTime? date,  String? dueDate)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  String? description,  String? time,  DateTime? date, @JsonKey(name: 'due_date')  String? dueDate)?  $default,) {final _that = this;
 switch (_that) {
 case _TodoParams() when $default != null:
 return $default(_that.title,_that.description,_that.time,_that.date,_that.dueDate);case _:
@@ -207,14 +207,14 @@ return $default(_that.title,_that.description,_that.time,_that.date,_that.dueDat
 @JsonSerializable()
 
 class _TodoParams implements TodoParams {
-  const _TodoParams({required this.title, this.description, this.time, this.date, this.dueDate});
+  const _TodoParams({required this.title, this.description, this.time, this.date, @JsonKey(name: 'due_date') this.dueDate});
   factory _TodoParams.fromJson(Map<String, dynamic> json) => _$TodoParamsFromJson(json);
 
 @override final  String title;
 @override final  String? description;
 @override final  String? time;
 @override final  DateTime? date;
-@override final  String? dueDate;
+@override@JsonKey(name: 'due_date') final  String? dueDate;
 
 /// Create a copy of TodoParams
 /// with the given fields replaced by the non-null parameter values.
@@ -249,7 +249,7 @@ abstract mixin class _$TodoParamsCopyWith<$Res> implements $TodoParamsCopyWith<$
   factory _$TodoParamsCopyWith(_TodoParams value, $Res Function(_TodoParams) _then) = __$TodoParamsCopyWithImpl;
 @override @useResult
 $Res call({
- String title, String? description, String? time, DateTime? date, String? dueDate
+ String title, String? description, String? time, DateTime? date,@JsonKey(name: 'due_date') String? dueDate
 });
 
 

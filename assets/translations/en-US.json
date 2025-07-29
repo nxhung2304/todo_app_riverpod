@@ -19,6 +19,10 @@
     "new_todo": "New todo",
     "no_todos_yet": "No todos yet",
     "need_new_todo": "Need new todo",
+    "name": "Name",
+    "date": "Date",
+    "time": "Time",
+    "description": "Description",
     "new": {
       "title": "New todo page",
       "created_todo_success": "Created todo success"
@@ -26,7 +30,8 @@
     "edit": {
       "title": "Edit todo page",
       "todo_not_found": "Todo not found",
-      "editting": "Editting"
+      "editting": "Editting",
+      "edited_todo_success": "Edited todo success"
     },
     "error": {
       "id_not_found": "Todo id not found",

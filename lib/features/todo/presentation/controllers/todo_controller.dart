@@ -56,21 +56,30 @@ class TodoController extends _$TodoController {
     DateTime? date,
   }) async {
     state = const AsyncLoading();
+
     try {
       final repository = ref.read(todoRepositoryProvider);
-
       final todoParams = TodoParams(
         title: title,
         description: description,
         dueDate: _combineDateAndTime(date, time),
       );
-
       final response = await repository.update(id, todoParams);
 
-      if (response.isSuccess) {
-        ref.invalidateSelf();
+      if (response.isSuccess && response.data != null) {
+        final currentTodos = state.valueOrNull ?? [];
+
+        final updatedTodo = response.data!;
+
+        final updatedTodos =
+            currentTodos
+                .map((todo) => todo.id == updatedTodo.id ? updatedTodo : todo)
+                .toList();
+
+        state = AsyncValue.data(updatedTodos);
       } else {
-        state = AsyncError(Exception(response.error), StackTrace.current);
+        final errorMessage = response.error ?? 'Update failed';
+        state = AsyncError(Exception(errorMessage), StackTrace.current);
       }
     } catch (e) {
       state = AsyncError(e, StackTrace.current);
@@ -78,16 +87,15 @@ class TodoController extends _$TodoController {
   }
 
   String? _combineDateAndTime(DateTime? date, TimeOfDay? time) {
-    if (date == null || time == null) return null;
+    if (date == null) return null;
 
     final dateTime = DateTime(
       date.year,
       date.month,
       date.day,
-      time.hour,
-      time.minute,
+      time?.hour ?? 0,
+      time?.minute ?? 0,
     );
-
     return dateTime.toIso8601String();
   }
 

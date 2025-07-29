@@ -30,10 +30,9 @@ sealed class TodoFormState with _$TodoFormState {
   }
 }
 
-extension TodoFormStateExtension on TodoFormState {
+extension TodoFormStateX on TodoFormState {
   Todo toTodo() {
     return Todo(
-      id: id,
       title: title,
       description: description.isEmpty ? null : description,
       date: selectedDate,

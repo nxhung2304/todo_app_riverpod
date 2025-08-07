@@ -62,9 +62,10 @@ class _TimeFormFieldState extends State<TimeFormField> {
                     Text(
                       _selectedTime != null
                           ? _selectedTime!.format(context)
-                          : widget.labelText ?? 'Chọn thời gian',
+                          : widget.labelText ?? '',
                       style: TextStyle(
-                        color: _selectedTime != null ? Colors.black : Colors.grey,
+                        color:
+                            _selectedTime != null ? Colors.black : Colors.grey,
                       ),
                     ),
                     Icon(Icons.access_time, color: Colors.grey),

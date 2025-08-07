@@ -6,11 +6,11 @@ part of 'core_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$apiClientHash() => r'c42ae0b1225625891ff5ccabd9fd0023f00d403a';
+String _$apiClientHash() => r'fcf37d3ed1b6a0aaf0d1a21de0bae8799dd1df26';
 
 /// See also [apiClient].
 @ProviderFor(apiClient)
-final apiClientProvider = AutoDisposeProvider<ApiClient>.internal(
+final apiClientProvider = Provider<ApiClient>.internal(
   apiClient,
   name: r'apiClientProvider',
   debugGetCreateSourceHash:
@@ -21,12 +21,12 @@ final apiClientProvider = AutoDisposeProvider<ApiClient>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef ApiClientRef = AutoDisposeProviderRef<ApiClient>;
-String _$storageServiceHash() => r'ac6fc7dcc6b0c6f1ecd20d8e670ee04bf22261ca';
+typedef ApiClientRef = ProviderRef<ApiClient>;
+String _$storageServiceHash() => r'62cbe9319bc400f2f78b16bce45d667585b592a2';
 
 /// See also [storageService].
 @ProviderFor(storageService)
-final storageServiceProvider = AutoDisposeProvider<StorageService>.internal(
+final storageServiceProvider = Provider<StorageService>.internal(
   storageService,
   name: r'storageServiceProvider',
   debugGetCreateSourceHash:
@@ -39,7 +39,7 @@ final storageServiceProvider = AutoDisposeProvider<StorageService>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef StorageServiceRef = AutoDisposeProviderRef<StorageService>;
+typedef StorageServiceRef = ProviderRef<StorageService>;
 String _$apiClientConfigHash() => r'e904915991f7f5477df793cadc833e21494d6201';
 
 /// See also [apiClientConfig].

@@ -1,57 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:learn_riverpod/core/extensions/string_extension.dart';
 import 'package:learn_riverpod/features/todo/data/models/todo.dart';
 import 'package:learn_riverpod/core/extensions/time_extension.dart';
 
-class TodoFormState {
-  final String title;
-  final String notes;
-  final DateTime? selectedDate;
-  final TimeOfDay? selectedTime;
-  final bool isLoading;
-  final String? errorMessage;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  const TodoFormState({
-    this.title = '',
-    this.notes = '',
-    this.selectedDate,
-    this.selectedTime,
-    this.isLoading = false,
-    this.errorMessage,
-  });
+part 'todo_form_state.freezed.dart';
 
-  TodoFormState copyWith({
-    String? title,
-    String? notes,
+@freezed
+sealed class TodoFormState with _$TodoFormState {
+  const factory TodoFormState({
+    @Default(0) int id,
+    @Default('') String title,
+    @Default('') String description,
     DateTime? selectedDate,
     TimeOfDay? selectedTime,
-    bool? isLoading,
+    @Default(false) bool isLoading,
     String? errorMessage,
-  }) {
-    return TodoFormState(
-      title: title ?? this.title,
-      notes: notes ?? this.notes,
-      selectedDate: selectedDate ?? this.selectedDate,
-      selectedTime: selectedTime ?? this.selectedTime,
-      isLoading: isLoading ?? this.isLoading,
-      errorMessage: errorMessage ?? this.errorMessage,
-    );
-  }
+  }) = _TodoFormState;
 
   factory TodoFormState.fromTodo(Todo todo) {
     return TodoFormState(
+      id: todo.id,
       title: todo.title,
-      notes: todo.notes ?? '',
+      description: todo.description ?? '',
       selectedDate: todo.date,
-      selectedTime: todo.time.toTimeOfDay(),
+      selectedTime: todo.time?.toTimeOfDay(),
     );
   }
+}
 
-  Todo toTodo({int? id, int? userId}) {
+extension TodoFormStateX on TodoFormState {
+  Todo toTodo() {
     return Todo(
-      id: id ?? DateTime.now().millisecondsSinceEpoch,
-      userId: userId ?? 1,
       title: title,
-      notes: notes.isEmpty ? null : notes,
+      description: description.isEmpty ? null : description,
       date: selectedDate,
       time: selectedTime?.toTimeString(),
     );

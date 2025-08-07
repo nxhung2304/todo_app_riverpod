@@ -26,11 +26,31 @@ final todoLocalDataSourceProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef TodoLocalDataSourceRef = AutoDisposeProviderRef<TodoLocalDataSource>;
-String _$todoRepositoryHash() => r'60350834b359ceeecfe6076f613784ebd9ba877b';
+String _$todoRemoteDataSourceHash() =>
+    r'a12b368e3ff99b2f98efbcfc7386e7259f67ab33';
+
+/// See also [todoRemoteDataSource].
+@ProviderFor(todoRemoteDataSource)
+final todoRemoteDataSourceProvider =
+    AutoDisposeProvider<TodoRemoteDataSource>.internal(
+      todoRemoteDataSource,
+      name: r'todoRemoteDataSourceProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$todoRemoteDataSourceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef TodoRemoteDataSourceRef = AutoDisposeProviderRef<TodoRemoteDataSource>;
+String _$todoRepositoryHash() => r'f7f253829b413894f990cfba8de740f830e40aa4';
 
 /// See also [todoRepository].
 @ProviderFor(todoRepository)
-final todoRepositoryProvider = AutoDisposeProvider<TodoRepository>.internal(
+final todoRepositoryProvider = AutoDisposeProvider<TodoRepositoryIml>.internal(
   todoRepository,
   name: r'todoRepositoryProvider',
   debugGetCreateSourceHash:
@@ -43,6 +63,6 @@ final todoRepositoryProvider = AutoDisposeProvider<TodoRepository>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef TodoRepositoryRef = AutoDisposeProviderRef<TodoRepository>;
+typedef TodoRepositoryRef = AutoDisposeProviderRef<TodoRepositoryIml>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

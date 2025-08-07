@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/core/config/router/app_routes.dart';
-import 'package:learn_riverpod/features/todo/presentation/providers/todo_provider.dart';
+import 'package:learn_riverpod/features/todo/presentation/controllers/todo_controller.dart';
 import 'package:learn_riverpod/features/todo/strings/todo_strings.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/todos/todo_item_widget.dart';
 import 'package:learn_riverpod/shared/widgets/base/localized_cosumer_widget.dart';
@@ -13,7 +13,7 @@ class TodoPage extends LocalizedConsumerWidget {
 
   @override
   Widget buildLocalized(BuildContext context, WidgetRef ref) {
-    final todosAsync = ref.watch(todoNotifierProvider);
+    final todosAsync = ref.watch(todoControllerProvider);
 
     return SharedScaffold(
       body: Column(
@@ -54,7 +54,7 @@ class TodoPage extends LocalizedConsumerWidget {
                 Text('Error: $error'),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () => ref.invalidate(todoNotifierProvider),
+                  onPressed: () => ref.invalidate(todoControllerProvider),
                   child: const Text('Retry'),
                 ),
               ],

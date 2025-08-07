@@ -7,21 +7,31 @@ part of 'todo.dart';
 // **************************************************************************
 
 _Todo _$TodoFromJson(Map<String, dynamic> json) => _Todo(
-  userId: (json['userId'] as num).toInt(),
-  id: (json['id'] as num).toInt(),
+  id: (json['id'] as num?)?.toInt() ?? 0,
   title: json['title'] as String,
-  notes: json['notes'] as String?,
-  date: json['date'] == null ? null : DateTime.parse(json['date'] as String),
-  time: json['time'] as String?,
-  completed: json['completed'] as bool? ?? false,
+  description: json['description'] as String?,
+  done: json['done'] as bool? ?? false,
+  priority: (json['priority'] as num?)?.toInt(),
+  priorityLabel: json['priority_label'] as String?,
+  dueDate: json['due_date'] as String?,
+  color: json['color'] as String?,
+  reminder: json['reminder'] as String?,
+  isOverdue: json['is_overdue'] as bool? ?? false,
+  createdAt: json['created_at'] as String?,
+  updatedAt: json['updated_at'] as String?,
 );
 
 Map<String, dynamic> _$TodoToJson(_Todo instance) => <String, dynamic>{
-  'userId': instance.userId,
   'id': instance.id,
   'title': instance.title,
-  'notes': instance.notes,
-  'date': instance.date?.toIso8601String(),
-  'time': instance.time,
-  'completed': instance.completed,
+  'description': instance.description,
+  'done': instance.done,
+  'priority': instance.priority,
+  'priority_label': instance.priorityLabel,
+  'due_date': instance.dueDate,
+  'color': instance.color,
+  'reminder': instance.reminder,
+  'is_overdue': instance.isOverdue,
+  'created_at': instance.createdAt,
+  'updated_at': instance.updatedAt,
 };

@@ -1,12 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'edit_todo_form_provider.dart';
+part of 'edit_todo_form_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$editTodoFormHash() => r'e24eb5c180424e5a0b0ffed1e349fbc57e18c8ac';
+String _$editTodoFormControllerHash() =>
+    r'7d5bc89c0958363f0e604f0b316d56f823caf555';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,30 +30,30 @@ class _SystemHash {
   }
 }
 
-abstract class _$EditTodoForm
+abstract class _$EditTodoFormController
     extends BuildlessAutoDisposeNotifier<TodoFormState> {
   late final Todo? initialTodo;
 
   TodoFormState build(Todo? initialTodo);
 }
 
-/// See also [EditTodoForm].
-@ProviderFor(EditTodoForm)
-const editTodoFormProvider = EditTodoFormFamily();
+/// See also [EditTodoFormController].
+@ProviderFor(EditTodoFormController)
+const editTodoFormControllerProvider = EditTodoFormControllerFamily();
 
-/// See also [EditTodoForm].
-class EditTodoFormFamily extends Family<TodoFormState> {
-  /// See also [EditTodoForm].
-  const EditTodoFormFamily();
+/// See also [EditTodoFormController].
+class EditTodoFormControllerFamily extends Family<TodoFormState> {
+  /// See also [EditTodoFormController].
+  const EditTodoFormControllerFamily();
 
-  /// See also [EditTodoForm].
-  EditTodoFormProvider call(Todo? initialTodo) {
-    return EditTodoFormProvider(initialTodo);
+  /// See also [EditTodoFormController].
+  EditTodoFormControllerProvider call(Todo? initialTodo) {
+    return EditTodoFormControllerProvider(initialTodo);
   }
 
   @override
-  EditTodoFormProvider getProviderOverride(
-    covariant EditTodoFormProvider provider,
+  EditTodoFormControllerProvider getProviderOverride(
+    covariant EditTodoFormControllerProvider provider,
   ) {
     return call(provider.initialTodo);
   }
@@ -69,29 +70,30 @@ class EditTodoFormFamily extends Family<TodoFormState> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'editTodoFormProvider';
+  String? get name => r'editTodoFormControllerProvider';
 }
 
-/// See also [EditTodoForm].
-class EditTodoFormProvider
-    extends AutoDisposeNotifierProviderImpl<EditTodoForm, TodoFormState> {
-  /// See also [EditTodoForm].
-  EditTodoFormProvider(Todo? initialTodo)
+/// See also [EditTodoFormController].
+class EditTodoFormControllerProvider
+    extends
+        AutoDisposeNotifierProviderImpl<EditTodoFormController, TodoFormState> {
+  /// See also [EditTodoFormController].
+  EditTodoFormControllerProvider(Todo? initialTodo)
     : this._internal(
-        () => EditTodoForm()..initialTodo = initialTodo,
-        from: editTodoFormProvider,
-        name: r'editTodoFormProvider',
+        () => EditTodoFormController()..initialTodo = initialTodo,
+        from: editTodoFormControllerProvider,
+        name: r'editTodoFormControllerProvider',
         debugGetCreateSourceHash:
             const bool.fromEnvironment('dart.vm.product')
                 ? null
-                : _$editTodoFormHash,
-        dependencies: EditTodoFormFamily._dependencies,
+                : _$editTodoFormControllerHash,
+        dependencies: EditTodoFormControllerFamily._dependencies,
         allTransitiveDependencies:
-            EditTodoFormFamily._allTransitiveDependencies,
+            EditTodoFormControllerFamily._allTransitiveDependencies,
         initialTodo: initialTodo,
       );
 
-  EditTodoFormProvider._internal(
+  EditTodoFormControllerProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -104,15 +106,15 @@ class EditTodoFormProvider
   final Todo? initialTodo;
 
   @override
-  TodoFormState runNotifierBuild(covariant EditTodoForm notifier) {
+  TodoFormState runNotifierBuild(covariant EditTodoFormController notifier) {
     return notifier.build(initialTodo);
   }
 
   @override
-  Override overrideWith(EditTodoForm Function() create) {
+  Override overrideWith(EditTodoFormController Function() create) {
     return ProviderOverride(
       origin: this,
-      override: EditTodoFormProvider._internal(
+      override: EditTodoFormControllerProvider._internal(
         () => create()..initialTodo = initialTodo,
         from: from,
         name: null,
@@ -125,14 +127,15 @@ class EditTodoFormProvider
   }
 
   @override
-  AutoDisposeNotifierProviderElement<EditTodoForm, TodoFormState>
+  AutoDisposeNotifierProviderElement<EditTodoFormController, TodoFormState>
   createElement() {
-    return _EditTodoFormProviderElement(this);
+    return _EditTodoFormControllerProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is EditTodoFormProvider && other.initialTodo == initialTodo;
+    return other is EditTodoFormControllerProvider &&
+        other.initialTodo == initialTodo;
   }
 
   @override
@@ -146,18 +149,24 @@ class EditTodoFormProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin EditTodoFormRef on AutoDisposeNotifierProviderRef<TodoFormState> {
+mixin EditTodoFormControllerRef
+    on AutoDisposeNotifierProviderRef<TodoFormState> {
   /// The parameter `initialTodo` of this provider.
   Todo? get initialTodo;
 }
 
-class _EditTodoFormProviderElement
-    extends AutoDisposeNotifierProviderElement<EditTodoForm, TodoFormState>
-    with EditTodoFormRef {
-  _EditTodoFormProviderElement(super.provider);
+class _EditTodoFormControllerProviderElement
+    extends
+        AutoDisposeNotifierProviderElement<
+          EditTodoFormController,
+          TodoFormState
+        >
+    with EditTodoFormControllerRef {
+  _EditTodoFormControllerProviderElement(super.provider);
 
   @override
-  Todo? get initialTodo => (origin as EditTodoFormProvider).initialTodo;
+  Todo? get initialTodo =>
+      (origin as EditTodoFormControllerProvider).initialTodo;
 }
 
 // ignore_for_file: type=lint

@@ -47,10 +47,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/core/config/router/app_routes.dart';
-import 'package:learn_riverpod/features/todo/presentation/providers/todo_provider.dart';
+import 'package:learn_riverpod/features/todo/presentation/controllers/todo_controller.dart';
+import 'package:learn_riverpod/features/todo/presentation/controllers/todo_form_controller.dart';
 import 'package:learn_riverpod/features/todo/strings/new_todo_strings.dart';
-import 'package:learn_riverpod/features/todo/presentation/providers/todo_form_provider.dart';
-import 'package:learn_riverpod/features/todo/presentation/services/new_todo_form_service.dart';
 import 'package:learn_riverpod/features/todo/presentation/validators/todo_validators.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/date_form_field.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/form/time_form_field.dart';
@@ -64,12 +63,11 @@ class NewTodoPage extends LocalizedConsumerWidget {
   @override
   Widget buildLocalized(BuildContext context, WidgetRef ref) {
     final formKey = useMemoized(() => GlobalKey<FormState>());
-    final formService = useMemoized(() => TodoFormService(ref, formKey));
 
-    final formState = ref.watch(todoFormProvider);
-    final submitState = ref.watch(todoNotifierProvider);
+    final formState = ref.watch(todoFormControllerProvider);
+    final submitState = ref.watch(todoControllerProvider);
 
-    ref.listen(todoNotifierProvider, (prev, next) {
+    ref.listen(todoControllerProvider, (prev, next) {
       next.when(
         data: (_) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -119,16 +117,17 @@ class NewTodoPage extends LocalizedConsumerWidget {
                   ],
                 ),
                 SizedBox(height: 16),
-                _buildNotesField(ref, formState.notes),
+                _buildNotesField(ref, formState.description),
                 SizedBox(height: 24),
-                _buildSubmitButton(ref, formService, submitState, formKey),
+                _buildSubmitButton(ref, submitState, formKey),
               ],
             ),
           ),
         ),
       ),
       onWillPop: () async {
-        final hasChanges = ref.read(todoFormProvider.notifier).hasChanges();
+        final hasChanges =
+            ref.read(todoFormControllerProvider.notifier).hasChanges();
         if (!hasChanges) {
           return true;
         }
@@ -171,10 +170,7 @@ class NewTodoPage extends LocalizedConsumerWidget {
         InputFormField(
           validator: TodoValidators.validateTitle,
           initialValue: currentTitle,
-          // onChanged: (value) {
-          //   ref.read(todoFormProvider.notifier).updateTitle(value);
-          // },
-          onChanged: ref.read(todoFormProvider.notifier).updateTitle,
+          onChanged: ref.read(todoFormControllerProvider.notifier).updateTitle,
           autovalidateMode: AutovalidateMode.onUserInteraction,
         ),
       ],
@@ -194,7 +190,7 @@ class NewTodoPage extends LocalizedConsumerWidget {
           initialDate: selectedDate,
           labelText: "",
           validator: TodoValidators.validateDate,
-          onChanged: ref.read(todoFormProvider.notifier).updateDate,
+          onChanged: ref.read(todoFormControllerProvider.notifier).updateDate,
         ),
       ],
     );
@@ -212,14 +208,14 @@ class NewTodoPage extends LocalizedConsumerWidget {
           initialValue: currentNotes,
           validator: TodoValidators.validateNotes,
           maxLines: 6,
-          onChanged: ref.read(todoFormProvider.notifier).updateNotes,
+          onChanged: ref.read(todoFormControllerProvider.notifier).updateNotes,
         ),
       ],
     );
   }
 
   Widget _buildTimeField(WidgetRef ref, TimeOfDay? selectedTime) {
-    final formState = ref.watch(todoFormProvider);
+    final formState = ref.watch(todoFormControllerProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -233,7 +229,7 @@ class NewTodoPage extends LocalizedConsumerWidget {
           validator: TodoValidators.validateTimeWithDate(
             formState.selectedDate,
           ),
-          onChanged: ref.read(todoFormProvider.notifier).updateTime,
+          onChanged: ref.read(todoFormControllerProvider.notifier).updateTime,
         ),
       ],
     );
@@ -241,7 +237,6 @@ class NewTodoPage extends LocalizedConsumerWidget {
 
   Widget _buildSubmitButton(
     WidgetRef ref,
-    TodoFormService formService,
     AsyncValue<void> submitState,
     GlobalKey<FormState> formKey,
   ) {
@@ -254,15 +249,15 @@ class NewTodoPage extends LocalizedConsumerWidget {
             return;
           }
 
-          final formState = ref.read(todoFormProvider);
+          final formState = ref.read(todoFormControllerProvider);
 
           await ref
-              .read(todoNotifierProvider.notifier)
+              .read(todoControllerProvider.notifier)
               .addTodo(
                 title: formState.title,
                 date: formState.selectedDate,
                 time: formState.selectedTime,
-                notes: formState.notes,
+                description: formState.description,
               );
         },
         child:

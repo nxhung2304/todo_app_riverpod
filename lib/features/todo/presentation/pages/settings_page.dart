@@ -3,6 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/core/config/localization/app_locale.dart';
 import 'package:learn_riverpod/core/config/localization/app_locale_provider.dart';
 import 'package:learn_riverpod/core/config/router/app_routes.dart';
+import 'package:learn_riverpod/core/models/auth_status.dart';
+import 'package:learn_riverpod/features/auth/presentation/providers/auth_provider.dart';
 import 'package:learn_riverpod/features/todo/presentation/widgets/settings/language_bottom_sheet.dart';
 import 'package:learn_riverpod/features/todo/strings/settings_strings.dart';
 import 'package:learn_riverpod/shared/widgets/base/localized_cosumer_widget.dart';
@@ -19,7 +21,10 @@ class SettingsPage extends LocalizedConsumerWidget {
       title: SettingsStrings.title,
       currentRoute: AppRoutes.settings,
       body: ListView(
-        children: [_buildSelectLanguage(context, ref, currentAppLocale)],
+        children: [
+          _buildSelectLanguage(context, ref, currentAppLocale),
+          _buildLogout(ref),
+        ],
       ),
     );
   }
@@ -46,6 +51,33 @@ class SettingsPage extends LocalizedConsumerWidget {
               ),
             },
       ),
+    );
+  }
+
+  _buildLogout(WidgetRef ref) {
+    final authState = ref.watch(authNotifierProvider);
+
+    return authState.when(
+      data:
+          (status) => status.when(
+            authenticated:
+                (user) => Card(
+                  child: ListTile(
+                    leading: Icon(Icons.logout),
+                    title: Text(SettingsStrings.logout),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      ref.read(authNotifierProvider.notifier).logout();
+                    },
+                  ),
+                ),
+            initialize: () => const SizedBox.shrink(),
+            loading: () => const SizedBox.shrink(),
+            unauthenticated: () => const SizedBox.shrink(),
+            error: (_) => const SizedBox.shrink(),
+          ),
+      loading: () => const SizedBox.shrink(),
+      error: (_, __) => const SizedBox.shrink(),
     );
   }
 }

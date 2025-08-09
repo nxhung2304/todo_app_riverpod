@@ -5,5 +5,7 @@ class SettingsStrings {
 
   static String get languageChanged => "settings.language_changed".tr();
 
+  static String get logout => "settings.logout".tr();
+
   static String get title => "settings.title".tr();
 }

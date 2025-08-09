@@ -5,6 +5,9 @@ class AppRoutes {
   static String newTodo = '/todo/new';
   static String editTodo = '/todo/edit/:todoId';
 
+  static String category = '/category';
+  static String newCategory = '/category/new';
+
   static String search = '/search';
   static String settings = '/settings';
 

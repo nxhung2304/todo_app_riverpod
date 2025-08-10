@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/core/config/router/app_routes.dart';
+import 'package:learn_riverpod/features/category/data/models/params/category_params.dart';
+import 'package:learn_riverpod/features/category/presentation/controllers/category_controller.dart';
 import 'package:learn_riverpod/features/category/presentation/forms/category_form.dart';
 import 'package:learn_riverpod/features/category/strings/category_strings.dart';
 import 'package:learn_riverpod/shared/widgets/base/localized_cosumer_widget.dart';
@@ -9,8 +11,13 @@ import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
 class CategoryNewPage extends LocalizedConsumerWidget {
   const CategoryNewPage({super.key});
 
-  Future<void> onSubmit(BuildContext context, WidgetRef ref) async {
+  Future<void> onSubmit(
+    BuildContext context,
+    WidgetRef ref,
+    CategoryParams categoryParams,
+  ) async {
     print("Category creating");
+    ref.read(CategoryControllerProvider(null).notifier).create(categoryParams);
   }
 
   @override
@@ -18,7 +25,11 @@ class CategoryNewPage extends LocalizedConsumerWidget {
     return SharedScaffold(
       title: CategoryStrings.title,
       currentRoute: AppRoutes.category,
-      body: CategoryForm.create(onSubmit: () => onSubmit(context, ref)),
+      body: CategoryForm.create(
+        onSubmit:
+            (CategoryParams categoryParams) =>
+                onSubmit(context, ref, categoryParams),
+      ),
     );
   }
 }

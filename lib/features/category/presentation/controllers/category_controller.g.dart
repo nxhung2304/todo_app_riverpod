@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'category_form_controller.dart';
+part of 'category_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$categoryFormControllerHash() =>
-    r'64f5fe2b4d2771948d3e6e9b75596641daf9031a';
+String _$categoryControllerHash() =>
+    r'166956008c1048283d4d9b311257303bd44bbb33';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,30 +30,30 @@ class _SystemHash {
   }
 }
 
-abstract class _$CategoryFormController
+abstract class _$CategoryController
     extends BuildlessAutoDisposeNotifier<CategoryFormState> {
   late final String? categoryId;
 
   CategoryFormState build(String? categoryId);
 }
 
-/// See also [CategoryFormController].
-@ProviderFor(CategoryFormController)
-const categoryFormControllerProvider = CategoryFormControllerFamily();
+/// See also [CategoryController].
+@ProviderFor(CategoryController)
+const categoryControllerProvider = CategoryControllerFamily();
 
-/// See also [CategoryFormController].
-class CategoryFormControllerFamily extends Family<CategoryFormState> {
-  /// See also [CategoryFormController].
-  const CategoryFormControllerFamily();
+/// See also [CategoryController].
+class CategoryControllerFamily extends Family<CategoryFormState> {
+  /// See also [CategoryController].
+  const CategoryControllerFamily();
 
-  /// See also [CategoryFormController].
-  CategoryFormControllerProvider call(String? categoryId) {
-    return CategoryFormControllerProvider(categoryId);
+  /// See also [CategoryController].
+  CategoryControllerProvider call(String? categoryId) {
+    return CategoryControllerProvider(categoryId);
   }
 
   @override
-  CategoryFormControllerProvider getProviderOverride(
-    covariant CategoryFormControllerProvider provider,
+  CategoryControllerProvider getProviderOverride(
+    covariant CategoryControllerProvider provider,
   ) {
     return call(provider.categoryId);
   }
@@ -70,33 +70,30 @@ class CategoryFormControllerFamily extends Family<CategoryFormState> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'categoryFormControllerProvider';
+  String? get name => r'categoryControllerProvider';
 }
 
-/// See also [CategoryFormController].
-class CategoryFormControllerProvider
+/// See also [CategoryController].
+class CategoryControllerProvider
     extends
-        AutoDisposeNotifierProviderImpl<
-          CategoryFormController,
-          CategoryFormState
-        > {
-  /// See also [CategoryFormController].
-  CategoryFormControllerProvider(String? categoryId)
+        AutoDisposeNotifierProviderImpl<CategoryController, CategoryFormState> {
+  /// See also [CategoryController].
+  CategoryControllerProvider(String? categoryId)
     : this._internal(
-        () => CategoryFormController()..categoryId = categoryId,
-        from: categoryFormControllerProvider,
-        name: r'categoryFormControllerProvider',
+        () => CategoryController()..categoryId = categoryId,
+        from: categoryControllerProvider,
+        name: r'categoryControllerProvider',
         debugGetCreateSourceHash:
             const bool.fromEnvironment('dart.vm.product')
                 ? null
-                : _$categoryFormControllerHash,
-        dependencies: CategoryFormControllerFamily._dependencies,
+                : _$categoryControllerHash,
+        dependencies: CategoryControllerFamily._dependencies,
         allTransitiveDependencies:
-            CategoryFormControllerFamily._allTransitiveDependencies,
+            CategoryControllerFamily._allTransitiveDependencies,
         categoryId: categoryId,
       );
 
-  CategoryFormControllerProvider._internal(
+  CategoryControllerProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -109,17 +106,15 @@ class CategoryFormControllerProvider
   final String? categoryId;
 
   @override
-  CategoryFormState runNotifierBuild(
-    covariant CategoryFormController notifier,
-  ) {
+  CategoryFormState runNotifierBuild(covariant CategoryController notifier) {
     return notifier.build(categoryId);
   }
 
   @override
-  Override overrideWith(CategoryFormController Function() create) {
+  Override overrideWith(CategoryController Function() create) {
     return ProviderOverride(
       origin: this,
-      override: CategoryFormControllerProvider._internal(
+      override: CategoryControllerProvider._internal(
         () => create()..categoryId = categoryId,
         from: from,
         name: null,
@@ -132,14 +127,14 @@ class CategoryFormControllerProvider
   }
 
   @override
-  AutoDisposeNotifierProviderElement<CategoryFormController, CategoryFormState>
+  AutoDisposeNotifierProviderElement<CategoryController, CategoryFormState>
   createElement() {
-    return _CategoryFormControllerProviderElement(this);
+    return _CategoryControllerProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is CategoryFormControllerProvider &&
+    return other is CategoryControllerProvider &&
         other.categoryId == categoryId;
   }
 
@@ -154,24 +149,23 @@ class CategoryFormControllerProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin CategoryFormControllerRef
+mixin CategoryControllerRef
     on AutoDisposeNotifierProviderRef<CategoryFormState> {
   /// The parameter `categoryId` of this provider.
   String? get categoryId;
 }
 
-class _CategoryFormControllerProviderElement
+class _CategoryControllerProviderElement
     extends
         AutoDisposeNotifierProviderElement<
-          CategoryFormController,
+          CategoryController,
           CategoryFormState
         >
-    with CategoryFormControllerRef {
-  _CategoryFormControllerProviderElement(super.provider);
+    with CategoryControllerRef {
+  _CategoryControllerProviderElement(super.provider);
 
   @override
-  String? get categoryId =>
-      (origin as CategoryFormControllerProvider).categoryId;
+  String? get categoryId => (origin as CategoryControllerProvider).categoryId;
 }
 
 // ignore_for_file: type=lint

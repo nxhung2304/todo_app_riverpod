@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/core/config/router/app_routes.dart';
+import 'package:learn_riverpod/features/category/data/models/params/category_params.dart';
 import 'package:learn_riverpod/features/category/presentation/forms/category_form.dart';
 import 'package:learn_riverpod/features/category/strings/category_strings.dart';
 import 'package:learn_riverpod/shared/widgets/base/localized_cosumer_widget.dart';
@@ -14,10 +15,11 @@ class CategoryEditPage extends LocalizedConsumerWidget {
   Future<void> onSubmit(
     BuildContext context,
     WidgetRef ref,
-    String? categoryId,
+    CategoryParams params,
   ) async {
     print("Category submitted with ID: $categoryId");
-    Navigator.of(context).pop();
+    print("Category params: ${params.toJson()}");
+    // Navigator.of(context).pop();
   }
 
   @override
@@ -27,7 +29,7 @@ class CategoryEditPage extends LocalizedConsumerWidget {
       currentRoute: AppRoutes.category,
       body: CategoryForm.edit(
         categoryId: categoryId,
-        onSubmit: () => onSubmit(context, ref, categoryId),
+        onSubmit: (params) => onSubmit(context, ref, params),
       ),
     );
   }

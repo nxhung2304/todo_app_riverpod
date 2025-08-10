@@ -13,4 +13,10 @@ class ApiEndpoints {
   static String updateTodo(int todoId) => '$todos/$todoId';
   static String toggleTodo(int todoId) => '$todos/$todoId/toggle';
   static String deleteTodo(int todoId) => '$todos/$todoId';
+
+  // Category
+  static const String categories = '/categories';
+  static String getCategoryById(String categoryId) => '$categories/$categoryId';
+  static String updateCategory(int categoryId) => '$categories/$categoryId';
+  static String deleteCategory(int categoryId) => '$categories/$categoryId';
 }

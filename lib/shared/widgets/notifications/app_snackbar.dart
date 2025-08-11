@@ -18,11 +18,11 @@ class AppSnackBar {
           children: [
             Icon(type.icon, color: Colors.white, size: 20),
             SizedBox(width: 8),
-            Text(message),
+            Expanded(child: Text(message)),
           ],
         ),
         backgroundColor: type.backgroundColor,
-        duration: Duration(seconds: 2),
+        duration: duration,
         behavior: SnackBarBehavior.floating,
       ),
     );

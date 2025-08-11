@@ -6,7 +6,8 @@ part 'category_form_state.freezed.dart';
 sealed class CategoryFormState with _$CategoryFormState {
   const factory CategoryFormState({
     required String name,
-    required String color,
-    required String icon,
+    String? color,
+    String? icon,
+    @Default(false) bool isLoading,
   }) = _CategoryFormState;
 }

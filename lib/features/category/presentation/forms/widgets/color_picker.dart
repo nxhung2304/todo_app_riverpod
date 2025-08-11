@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/shared/widgets/form/bottom_sheet_picker.dart';
 
-class ColorPicker extends StatelessWidget {
+class ColorPicker extends HookConsumerWidget {
   final List<Color> colors = [
     Colors.red,
     Colors.blue,
@@ -22,14 +24,24 @@ class ColorPicker extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedColor = useState<Color>(initialColor);
+
+    useEffect(() {
+      selectedColor.value = initialColor;
+      return null;
+    }, [initialColor]);
+
     return BottomSheetPicker<Color>(
       items: colors,
       title: 'Select Color',
       crossAxisCount: 4,
       childAspectRatio: 1.2,
-      onItemSelected: onColorSelected,
-      initialItem: initialColor,
+      onItemSelected: (color) {
+        selectedColor.value = color ?? Colors.blue;
+        onColorSelected(color);
+      },
+      initialItem: selectedColor.value,
       itemBuilder: (color, isSelected, selectedColor) {
         return Container(
           margin: EdgeInsets.all(8),

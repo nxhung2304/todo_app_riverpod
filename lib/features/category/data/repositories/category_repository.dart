@@ -14,23 +14,24 @@ class CategoryRepository{
     required this.remoteDataSource,
   });
 
-  Future<ApiResponse<List<Category>>> getCategories() async {
+  Future<ApiResponse<List<Category>>> all() async {
     try {
-      final response = await remoteDataSource.getCategories();
+      final response = await remoteDataSource.all();
       if (response.isSuccess && response.data != null) {
         await localDataSource.saveCategories(response.data!);
         return response;
       }
 
-      final localCategorys = await localDataSource.getCategories();
+      final localCategorys = await localDataSource.all();
       return ApiResponse.success(localCategorys);
     } catch (e) {
-      final localCategorys = await localDataSource.getCategories();
+      print("[CategoryRepository] Error fetching categories: $e");
+      final localCategorys = await localDataSource.all();
       return ApiResponse.success(localCategorys);
     }
   }
 
-  Future<ApiResponse<Category>> getById(String categoryId) async {
+  Future<ApiResponse<Category>> getById(int categoryId) async {
     try {
       final response = await remoteDataSource.getById(categoryId);
       if (response.isSuccess && response.data != null) {
@@ -48,7 +49,7 @@ class CategoryRepository{
       if (response.isSuccess && response.data != null) {
         await localDataSource.add(response.data!);
       }
-      return response;
+      return ApiResponse.success(response.data!);
     } catch (e) {
       return ApiResponse.error(e.toString());
     }
@@ -61,7 +62,7 @@ class CategoryRepository{
       if (response.isSuccess && response.data != null) {
         await localDataSource.add(response.data!);
       }
-      return response;
+      return ApiResponse.success(response.data!);
     } catch (e) {
       return ApiResponse.error(e.toString());
     }

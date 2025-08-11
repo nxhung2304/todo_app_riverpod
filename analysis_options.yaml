@@ -29,5 +29,6 @@ linter:
 analyzer:
   errors:
     no_leading_underscores_for_local_identifiers: ignore
+    invalid_annotation_target: ignore
   plugins:
     - custom_lint

@@ -19,7 +19,7 @@ class CategoryLocalDataSource {
     }
   }
 
-  Future<List<Category>> getCategories() async {
+  Future<List<Category>> all() async {
     try {
       final jsonList = await storageService.getStringList(StorageKeys.category);
       if (jsonList == null) return [];
@@ -34,13 +34,13 @@ class CategoryLocalDataSource {
   }
 
   Future<bool> add(Category category) async {
-    final categories = await getCategories();
+    final categories = await all();
     categories.add(category);
     return await saveCategories(categories);
   }
 
   Future<bool> update(Category updatedcategory) async {
-    final categories = await getCategories();
+    final categories = await all();
     final index = categories.indexWhere(
       (category) => category.id == updatedcategory.id,
     );
@@ -54,7 +54,7 @@ class CategoryLocalDataSource {
   }
 
   Future<bool> delete(int id) async {
-    final categories = await getCategories();
+    final categories = await all();
     categories.removeWhere((category) => category.id == id);
     return await saveCategories(categories);
   }

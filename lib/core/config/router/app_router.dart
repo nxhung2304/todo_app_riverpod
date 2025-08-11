@@ -72,7 +72,9 @@ final _protectedRoutes = [
         path: 'edit/:id',
         builder:
             (context, state) =>
-                CategoryEditPage(categoryId: state.pathParameters['id']),
+                CategoryEditPage(categoryId: state.pathParameters['id'] != null
+                    ? int.tryParse(state.pathParameters['id']!)
+                    : null),
       ),
     ],
   ),

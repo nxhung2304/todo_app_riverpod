@@ -7,6 +7,7 @@ class AppRoutes {
 
   static String category = '/category';
   static String newCategory = '/category/new';
+  static String editCategory = '/category/edit/:categoryId';
 
   static String search = '/search';
   static String settings = '/settings';

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Category {
 
- String get id; String get name; String get color; String get icon; DateTime get createdAt; DateTime get updatedAt; String get userId;
+ int get id; String get name;@JsonKey(name: 'user_id') int get userId;@JsonKey(name: 'color') String? get color;@JsonKey(name: 'icon') String? get icon;@JsonKey(name: 'description') String? get description;@JsonKey(name: 'created_at') DateTime get createdAt;@JsonKey(name: 'updated_at') DateTime get updatedAt;@JsonKey(name: 'archived') bool get archived;
 /// Create a copy of Category
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $CategoryCopyWith<Category> get copyWith => _$CategoryCopyWithImpl<Category>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Category&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.color, color) || other.color == color)&&(identical(other.icon, icon) || other.icon == icon)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.userId, userId) || other.userId == userId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Category&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.color, color) || other.color == color)&&(identical(other.icon, icon) || other.icon == icon)&&(identical(other.description, description) || other.description == description)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.archived, archived) || other.archived == archived));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,color,icon,createdAt,updatedAt,userId);
+int get hashCode => Object.hash(runtimeType,id,name,userId,color,icon,description,createdAt,updatedAt,archived);
 
 @override
 String toString() {
-  return 'Category(id: $id, name: $name, color: $color, icon: $icon, createdAt: $createdAt, updatedAt: $updatedAt, userId: $userId)';
+  return 'Category(id: $id, name: $name, userId: $userId, color: $color, icon: $icon, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, archived: $archived)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $CategoryCopyWith<$Res>  {
   factory $CategoryCopyWith(Category value, $Res Function(Category) _then) = _$CategoryCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String color, String icon, DateTime createdAt, DateTime updatedAt, String userId
+ int id, String name,@JsonKey(name: 'user_id') int userId,@JsonKey(name: 'color') String? color,@JsonKey(name: 'icon') String? icon,@JsonKey(name: 'description') String? description,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt,@JsonKey(name: 'archived') bool archived
 });
 
 
@@ -65,16 +65,18 @@ class _$CategoryCopyWithImpl<$Res>
 
 /// Create a copy of Category
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? color = null,Object? icon = null,Object? createdAt = null,Object? updatedAt = null,Object? userId = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? userId = null,Object? color = freezed,Object? icon = freezed,Object? description = freezed,Object? createdAt = null,Object? updatedAt = null,Object? archived = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
-as String,icon: null == icon ? _self.icon : icon // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as int,color: freezed == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
+as String?,icon: freezed == icon ? _self.icon : icon // ignore: cast_nullable_to_non_nullable
+as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as String,
+as DateTime,archived: null == archived ? _self.archived : archived // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -156,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String color,  String icon,  DateTime createdAt,  DateTime updatedAt,  String userId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name, @JsonKey(name: 'user_id')  int userId, @JsonKey(name: 'color')  String? color, @JsonKey(name: 'icon')  String? icon, @JsonKey(name: 'description')  String? description, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt, @JsonKey(name: 'archived')  bool archived)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Category() when $default != null:
-return $default(_that.id,_that.name,_that.color,_that.icon,_that.createdAt,_that.updatedAt,_that.userId);case _:
+return $default(_that.id,_that.name,_that.userId,_that.color,_that.icon,_that.description,_that.createdAt,_that.updatedAt,_that.archived);case _:
   return orElse();
 
 }
@@ -177,10 +179,10 @@ return $default(_that.id,_that.name,_that.color,_that.icon,_that.createdAt,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String color,  String icon,  DateTime createdAt,  DateTime updatedAt,  String userId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name, @JsonKey(name: 'user_id')  int userId, @JsonKey(name: 'color')  String? color, @JsonKey(name: 'icon')  String? icon, @JsonKey(name: 'description')  String? description, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt, @JsonKey(name: 'archived')  bool archived)  $default,) {final _that = this;
 switch (_that) {
 case _Category():
-return $default(_that.id,_that.name,_that.color,_that.icon,_that.createdAt,_that.updatedAt,_that.userId);}
+return $default(_that.id,_that.name,_that.userId,_that.color,_that.icon,_that.description,_that.createdAt,_that.updatedAt,_that.archived);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -194,10 +196,10 @@ return $default(_that.id,_that.name,_that.color,_that.icon,_that.createdAt,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String color,  String icon,  DateTime createdAt,  DateTime updatedAt,  String userId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name, @JsonKey(name: 'user_id')  int userId, @JsonKey(name: 'color')  String? color, @JsonKey(name: 'icon')  String? icon, @JsonKey(name: 'description')  String? description, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt, @JsonKey(name: 'archived')  bool archived)?  $default,) {final _that = this;
 switch (_that) {
 case _Category() when $default != null:
-return $default(_that.id,_that.name,_that.color,_that.icon,_that.createdAt,_that.updatedAt,_that.userId);case _:
+return $default(_that.id,_that.name,_that.userId,_that.color,_that.icon,_that.description,_that.createdAt,_that.updatedAt,_that.archived);case _:
   return null;
 
 }
@@ -209,16 +211,18 @@ return $default(_that.id,_that.name,_that.color,_that.icon,_that.createdAt,_that
 @JsonSerializable()
 
 class _Category implements Category {
-  const _Category({required this.id, required this.name, required this.color, required this.icon, required this.createdAt, required this.updatedAt, required this.userId});
+  const _Category({required this.id, required this.name, @JsonKey(name: 'user_id') required this.userId, @JsonKey(name: 'color') this.color, @JsonKey(name: 'icon') this.icon, @JsonKey(name: 'description') this.description, @JsonKey(name: 'created_at') required this.createdAt, @JsonKey(name: 'updated_at') required this.updatedAt, @JsonKey(name: 'archived') required this.archived});
   factory _Category.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);
 
-@override final  String id;
+@override final  int id;
 @override final  String name;
-@override final  String color;
-@override final  String icon;
-@override final  DateTime createdAt;
-@override final  DateTime updatedAt;
-@override final  String userId;
+@override@JsonKey(name: 'user_id') final  int userId;
+@override@JsonKey(name: 'color') final  String? color;
+@override@JsonKey(name: 'icon') final  String? icon;
+@override@JsonKey(name: 'description') final  String? description;
+@override@JsonKey(name: 'created_at') final  DateTime createdAt;
+@override@JsonKey(name: 'updated_at') final  DateTime updatedAt;
+@override@JsonKey(name: 'archived') final  bool archived;
 
 /// Create a copy of Category
 /// with the given fields replaced by the non-null parameter values.
@@ -233,16 +237,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Category&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.color, color) || other.color == color)&&(identical(other.icon, icon) || other.icon == icon)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.userId, userId) || other.userId == userId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Category&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.color, color) || other.color == color)&&(identical(other.icon, icon) || other.icon == icon)&&(identical(other.description, description) || other.description == description)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.archived, archived) || other.archived == archived));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,color,icon,createdAt,updatedAt,userId);
+int get hashCode => Object.hash(runtimeType,id,name,userId,color,icon,description,createdAt,updatedAt,archived);
 
 @override
 String toString() {
-  return 'Category(id: $id, name: $name, color: $color, icon: $icon, createdAt: $createdAt, updatedAt: $updatedAt, userId: $userId)';
+  return 'Category(id: $id, name: $name, userId: $userId, color: $color, icon: $icon, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, archived: $archived)';
 }
 
 
@@ -253,7 +257,7 @@ abstract mixin class _$CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res>
   factory _$CategoryCopyWith(_Category value, $Res Function(_Category) _then) = __$CategoryCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String color, String icon, DateTime createdAt, DateTime updatedAt, String userId
+ int id, String name,@JsonKey(name: 'user_id') int userId,@JsonKey(name: 'color') String? color,@JsonKey(name: 'icon') String? icon,@JsonKey(name: 'description') String? description,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt,@JsonKey(name: 'archived') bool archived
 });
 
 
@@ -270,16 +274,18 @@ class __$CategoryCopyWithImpl<$Res>
 
 /// Create a copy of Category
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? color = null,Object? icon = null,Object? createdAt = null,Object? updatedAt = null,Object? userId = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? userId = null,Object? color = freezed,Object? icon = freezed,Object? description = freezed,Object? createdAt = null,Object? updatedAt = null,Object? archived = null,}) {
   return _then(_Category(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
-as String,icon: null == icon ? _self.icon : icon // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as int,color: freezed == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
+as String?,icon: freezed == icon ? _self.icon : icon // ignore: cast_nullable_to_non_nullable
+as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as String,
+as DateTime,archived: null == archived ? _self.archived : archived // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

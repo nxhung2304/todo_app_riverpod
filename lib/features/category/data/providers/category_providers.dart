@@ -1,7 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:learn_riverpod/core/models/api_response.dart';
 import 'package:learn_riverpod/core/providers/core_providers.dart';
 import 'package:learn_riverpod/features/category/data/datasources/category_local_datasource.dart';
 import 'package:learn_riverpod/features/category/data/datasources/category_remote_datasource.dart';
+import 'package:learn_riverpod/features/category/data/models/category.dart';
 import 'package:learn_riverpod/features/category/data/repositories/category_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -9,7 +11,9 @@ part 'category_providers.g.dart';
 
 @riverpod
 CategoryLocalDataSource categoryLocalDataSource(Ref ref) {
-  return CategoryLocalDataSource(storageService: ref.read(storageServiceProvider));
+  return CategoryLocalDataSource(
+    storageService: ref.read(storageServiceProvider),
+  );
 }
 
 @riverpod
@@ -24,3 +28,10 @@ CategoryRepository categoryRepository(Ref ref) {
 
   return CategoryRepository(localDataSource: local, remoteDataSource: remote);
 }
+
+final categoryByIdProvider = FutureProvider.family<ApiResponse<Category>, int>((
+  ref,
+  id,
+) {
+  return ref.read(categoryRepositoryProvider).getById(id);
+});

@@ -34,6 +34,26 @@
       "edited_todo_success": "Đã chỉnh sửa công việc thành công"
     }
   },
+  "category": {
+    "title": "Thể loại",
+    "name": "Tên thể loại",
+    "color": "Màu sắc",
+    "icon": "Biểu tượng",
+    "not_found": "Không tìm thấy thể loại",
+    "edit": "Chỉnh sửa",
+    "edit_title": "Chỉnh sửa thể loại",
+    "create_title": "Tạo thể loại mới",
+    "new": "Mới",
+    "delete": "Xóa",
+    "created_success": "Tạo thành công",
+    "failed_create": "Tạo thất bại",
+    "edited_success": "Chỉnh sửa thành công",
+    "failed_edit": "Chỉnh sửa thất bại",
+    "deleted_success": "Xóa thành công",
+    "failed_delete": "Xóa thất bại",
+    "updated_success": "Cập nhật thành công",
+    "failed_update": "Cập nhật thất bại"
+  },
   "home": {
     "title": "Trang chủ"
   },

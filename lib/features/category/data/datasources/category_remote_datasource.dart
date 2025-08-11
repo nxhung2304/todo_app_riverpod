@@ -9,16 +9,24 @@ class CategoryRemoteDataSource {
 
   CategoryRemoteDataSource({required this.apiClient});
 
-  Future<ApiResponse<List<Category>>> getCategories() async {
+  Future<ApiResponse<List<Category>>> all() async {
     try {
       final response = await apiClient.get(ApiEndpoints.categories);
-      final List<dynamic> categoriesJson =
-          response.data['data'] as List<dynamic>;
-      final categories =
-          categoriesJson.map((todo) => Category.fromJson(todo)).toList();
+      final responseData = response.data;
+      if (responseData['success'] == true && responseData['data'] != null) {
+        final categories =
+            (responseData['data'] as List)
+                .map((json) => Category.fromJson(json))
+                .toList();
 
-      return ApiResponse.success(categories);
+        return ApiResponse.success(categories);
+      } else {
+        return ApiResponse.error(
+          responseData['message'] ?? 'Failed to load categories',
+        );
+      }
     } catch (e) {
+      print("[CategoryRemoteDataSource] Error fetching categories: $e");
       return ApiResponse.error(e.toString());
     }
   }
@@ -39,9 +47,11 @@ class CategoryRemoteDataSource {
     }
   }
 
-  Future<ApiResponse<Category>> getById(String categoryId) async {
+  Future<ApiResponse<Category>> getById(int categoryId) async {
     try {
-      final response = await apiClient.get(ApiEndpoints.getCategoryById(categoryId));
+      final response = await apiClient.get(
+        ApiEndpoints.getCategoryById(categoryId),
+      );
       final Map<String, dynamic> categoryJson =
           response.data['data'] as Map<String, dynamic>;
       final category = Category.fromJson(categoryJson);
@@ -52,16 +62,18 @@ class CategoryRemoteDataSource {
     }
   }
 
-  Future<ApiResponse<Category>> update(int categoryId, CategoryParams categoryParams) async {
+  Future<ApiResponse<Category>> update(
+    int categoryId,
+    CategoryParams categoryParams,
+  ) async {
     try {
       final response = await apiClient.put(
         ApiEndpoints.updateCategory(categoryId),
         data: categoryParams.toJson(),
       );
-    final Map<String, dynamic> categoryJson =
+      final Map<String, dynamic> categoryJson =
           response.data['data'] as Map<String, dynamic>;
       final category = Category.fromJson(categoryJson);
-
 
       return ApiResponse.success(category);
     } catch (e) {

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:learn_riverpod/core/models/auth_status.dart';
-import 'package:learn_riverpod/features/auth/presentation/providers/auth_provider.dart';
 import 'package:learn_riverpod/shared/widgets/navigation/shared_app_bar.dart';
 import 'package:learn_riverpod/shared/widgets/navigation/shared_bottom_nav.dart';
 

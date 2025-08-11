@@ -62,9 +62,6 @@ extension IconDataStringX on String {
 
     if (codePoint == null) return null;
 
-    return IconData(
-      codePoint,
-      fontFamily: fontFamily == 'MaterialIcons' ? null : fontFamily,
-    );
+    return IconData(codePoint, fontFamily: fontFamily);
   }
 }

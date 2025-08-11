@@ -16,7 +16,7 @@ class ApiEndpoints {
 
   // Category
   static const String categories = '/categories';
-  static String getCategoryById(String categoryId) => '$categories/$categoryId';
+  static String getCategoryById(int categoryId) => '$categories/$categoryId';
   static String updateCategory(int categoryId) => '$categories/$categoryId';
   static String deleteCategory(int categoryId) => '$categories/$categoryId';
 }

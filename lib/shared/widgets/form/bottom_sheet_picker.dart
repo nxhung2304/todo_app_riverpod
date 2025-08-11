@@ -35,6 +35,7 @@ class _BottomSheetPickerState<T> extends State<BottomSheetPicker<T>> {
   @override
   void initState() {
     super.initState();
+
     selectedItem = widget.initialItem;
   }
 
@@ -158,9 +159,11 @@ class _BottomSheetPickerState<T> extends State<BottomSheetPicker<T>> {
                                     setModalState(() {
                                       selectedItem = item;
                                     });
-                                    setState(() {
-                                      selectedItem = item;
-                                    });
+                                    if (mounted) {
+                                      setState(() {
+                                        selectedItem = item;
+                                      });
+                                    }
                                     widget.onItemSelected?.call(item);
                                   },
                                   child: Container(

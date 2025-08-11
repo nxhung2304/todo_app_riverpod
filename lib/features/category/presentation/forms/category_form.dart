@@ -10,25 +10,24 @@ import 'package:learn_riverpod/features/category/presentation/forms/validators/c
 import 'package:learn_riverpod/features/category/presentation/forms/widgets/color_picker.dart';
 import 'package:learn_riverpod/features/category/presentation/forms/widgets/icon_picker.dart';
 import 'package:learn_riverpod/features/category/strings/category_strings.dart';
+import 'package:learn_riverpod/shared/enums/form_mode.dart';
 import 'package:learn_riverpod/shared/widgets/base/localized_cosumer_widget.dart';
 import 'package:learn_riverpod/shared/widgets/form/input_field_form.dart';
 
-enum CategoryFormMode { create, edit }
-
 class CategoryForm extends LocalizedConsumerWidget {
-  final CategoryFormMode mode;
-  final String? categoryId;
+  final FormMode mode;
+  final int? categoryId;
   final Future<void> Function(CategoryParams) onSubmit;
 
   const CategoryForm.create({super.key, required this.onSubmit})
-    : mode = CategoryFormMode.create,
+    : mode = FormMode.create,
       categoryId = null;
 
   const CategoryForm.edit({
     super.key,
     required this.categoryId,
     required this.onSubmit,
-  }) : mode = CategoryFormMode.edit;
+  }) : mode = FormMode.edit;
 
   @override
   Widget buildLocalized(BuildContext context, WidgetRef ref) {
@@ -36,31 +35,34 @@ class CategoryForm extends LocalizedConsumerWidget {
 
     final nameController = useTextEditingController();
     final selectedIcon = useState<IconData?>(null);
-    final selectedColor = useState<Color>(Colors.blue);
-    final isEdit = mode == CategoryFormMode.edit;
-
-    Future<void> _loadCategoryData() async {
-      try {
-        final category = await ref
-            .read(categoryRepositoryProvider)
-            .getById(categoryId!);
-
-        nameController.text = category.data?.name ?? '';
-        selectedIcon.value = category.data?.icon.toIconData();
-        selectedColor.value = category.data?.color.toColor() ?? Colors.blue;
-      } catch (e) {
-        print(e.toString());
-      }
-    }
+    var selectedColor = useState<Color?>(Colors.blue);
+    final isEdit = mode == FormMode.edit;
+    final categoryAsync =
+        isEdit && categoryId != null
+            ? ref.watch(categoryByIdProvider(categoryId!))
+            : null;
 
     useEffect(() {
-      if (isEdit && categoryId != null) {
-        _loadCategoryData();
+      if (categoryAsync?.hasValue == true) {
+        final category = categoryAsync!.value!.data;
+        if (category != null) {
+          nameController.text = category.name;
+          selectedIcon.value = category.icon?.toIconData();
+          selectedColor.value = category.color?.toColor() ?? Colors.blue;
+        }
       }
       return null;
-    }, []);
+    }, [categoryAsync]);
 
-    String getButtonTitle() {
+    if (categoryAsync?.isLoading == true) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (categoryAsync?.hasError == true) {
+      return Center(child: Text('Error: ${categoryAsync!.error}'));
+    }
+
+    String _getButtonTitle() {
       return isEdit ? CategoryStrings.editButton : CategoryStrings.newButton;
     }
 
@@ -68,7 +70,7 @@ class CategoryForm extends LocalizedConsumerWidget {
       if (formKey.currentState?.validate() ?? false) {
         final categoryParams = CategoryParams(
           name: nameController.text,
-          color: selectedColor.value.toHex(),
+          color: selectedColor.value?.toHex(),
           icon: selectedIcon.value?.toStorageString() ?? '',
         );
 
@@ -77,45 +79,41 @@ class CategoryForm extends LocalizedConsumerWidget {
     }
 
     _onIconSelected(IconData? icon) {
-      print(selectedIcon);
       selectedIcon.value = icon;
     }
 
-    _onColorSelected(Color? selectedColor) {
-      print(selectedColor);
-      selectedColor = selectedColor;
+    _onColorSelected(Color? color) {
+      selectedColor.value = color;
     }
 
-    return PopScope(
-      canPop: true,
-      child: Form(
-        key: formKey,
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              InputFormField(
-                labelText: CategoryStrings.name,
-                controller: nameController,
-                validator: CategoryValidators.validateName,
-              ),
-              SizedBox(height: 20),
-              IconPicker(
-                onIconSelected: _onIconSelected,
-                initialIcon: selectedIcon.value,
-              ),
-              SizedBox(height: 20),
-              ColorPicker(
-                onColorSelected: _onColorSelected,
-                initialColor: selectedColor.value,
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _onCategoryFormSubmit,
-                child: Text(getButtonTitle()),
-              ),
-            ],
-          ),
+    return Form(
+      key: formKey,
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            InputFormField(
+              labelText: CategoryStrings.name,
+              controller: nameController,
+              validator: CategoryValidators.validateName,
+            ),
+
+            const SizedBox(height: 20),
+            IconPicker(
+              onIconSelected: _onIconSelected,
+              initialIcon: selectedIcon.value,
+            ),
+            const SizedBox(height: 20),
+            ColorPicker(
+              onColorSelected: _onColorSelected,
+              initialColor: selectedColor.value ?? Colors.blue,
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _onCategoryFormSubmit,
+              child: Text(_getButtonTitle()),
+            ),
+          ],
         ),
       ),
     );

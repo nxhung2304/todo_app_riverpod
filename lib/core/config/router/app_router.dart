@@ -2,6 +2,9 @@ import 'package:go_router/go_router.dart';
 import 'package:learn_riverpod/core/config/router/app_routes.dart';
 import 'package:learn_riverpod/features/auth/presentation/pages/login_page.dart';
 import 'package:learn_riverpod/features/auth/presentation/pages/signup_page.dart';
+import 'package:learn_riverpod/features/category/presentation/pages/category_edit_page.dart';
+import 'package:learn_riverpod/features/category/presentation/pages/category_new_page.dart';
+import 'package:learn_riverpod/features/category/presentation/pages/category_page.dart';
 import 'package:learn_riverpod/features/todo/presentation/pages/edit_todo_page.dart';
 import 'package:learn_riverpod/features/todo/presentation/pages/home_page.dart';
 import 'package:learn_riverpod/features/todo/presentation/pages/todo_page.dart';
@@ -54,6 +57,24 @@ final _protectedRoutes = [
 
           return EditTodoPage(todoId: todoId);
         },
+      ),
+    ],
+  ),
+  GoRoute(
+    path: AppRoutes.category,
+    builder: (context, state) => CategoryPage(),
+    routes: [
+      GoRoute(
+        path: 'new',
+        builder: (context, state) => CategoryNewPage(),
+      ),
+      GoRoute(
+        path: 'edit/:id',
+        builder:
+            (context, state) =>
+                CategoryEditPage(categoryId: state.pathParameters['id'] != null
+                    ? int.tryParse(state.pathParameters['id']!)
+                    : null),
       ),
     ],
   ),

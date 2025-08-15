@@ -73,7 +73,6 @@ class NewTodoPage extends LocalizedConsumerWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(NewTodoStrings.createdTodo),
-              // content: Text(context.tr("todo.new.created_todo")),
               backgroundColor: Colors.green,
             ),
           );

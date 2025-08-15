@@ -1,0 +1,1 @@
+enum FormMode { create, edit }

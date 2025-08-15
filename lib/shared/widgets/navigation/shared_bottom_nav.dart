@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:learn_riverpod/core/config/router/app_routes.dart';
+import 'package:learn_riverpod/features/category/strings/category_strings.dart';
 import 'package:learn_riverpod/features/todo/strings/home_strings.dart';
-import 'package:learn_riverpod/features/todo/strings/search_strings.dart';
 import 'package:learn_riverpod/features/todo/strings/settings_strings.dart';
 import 'package:learn_riverpod/features/todo/strings/todo_strings.dart';
 import 'package:learn_riverpod/shared/enums/navigation_item.dart';
@@ -25,9 +25,9 @@ class SharedBottomNav extends StatelessWidget {
       route: AppRoutes.todo,
     ),
     NavigationDestinationModel(
-      icon: Icons.search,
-      label: SearchStrings.title,
-      route: AppRoutes.search,
+      icon: Icons.category,
+      label: CategoryStrings.title,
+      route: AppRoutes.category,
     ),
     NavigationDestinationModel(
       icon: Icons.settings,

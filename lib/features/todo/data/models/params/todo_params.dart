@@ -14,6 +14,7 @@ sealed class TodoParams with _$TodoParams {
     String? time,
     DateTime? date,
     @JsonKey(name: 'due_date') String? dueDate,
+    @JsonKey(name: 'category_id') int? categoryId,
   }) = _TodoParams;
 
   factory TodoParams.fromJson(Map<String, dynamic> json) =>

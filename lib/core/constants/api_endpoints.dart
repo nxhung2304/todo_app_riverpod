@@ -10,6 +10,7 @@ class ApiEndpoints {
   // Todo
   static const String todos = '/todos';
 
+  static String getTodoById(int todoId) => '$todos/$todoId';
   static String updateTodo(int todoId) => '$todos/$todoId';
   static String toggleTodo(int todoId) => '$todos/$todoId/toggle';
   static String deleteTodo(int todoId) => '$todos/$todoId';

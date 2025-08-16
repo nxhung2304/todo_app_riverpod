@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:learn_riverpod/features/todo/data/models/todo.dart';
+import 'package:learn_riverpod/core/config/router/app_routes.dart';
+import 'package:learn_riverpod/features/todo/data/models/params/todo_params.dart';
 import 'package:learn_riverpod/features/todo/presentation/controllers/todo_controller.dart';
-import 'package:learn_riverpod/features/todo/presentation/forms/edit_todo_form.dart';
-import 'package:learn_riverpod/features/todo/strings/edit_todo_strings.dart';
+import 'package:learn_riverpod/features/todo/presentation/forms/todo_form.dart';
+import 'package:learn_riverpod/features/todo/strings/todo_strings.dart';
 import 'package:learn_riverpod/shared/widgets/base/localized_cosumer_widget.dart';
-import 'package:learn_riverpod/shared/widgets/navigation/shared_app_bar.dart';
+import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
+import 'package:learn_riverpod/shared/widgets/notifications/app_snackbar.dart';
 
 class EditTodoPage extends LocalizedConsumerWidget {
   final int todoId;
@@ -14,43 +17,36 @@ class EditTodoPage extends LocalizedConsumerWidget {
 
   @override
   Widget buildLocalized(BuildContext context, WidgetRef ref) {
-    final todosAsync = ref.watch(todoControllerProvider);
+    Future<void> onSubmit(
+      BuildContext context,
+      WidgetRef ref,
+      TodoParams params,
+    ) async {
+      try {
+        final controller = ref.read(todoControllerProvider.notifier);
 
-    return todosAsync.when(
-      loading: () {
-        final todos = todosAsync.valueOrNull;
-        if (todos != null) {
-          final foundTodo = todos.cast<Todo?>().firstWhere(
-            (todo) => todo?.id == todoId,
-            orElse: () => null,
-          );
+        final result = await controller.updateTodo(todoId, params);
 
-          if (foundTodo != null) {
-            return EditTodoForm(todo: foundTodo);
-          }
+        if (!context.mounted) return;
+
+        if (result.isSuccess) {
+          AppSnackBar.showSuccess(context, TodoStrings.updateSuccess);
+          context.pop();
+        } else {
+          AppSnackBar.showError(context, TodoStrings.updateError);
         }
+      } catch (e) {
+        AppSnackBar.showError(context, e.toString());
+      }
+    }
 
-        return const Scaffold(body: Center(child: CircularProgressIndicator()));
-      },
-      error: (error, stackTrace) => Scaffold(
-        appBar: const SharedAppBar(title: 'Error'),
-        body: Center(child: Text('Error: $error')),
+    return SharedScaffold(
+      title: TodoStrings.title,
+      currentRoute: AppRoutes.category,
+      body: TodoForm.edit(
+        todoId: todoId,
+        onSubmit: (params) => onSubmit(context, ref, params),
       ),
-      data: (todos) {
-        final foundTodo = todos.cast<Todo?>().firstWhere(
-          (todo) => todo?.id == todoId,
-          orElse: () => null,
-        );
-
-        if (foundTodo == null) {
-          return Scaffold(
-            appBar: const SharedAppBar(title: 'Error'),
-            body: Center(child: Text(EditTodoStrings.todoNotFound)),
-          );
-        }
-
-        return EditTodoForm(todo: foundTodo);
-      },
     );
   }
 }

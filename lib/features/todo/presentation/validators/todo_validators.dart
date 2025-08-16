@@ -4,13 +4,13 @@ import 'package:learn_riverpod/features/todo/strings/todo_error_strings.dart';
 class TodoValidators {
   static String? validateTitle(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return TodoErrorStrings.titleRequired;
+      return TodoErrorStrings.nameRequired;
     }
     if (value.trim().length < 3) {
-      return TodoErrorStrings.titleMinLength;
+      return TodoErrorStrings.nameMinLength;
     }
     if (value.length > 100) {
-      return TodoErrorStrings.titleMaxLength;
+      return TodoErrorStrings.nameMaxLength;
     }
 
     return null;
@@ -59,7 +59,7 @@ class TodoValidators {
     };
   }
 
-  static String? validateNotes(String? description) {
+  static String? validateDescription(String? description) {
     if (description == null) {
       return null;
     }

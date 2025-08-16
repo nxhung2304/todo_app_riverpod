@@ -9,7 +9,7 @@ class TodoRemoteDataSource {
 
   TodoRemoteDataSource({required this.apiClient});
 
-  Future<ApiResponse<List<Todo>>> getTodos() async {
+  Future<ApiResponse<List<Todo>>> all() async {
     try {
       final response = await apiClient.get(ApiEndpoints.todos);
       final List<dynamic> todosJson = response.data['data'] as List<dynamic>;
@@ -21,7 +21,7 @@ class TodoRemoteDataSource {
     }
   }
 
-  Future<ApiResponse<Todo>> addTodo(TodoParams todoParams) async {
+  Future<ApiResponse<Todo>> createTodo(TodoParams todoParams) async {
     try {
       final response = await apiClient.post(
         ApiEndpoints.todos,
@@ -33,6 +33,21 @@ class TodoRemoteDataSource {
       final todo = Todo.fromJson(todoJson);
 
       return ApiResponse.success(todo);
+    } catch (e) {
+      return ApiResponse.error(e.toString());
+    }
+  }
+
+  Future<ApiResponse<Todo>> getById(int categoryId) async {
+    try {
+      final response = await apiClient.get(
+        ApiEndpoints.getTodoById(categoryId),
+      );
+      final Map<String, dynamic> categoryJson =
+          response.data['data'] as Map<String, dynamic>;
+      final category = Todo.fromJson(categoryJson);
+
+      return ApiResponse.success(category);
     } catch (e) {
       return ApiResponse.error(e.toString());
     }

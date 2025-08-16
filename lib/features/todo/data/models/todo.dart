@@ -8,6 +8,7 @@ sealed class Todo with _$Todo {
   factory Todo({
     @Default(0) int id,
     required String title,
+    @JsonKey(name: 'category_id') required int categoryId,
     String? description,
     @Default(false) bool done,
     int? priority,

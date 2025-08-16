@@ -23,6 +23,10 @@
     "date": "Ngày tháng",
     "time": "Thời gian",
     "description": "Mô tả",
+    "createSuccess": "Công việc đã được tạo thành công",
+    "updateSuccess": "Công việc đã được cập nhật thành công",
+    "deleteSuccess": "Công việc đã được xóa thành công",
+    "not_found": "Không tìm thấy công việc",
     "new": {
       "title": "Trang tạo công việc mới",
       "created_todo_success": "Tạo công việc thành công"
@@ -104,9 +108,9 @@
       "confirm_password_does_not_match": "Xác nhận mật khẩu không khớp"
     },
     "todo": {
-      "title_required": "Tiêu đề công việc là bắt buộc",
-      "title_min_length": "Tiêu đề công việc phải có ít nhất 3 ký tự",
-      "title_max_length": "Tiêu đề công việc không được quá 100 ký tự",
+      "name_required": "Tên công việc là bắt buộc",
+      "name_min_length": "Tên công việc phải có ít nhất 3 ký tự",
+      "name_max_length": "Tên công việc không được quá 100 ký tự",
       "date_in_past": "Ngày không được trong quá khứ",
       "time_in_past": "Thời gian không được trong quá khứ",
       "select_date_when_time_selected": "Vui lòng chọn ngày khi đã chọn thời gian",

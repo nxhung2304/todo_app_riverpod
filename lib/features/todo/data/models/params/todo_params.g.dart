@@ -12,6 +12,7 @@ _TodoParams _$TodoParamsFromJson(Map<String, dynamic> json) => _TodoParams(
   time: json['time'] as String?,
   date: json['date'] == null ? null : DateTime.parse(json['date'] as String),
   dueDate: json['due_date'] as String?,
+  categoryId: (json['category_id'] as num?)?.toInt(),
 );
 
 Map<String, dynamic> _$TodoParamsToJson(_TodoParams instance) =>
@@ -21,4 +22,5 @@ Map<String, dynamic> _$TodoParamsToJson(_TodoParams instance) =>
       'time': instance.time,
       'date': instance.date?.toIso8601String(),
       'due_date': instance.dueDate,
+      'category_id': instance.categoryId,
     };

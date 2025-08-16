@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TodoParams {
 
- String get title; String? get description; String? get time; DateTime? get date;@JsonKey(name: 'due_date') String? get dueDate;
+ String get title; String? get description; String? get time; DateTime? get date;@JsonKey(name: 'due_date') String? get dueDate;@JsonKey(name: 'category_id') int? get categoryId;
 /// Create a copy of TodoParams
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $TodoParamsCopyWith<TodoParams> get copyWith => _$TodoParamsCopyWithImpl<TodoPar
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TodoParams&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.time, time) || other.time == time)&&(identical(other.date, date) || other.date == date)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TodoParams&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.time, time) || other.time == time)&&(identical(other.date, date) || other.date == date)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,description,time,date,dueDate);
+int get hashCode => Object.hash(runtimeType,title,description,time,date,dueDate,categoryId);
 
 @override
 String toString() {
-  return 'TodoParams(title: $title, description: $description, time: $time, date: $date, dueDate: $dueDate)';
+  return 'TodoParams(title: $title, description: $description, time: $time, date: $date, dueDate: $dueDate, categoryId: $categoryId)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $TodoParamsCopyWith<$Res>  {
   factory $TodoParamsCopyWith(TodoParams value, $Res Function(TodoParams) _then) = _$TodoParamsCopyWithImpl;
 @useResult
 $Res call({
- String title, String? description, String? time, DateTime? date,@JsonKey(name: 'due_date') String? dueDate
+ String title, String? description, String? time, DateTime? date,@JsonKey(name: 'due_date') String? dueDate,@JsonKey(name: 'category_id') int? categoryId
 });
 
 
@@ -65,14 +65,15 @@ class _$TodoParamsCopyWithImpl<$Res>
 
 /// Create a copy of TodoParams
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? description = freezed,Object? time = freezed,Object? date = freezed,Object? dueDate = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? description = freezed,Object? time = freezed,Object? date = freezed,Object? dueDate = freezed,Object? categoryId = freezed,}) {
   return _then(_self.copyWith(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,time: freezed == time ? _self.time : time // ignore: cast_nullable_to_non_nullable
 as String?,date: freezed == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime?,dueDate: freezed == dueDate ? _self.dueDate : dueDate // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 
@@ -154,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  String? description,  String? time,  DateTime? date, @JsonKey(name: 'due_date')  String? dueDate)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  String? description,  String? time,  DateTime? date, @JsonKey(name: 'due_date')  String? dueDate, @JsonKey(name: 'category_id')  int? categoryId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TodoParams() when $default != null:
-return $default(_that.title,_that.description,_that.time,_that.date,_that.dueDate);case _:
+return $default(_that.title,_that.description,_that.time,_that.date,_that.dueDate,_that.categoryId);case _:
   return orElse();
 
 }
@@ -175,10 +176,10 @@ return $default(_that.title,_that.description,_that.time,_that.date,_that.dueDat
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  String? description,  String? time,  DateTime? date, @JsonKey(name: 'due_date')  String? dueDate)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  String? description,  String? time,  DateTime? date, @JsonKey(name: 'due_date')  String? dueDate, @JsonKey(name: 'category_id')  int? categoryId)  $default,) {final _that = this;
 switch (_that) {
 case _TodoParams():
-return $default(_that.title,_that.description,_that.time,_that.date,_that.dueDate);}
+return $default(_that.title,_that.description,_that.time,_that.date,_that.dueDate,_that.categoryId);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -192,10 +193,10 @@ return $default(_that.title,_that.description,_that.time,_that.date,_that.dueDat
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  String? description,  String? time,  DateTime? date, @JsonKey(name: 'due_date')  String? dueDate)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  String? description,  String? time,  DateTime? date, @JsonKey(name: 'due_date')  String? dueDate, @JsonKey(name: 'category_id')  int? categoryId)?  $default,) {final _that = this;
 switch (_that) {
 case _TodoParams() when $default != null:
-return $default(_that.title,_that.description,_that.time,_that.date,_that.dueDate);case _:
+return $default(_that.title,_that.description,_that.time,_that.date,_that.dueDate,_that.categoryId);case _:
   return null;
 
 }
@@ -207,7 +208,7 @@ return $default(_that.title,_that.description,_that.time,_that.date,_that.dueDat
 @JsonSerializable()
 
 class _TodoParams implements TodoParams {
-  const _TodoParams({required this.title, this.description, this.time, this.date, @JsonKey(name: 'due_date') this.dueDate});
+  const _TodoParams({required this.title, this.description, this.time, this.date, @JsonKey(name: 'due_date') this.dueDate, @JsonKey(name: 'category_id') this.categoryId});
   factory _TodoParams.fromJson(Map<String, dynamic> json) => _$TodoParamsFromJson(json);
 
 @override final  String title;
@@ -215,6 +216,7 @@ class _TodoParams implements TodoParams {
 @override final  String? time;
 @override final  DateTime? date;
 @override@JsonKey(name: 'due_date') final  String? dueDate;
+@override@JsonKey(name: 'category_id') final  int? categoryId;
 
 /// Create a copy of TodoParams
 /// with the given fields replaced by the non-null parameter values.
@@ -229,16 +231,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TodoParams&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.time, time) || other.time == time)&&(identical(other.date, date) || other.date == date)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TodoParams&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.time, time) || other.time == time)&&(identical(other.date, date) || other.date == date)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,description,time,date,dueDate);
+int get hashCode => Object.hash(runtimeType,title,description,time,date,dueDate,categoryId);
 
 @override
 String toString() {
-  return 'TodoParams(title: $title, description: $description, time: $time, date: $date, dueDate: $dueDate)';
+  return 'TodoParams(title: $title, description: $description, time: $time, date: $date, dueDate: $dueDate, categoryId: $categoryId)';
 }
 
 
@@ -249,7 +251,7 @@ abstract mixin class _$TodoParamsCopyWith<$Res> implements $TodoParamsCopyWith<$
   factory _$TodoParamsCopyWith(_TodoParams value, $Res Function(_TodoParams) _then) = __$TodoParamsCopyWithImpl;
 @override @useResult
 $Res call({
- String title, String? description, String? time, DateTime? date,@JsonKey(name: 'due_date') String? dueDate
+ String title, String? description, String? time, DateTime? date,@JsonKey(name: 'due_date') String? dueDate,@JsonKey(name: 'category_id') int? categoryId
 });
 
 
@@ -266,14 +268,15 @@ class __$TodoParamsCopyWithImpl<$Res>
 
 /// Create a copy of TodoParams
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? description = freezed,Object? time = freezed,Object? date = freezed,Object? dueDate = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? description = freezed,Object? time = freezed,Object? date = freezed,Object? dueDate = freezed,Object? categoryId = freezed,}) {
   return _then(_TodoParams(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,time: freezed == time ? _self.time : time // ignore: cast_nullable_to_non_nullable
 as String?,date: freezed == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime?,dueDate: freezed == dueDate ? _self.dueDate : dueDate // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 

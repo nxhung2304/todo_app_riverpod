@@ -26,6 +26,7 @@ class CategoryStrings {
   static String get deleteSuccess => "$_prefix.deleted_success".tr();
   static String get deleteError => "$_prefix.failed_delete".tr();
   static String get categoryNotFound => "$_prefix.not_found".tr();
+  static String get noCategoriesFound => "$_prefix.no_categories_found".tr();
 
   // Validation errors
   static String get nameRequired => "errors.$_prefix.name_required".tr();

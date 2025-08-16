@@ -46,11 +46,11 @@ final todoRemoteDataSourceProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef TodoRemoteDataSourceRef = AutoDisposeProviderRef<TodoRemoteDataSource>;
-String _$todoRepositoryHash() => r'f7f253829b413894f990cfba8de740f830e40aa4';
+String _$todoRepositoryHash() => r'6a3a968fc23c17058a8be8667cb983560b5f55da';
 
 /// See also [todoRepository].
 @ProviderFor(todoRepository)
-final todoRepositoryProvider = AutoDisposeProvider<TodoRepositoryIml>.internal(
+final todoRepositoryProvider = AutoDisposeProvider<TodoRepository>.internal(
   todoRepository,
   name: r'todoRepositoryProvider',
   debugGetCreateSourceHash:
@@ -63,6 +63,6 @@ final todoRepositoryProvider = AutoDisposeProvider<TodoRepositoryIml>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef TodoRepositoryRef = AutoDisposeProviderRef<TodoRepositoryIml>;
+typedef TodoRepositoryRef = AutoDisposeProviderRef<TodoRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -20,7 +20,7 @@ class TodoLocalDataSource {
     }
   }
   
-  Future<List<Todo>> getTodos() async{
+  Future<List<Todo>> all() async{
     try {
       final jsonList = await storageService.getStringList(StorageKeys.todos);
       if (jsonList == null) return [];
@@ -34,14 +34,14 @@ class TodoLocalDataSource {
     }
   }
   
-  Future<bool> addTodo(Todo todo) async {
-    final todos = await getTodos();
+  Future<bool> add(Todo todo) async {
+    final todos = await all();
     todos.add(todo);
     return await saveTodos(todos);
   }
   
-  Future<bool> updateTodo(Todo updatedTodo) async {
-    final todos = await getTodos();
+  Future<bool> update(Todo updatedTodo) async {
+    final todos = await all();
     final index = todos.indexWhere((todo) => todo.id == updatedTodo.id);
     
     if (index != -1) {
@@ -52,13 +52,13 @@ class TodoLocalDataSource {
     return false;
   }
   
-  Future<bool> deleteTodo(int id) async {
-    final todos = await getTodos();
+  Future<bool> delete(int id) async {
+    final todos = await all();
     todos.removeWhere((todo) => todo.id == id);
     return await saveTodos(todos);
   }
   
-  Future<bool> clearTodos() async {
+  Future<bool> clear() async {
     return await storageService.remove(StorageKeys.todos);
   }
 }

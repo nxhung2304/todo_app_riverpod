@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Todo {
 
- int get id; String get title; String? get description; bool get done; int? get priority;@JsonKey(name: 'priority_label') String? get priorityLabel;@JsonKey(name: 'due_date') String? get dueDate; String? get color; String? get reminder;@JsonKey(name: 'is_overdue') bool get isOverdue;@JsonKey(name: 'created_at') String? get createdAt;@JsonKey(name: 'updated_at') String? get updatedAt;@JsonKey(includeFromJson: false, includeToJson: false) DateTime? get date;@JsonKey(includeFromJson: false, includeToJson: false) String? get time;
+ int get id; String get title;@JsonKey(name: 'category_id') int get categoryId; String? get description; bool get done; int? get priority;@JsonKey(name: 'priority_label') String? get priorityLabel;@JsonKey(name: 'due_date') String? get dueDate; String? get color; String? get reminder;@JsonKey(name: 'is_overdue') bool get isOverdue;@JsonKey(name: 'created_at') String? get createdAt;@JsonKey(name: 'updated_at') String? get updatedAt;@JsonKey(includeFromJson: false, includeToJson: false) DateTime? get date;@JsonKey(includeFromJson: false, includeToJson: false) String? get time;
 /// Create a copy of Todo
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $TodoCopyWith<Todo> get copyWith => _$TodoCopyWithImpl<Todo>(this as Todo, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Todo&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.done, done) || other.done == done)&&(identical(other.priority, priority) || other.priority == priority)&&(identical(other.priorityLabel, priorityLabel) || other.priorityLabel == priorityLabel)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.color, color) || other.color == color)&&(identical(other.reminder, reminder) || other.reminder == reminder)&&(identical(other.isOverdue, isOverdue) || other.isOverdue == isOverdue)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.date, date) || other.date == date)&&(identical(other.time, time) || other.time == time));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Todo&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.description, description) || other.description == description)&&(identical(other.done, done) || other.done == done)&&(identical(other.priority, priority) || other.priority == priority)&&(identical(other.priorityLabel, priorityLabel) || other.priorityLabel == priorityLabel)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.color, color) || other.color == color)&&(identical(other.reminder, reminder) || other.reminder == reminder)&&(identical(other.isOverdue, isOverdue) || other.isOverdue == isOverdue)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.date, date) || other.date == date)&&(identical(other.time, time) || other.time == time));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description,done,priority,priorityLabel,dueDate,color,reminder,isOverdue,createdAt,updatedAt,date,time);
+int get hashCode => Object.hash(runtimeType,id,title,categoryId,description,done,priority,priorityLabel,dueDate,color,reminder,isOverdue,createdAt,updatedAt,date,time);
 
 @override
 String toString() {
-  return 'Todo(id: $id, title: $title, description: $description, done: $done, priority: $priority, priorityLabel: $priorityLabel, dueDate: $dueDate, color: $color, reminder: $reminder, isOverdue: $isOverdue, createdAt: $createdAt, updatedAt: $updatedAt, date: $date, time: $time)';
+  return 'Todo(id: $id, title: $title, categoryId: $categoryId, description: $description, done: $done, priority: $priority, priorityLabel: $priorityLabel, dueDate: $dueDate, color: $color, reminder: $reminder, isOverdue: $isOverdue, createdAt: $createdAt, updatedAt: $updatedAt, date: $date, time: $time)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $TodoCopyWith<$Res>  {
   factory $TodoCopyWith(Todo value, $Res Function(Todo) _then) = _$TodoCopyWithImpl;
 @useResult
 $Res call({
- int id, String title, String? description, bool done, int? priority,@JsonKey(name: 'priority_label') String? priorityLabel,@JsonKey(name: 'due_date') String? dueDate, String? color, String? reminder,@JsonKey(name: 'is_overdue') bool isOverdue,@JsonKey(name: 'created_at') String? createdAt,@JsonKey(name: 'updated_at') String? updatedAt,@JsonKey(includeFromJson: false, includeToJson: false) DateTime? date,@JsonKey(includeFromJson: false, includeToJson: false) String? time
+ int id, String title,@JsonKey(name: 'category_id') int categoryId, String? description, bool done, int? priority,@JsonKey(name: 'priority_label') String? priorityLabel,@JsonKey(name: 'due_date') String? dueDate, String? color, String? reminder,@JsonKey(name: 'is_overdue') bool isOverdue,@JsonKey(name: 'created_at') String? createdAt,@JsonKey(name: 'updated_at') String? updatedAt,@JsonKey(includeFromJson: false, includeToJson: false) DateTime? date,@JsonKey(includeFromJson: false, includeToJson: false) String? time
 });
 
 
@@ -65,11 +65,12 @@ class _$TodoCopyWithImpl<$Res>
 
 /// Create a copy of Todo
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = freezed,Object? done = null,Object? priority = freezed,Object? priorityLabel = freezed,Object? dueDate = freezed,Object? color = freezed,Object? reminder = freezed,Object? isOverdue = null,Object? createdAt = freezed,Object? updatedAt = freezed,Object? date = freezed,Object? time = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? categoryId = null,Object? description = freezed,Object? done = null,Object? priority = freezed,Object? priorityLabel = freezed,Object? dueDate = freezed,Object? color = freezed,Object? reminder = freezed,Object? isOverdue = null,Object? createdAt = freezed,Object? updatedAt = freezed,Object? date = freezed,Object? time = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as int,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,done: null == done ? _self.done : done // ignore: cast_nullable_to_non_nullable
 as bool,priority: freezed == priority ? _self.priority : priority // ignore: cast_nullable_to_non_nullable
 as int?,priorityLabel: freezed == priorityLabel ? _self.priorityLabel : priorityLabel // ignore: cast_nullable_to_non_nullable
@@ -163,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String title,  String? description,  bool done,  int? priority, @JsonKey(name: 'priority_label')  String? priorityLabel, @JsonKey(name: 'due_date')  String? dueDate,  String? color,  String? reminder, @JsonKey(name: 'is_overdue')  bool isOverdue, @JsonKey(name: 'created_at')  String? createdAt, @JsonKey(name: 'updated_at')  String? updatedAt, @JsonKey(includeFromJson: false, includeToJson: false)  DateTime? date, @JsonKey(includeFromJson: false, includeToJson: false)  String? time)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String title, @JsonKey(name: 'category_id')  int categoryId,  String? description,  bool done,  int? priority, @JsonKey(name: 'priority_label')  String? priorityLabel, @JsonKey(name: 'due_date')  String? dueDate,  String? color,  String? reminder, @JsonKey(name: 'is_overdue')  bool isOverdue, @JsonKey(name: 'created_at')  String? createdAt, @JsonKey(name: 'updated_at')  String? updatedAt, @JsonKey(includeFromJson: false, includeToJson: false)  DateTime? date, @JsonKey(includeFromJson: false, includeToJson: false)  String? time)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Todo() when $default != null:
-return $default(_that.id,_that.title,_that.description,_that.done,_that.priority,_that.priorityLabel,_that.dueDate,_that.color,_that.reminder,_that.isOverdue,_that.createdAt,_that.updatedAt,_that.date,_that.time);case _:
+return $default(_that.id,_that.title,_that.categoryId,_that.description,_that.done,_that.priority,_that.priorityLabel,_that.dueDate,_that.color,_that.reminder,_that.isOverdue,_that.createdAt,_that.updatedAt,_that.date,_that.time);case _:
   return orElse();
 
 }
@@ -184,10 +185,10 @@ return $default(_that.id,_that.title,_that.description,_that.done,_that.priority
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String title,  String? description,  bool done,  int? priority, @JsonKey(name: 'priority_label')  String? priorityLabel, @JsonKey(name: 'due_date')  String? dueDate,  String? color,  String? reminder, @JsonKey(name: 'is_overdue')  bool isOverdue, @JsonKey(name: 'created_at')  String? createdAt, @JsonKey(name: 'updated_at')  String? updatedAt, @JsonKey(includeFromJson: false, includeToJson: false)  DateTime? date, @JsonKey(includeFromJson: false, includeToJson: false)  String? time)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String title, @JsonKey(name: 'category_id')  int categoryId,  String? description,  bool done,  int? priority, @JsonKey(name: 'priority_label')  String? priorityLabel, @JsonKey(name: 'due_date')  String? dueDate,  String? color,  String? reminder, @JsonKey(name: 'is_overdue')  bool isOverdue, @JsonKey(name: 'created_at')  String? createdAt, @JsonKey(name: 'updated_at')  String? updatedAt, @JsonKey(includeFromJson: false, includeToJson: false)  DateTime? date, @JsonKey(includeFromJson: false, includeToJson: false)  String? time)  $default,) {final _that = this;
 switch (_that) {
 case _Todo():
-return $default(_that.id,_that.title,_that.description,_that.done,_that.priority,_that.priorityLabel,_that.dueDate,_that.color,_that.reminder,_that.isOverdue,_that.createdAt,_that.updatedAt,_that.date,_that.time);}
+return $default(_that.id,_that.title,_that.categoryId,_that.description,_that.done,_that.priority,_that.priorityLabel,_that.dueDate,_that.color,_that.reminder,_that.isOverdue,_that.createdAt,_that.updatedAt,_that.date,_that.time);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -201,10 +202,10 @@ return $default(_that.id,_that.title,_that.description,_that.done,_that.priority
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String title,  String? description,  bool done,  int? priority, @JsonKey(name: 'priority_label')  String? priorityLabel, @JsonKey(name: 'due_date')  String? dueDate,  String? color,  String? reminder, @JsonKey(name: 'is_overdue')  bool isOverdue, @JsonKey(name: 'created_at')  String? createdAt, @JsonKey(name: 'updated_at')  String? updatedAt, @JsonKey(includeFromJson: false, includeToJson: false)  DateTime? date, @JsonKey(includeFromJson: false, includeToJson: false)  String? time)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String title, @JsonKey(name: 'category_id')  int categoryId,  String? description,  bool done,  int? priority, @JsonKey(name: 'priority_label')  String? priorityLabel, @JsonKey(name: 'due_date')  String? dueDate,  String? color,  String? reminder, @JsonKey(name: 'is_overdue')  bool isOverdue, @JsonKey(name: 'created_at')  String? createdAt, @JsonKey(name: 'updated_at')  String? updatedAt, @JsonKey(includeFromJson: false, includeToJson: false)  DateTime? date, @JsonKey(includeFromJson: false, includeToJson: false)  String? time)?  $default,) {final _that = this;
 switch (_that) {
 case _Todo() when $default != null:
-return $default(_that.id,_that.title,_that.description,_that.done,_that.priority,_that.priorityLabel,_that.dueDate,_that.color,_that.reminder,_that.isOverdue,_that.createdAt,_that.updatedAt,_that.date,_that.time);case _:
+return $default(_that.id,_that.title,_that.categoryId,_that.description,_that.done,_that.priority,_that.priorityLabel,_that.dueDate,_that.color,_that.reminder,_that.isOverdue,_that.createdAt,_that.updatedAt,_that.date,_that.time);case _:
   return null;
 
 }
@@ -216,11 +217,12 @@ return $default(_that.id,_that.title,_that.description,_that.done,_that.priority
 @JsonSerializable()
 
 class _Todo implements Todo {
-   _Todo({this.id = 0, required this.title, this.description, this.done = false, this.priority, @JsonKey(name: 'priority_label') this.priorityLabel, @JsonKey(name: 'due_date') this.dueDate, this.color, this.reminder, @JsonKey(name: 'is_overdue') this.isOverdue = false, @JsonKey(name: 'created_at') this.createdAt, @JsonKey(name: 'updated_at') this.updatedAt, @JsonKey(includeFromJson: false, includeToJson: false) this.date, @JsonKey(includeFromJson: false, includeToJson: false) this.time});
+   _Todo({this.id = 0, required this.title, @JsonKey(name: 'category_id') required this.categoryId, this.description, this.done = false, this.priority, @JsonKey(name: 'priority_label') this.priorityLabel, @JsonKey(name: 'due_date') this.dueDate, this.color, this.reminder, @JsonKey(name: 'is_overdue') this.isOverdue = false, @JsonKey(name: 'created_at') this.createdAt, @JsonKey(name: 'updated_at') this.updatedAt, @JsonKey(includeFromJson: false, includeToJson: false) this.date, @JsonKey(includeFromJson: false, includeToJson: false) this.time});
   factory _Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
 
 @override@JsonKey() final  int id;
 @override final  String title;
+@override@JsonKey(name: 'category_id') final  int categoryId;
 @override final  String? description;
 @override@JsonKey() final  bool done;
 @override final  int? priority;
@@ -247,16 +249,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Todo&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.done, done) || other.done == done)&&(identical(other.priority, priority) || other.priority == priority)&&(identical(other.priorityLabel, priorityLabel) || other.priorityLabel == priorityLabel)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.color, color) || other.color == color)&&(identical(other.reminder, reminder) || other.reminder == reminder)&&(identical(other.isOverdue, isOverdue) || other.isOverdue == isOverdue)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.date, date) || other.date == date)&&(identical(other.time, time) || other.time == time));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Todo&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.description, description) || other.description == description)&&(identical(other.done, done) || other.done == done)&&(identical(other.priority, priority) || other.priority == priority)&&(identical(other.priorityLabel, priorityLabel) || other.priorityLabel == priorityLabel)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.color, color) || other.color == color)&&(identical(other.reminder, reminder) || other.reminder == reminder)&&(identical(other.isOverdue, isOverdue) || other.isOverdue == isOverdue)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.date, date) || other.date == date)&&(identical(other.time, time) || other.time == time));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description,done,priority,priorityLabel,dueDate,color,reminder,isOverdue,createdAt,updatedAt,date,time);
+int get hashCode => Object.hash(runtimeType,id,title,categoryId,description,done,priority,priorityLabel,dueDate,color,reminder,isOverdue,createdAt,updatedAt,date,time);
 
 @override
 String toString() {
-  return 'Todo(id: $id, title: $title, description: $description, done: $done, priority: $priority, priorityLabel: $priorityLabel, dueDate: $dueDate, color: $color, reminder: $reminder, isOverdue: $isOverdue, createdAt: $createdAt, updatedAt: $updatedAt, date: $date, time: $time)';
+  return 'Todo(id: $id, title: $title, categoryId: $categoryId, description: $description, done: $done, priority: $priority, priorityLabel: $priorityLabel, dueDate: $dueDate, color: $color, reminder: $reminder, isOverdue: $isOverdue, createdAt: $createdAt, updatedAt: $updatedAt, date: $date, time: $time)';
 }
 
 
@@ -267,7 +269,7 @@ abstract mixin class _$TodoCopyWith<$Res> implements $TodoCopyWith<$Res> {
   factory _$TodoCopyWith(_Todo value, $Res Function(_Todo) _then) = __$TodoCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String title, String? description, bool done, int? priority,@JsonKey(name: 'priority_label') String? priorityLabel,@JsonKey(name: 'due_date') String? dueDate, String? color, String? reminder,@JsonKey(name: 'is_overdue') bool isOverdue,@JsonKey(name: 'created_at') String? createdAt,@JsonKey(name: 'updated_at') String? updatedAt,@JsonKey(includeFromJson: false, includeToJson: false) DateTime? date,@JsonKey(includeFromJson: false, includeToJson: false) String? time
+ int id, String title,@JsonKey(name: 'category_id') int categoryId, String? description, bool done, int? priority,@JsonKey(name: 'priority_label') String? priorityLabel,@JsonKey(name: 'due_date') String? dueDate, String? color, String? reminder,@JsonKey(name: 'is_overdue') bool isOverdue,@JsonKey(name: 'created_at') String? createdAt,@JsonKey(name: 'updated_at') String? updatedAt,@JsonKey(includeFromJson: false, includeToJson: false) DateTime? date,@JsonKey(includeFromJson: false, includeToJson: false) String? time
 });
 
 
@@ -284,11 +286,12 @@ class __$TodoCopyWithImpl<$Res>
 
 /// Create a copy of Todo
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = freezed,Object? done = null,Object? priority = freezed,Object? priorityLabel = freezed,Object? dueDate = freezed,Object? color = freezed,Object? reminder = freezed,Object? isOverdue = null,Object? createdAt = freezed,Object? updatedAt = freezed,Object? date = freezed,Object? time = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? categoryId = null,Object? description = freezed,Object? done = null,Object? priority = freezed,Object? priorityLabel = freezed,Object? dueDate = freezed,Object? color = freezed,Object? reminder = freezed,Object? isOverdue = null,Object? createdAt = freezed,Object? updatedAt = freezed,Object? date = freezed,Object? time = freezed,}) {
   return _then(_Todo(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as int,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,done: null == done ? _self.done : done // ignore: cast_nullable_to_non_nullable
 as bool,priority: freezed == priority ? _self.priority : priority // ignore: cast_nullable_to_non_nullable
 as int?,priorityLabel: freezed == priorityLabel ? _self.priorityLabel : priorityLabel // ignore: cast_nullable_to_non_nullable

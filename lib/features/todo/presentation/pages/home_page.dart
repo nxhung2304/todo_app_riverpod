@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:learn_riverpod/core/config/router/app_routes.dart';
+import 'package:learn_riverpod/core/providers/storage_providers.dart';
 import 'package:learn_riverpod/features/todo/strings/home_strings.dart';
 import 'package:learn_riverpod/shared/widgets/base/localized_cosumer_widget.dart';
 import 'package:learn_riverpod/shared/widgets/layout/shared_scaffold.dart';
@@ -12,8 +15,8 @@ class HomePage extends LocalizedConsumerWidget {
   Widget buildLocalized(BuildContext context, WidgetRef ref) {
     return SharedScaffold(
       title: HomeStrings.title,
-      body: Text(HomeStrings.title),
       currentRoute: AppRoutes.home,
+      body: Text(HomeStrings.title),
     );
   }
 }

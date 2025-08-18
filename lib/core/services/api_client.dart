@@ -9,7 +9,6 @@ import 'package:learn_riverpod/core/services/intercepters/logging_intercepter.da
 import 'package:learn_riverpod/core/services/network_connectivity.dart';
 import 'package:learn_riverpod/core/services/token_storage_service.dart';
 import 'package:learn_riverpod/features/auth/strings/auth_error_strings.dart';
-import 'package:learn_riverpod/features/auth/strings/auth_strings.dart';
 
 class ApiClient {
   late final Dio _dio;
@@ -64,6 +63,7 @@ class ApiClient {
       logger: appLogger,
       ref: ref,
       tokenStorageService: tokenStorageService,
+      dio: _dio
     );
 
     _dio.interceptors.addAll([authInterceptor, loggingInterceptor]);

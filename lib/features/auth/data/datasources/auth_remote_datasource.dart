@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:learn_riverpod/core/constants/api_endpoints.dart';
+import 'package:learn_riverpod/core/exceptions/network_exception.dart';
 import 'package:learn_riverpod/core/exceptions/server_exception.dart';
 import 'package:learn_riverpod/core/models/api_response.dart';
 import 'package:learn_riverpod/core/models/auth_tokens.dart';
@@ -83,8 +84,14 @@ class AuthRemoteDatasource {
       } else {
         return ApiError('Validation failed');
       }
+    } on NetworkException catch (e) {
+      print('Network error: ${e.message}');
+      return ApiError('Network error: ${e.message}');
+    } on DioException catch (e) {
+      print('Dio error: ${_handleDioError(e)}');
+      return ApiError(_handleDioError(e));
     } catch (e) {
-      print('validateToken error: $e');
+      print('validateToken error: ${e.toString()}');
       print('Error type: ${e.runtimeType}');
       return ApiError(e.toString());
     }

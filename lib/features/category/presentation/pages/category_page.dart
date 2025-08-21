@@ -61,7 +61,7 @@ class CategoryPage extends LocalizedConsumerWidget {
     List<Category> categories,
   ) {
     if (categories.isEmpty) {
-      return const Center(child: Text('No categories found'));
+      return Center(child: Text(CategoryStrings.noCategoriesFound));
     }
 
     return ListView.builder(

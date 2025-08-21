@@ -24,6 +24,10 @@
     "date": "Date",
     "time": "Time",
     "description": "Description",
+    "createSuccess": "Created todo success",
+    "updateSuccess": "Updated todo success",
+    "updatedError": "Updated todo error",
+    "deleteSuccess": "Deleted todo success",
     "new": {
       "title": "New todo page",
       "created_todo_success": "Created todo success"
@@ -33,12 +37,6 @@
       "todo_not_found": "Todo not found",
       "editting": "Editting",
       "edited_todo_success": "Edited todo success"
-    },
-    "error": {
-      "id_not_found": "Todo id not found",
-      "invalid_id": "Invalid id",
-      "not_found": "Not found",
-      "load_failed": "Load failed"
     }
   },
   "category": {
@@ -59,7 +57,8 @@
     "deleted_success": "Deleted success",
     "failed_delete": "Failed to delete",
     "updated_success": "Updated success",
-    "failed_update": "Failed to update"
+    "failed_update": "Failed to update",
+    "no_categories_found": "No categories found"
   },
   "home": {
     "title": "Home"
@@ -111,9 +110,9 @@
       "confirm_password_does_not_match": "Confirm password does not match"
     },
     "todo": {
-      "title_required": "Title is required",
-      "title_min_length": "Title must be at least 3 characters",
-      "title_max_length": "Title must not exceed 100 characters",
+      "name_required": "Name is required",
+      "name_min_length": "Name must be at least 3 characters",
+      "name_max_length": "Name must not exceed 100 characters",
       "date_in_past": "Date cannot be in the past",
       "time_in_past": "Time cannot be in the past",
       "select_date_when_time_selected": "Please select a date when time is selected",
